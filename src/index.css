@@ -291,7 +291,30 @@ a:hover { color: var(--accent-hover); }
   flex-direction: column;
   gap: 5px;
 }
-.clan-legend-row { display: flex; align-items: center; gap: 7px; }
+.clan-legend-hint {
+  font-size: 0.68rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-bottom: 1px;
+}
+.clan-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  padding: 3px 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  text-align: left;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.clan-legend-row:hover:not(:disabled) { background: rgba(0,0,0,0.06); }
+.clan-legend-row.active {
+  background: rgba(0,0,0,0.08);
+  border-color: var(--panel-border);
+}
+.clan-legend-row:disabled { opacity: 0.4; cursor: default; }
 .clan-legend-swatch {
   width: 18px;
   height: 18px;
@@ -305,6 +328,13 @@ a:hover { color: var(--accent-hover); }
   border-radius: 3px;
 }
 .clan-legend-label { font-size: 0.74rem; font-weight: 600; color: var(--text); }
+.clan-legend-count {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
 
 /* Clan seat popup (Leaflet) */
 .clan-popup-wrap .leaflet-popup-content-wrap {

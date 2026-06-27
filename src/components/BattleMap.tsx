@@ -1,10 +1,23 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { ConflictEvent, PowerCenter } from '../types';
+import { ConflictEvent, PowerCenter, ClanId } from '../types';
 import { EVENT_CONFIG } from '../utils/eventConfig';
 import { CLAN_CONFIG, CLAN_ORDER } from '../utils/clanConfig';
 import { powerCenters } from '../data/powerCenters';
+import { events as allEvents } from '../data/events';
+import { CLAN_BATTLES } from '../data/clanBattles';
+
+// Lookup of every event by id (for the clan→battle connection lines, which
+// must reach events regardless of the current year/type filters).
+const EVENTS_BY_ID = new Map(allEvents.map((e) => [e.id, e]));
+
+// Squared lat/lng distance — fine for "which seat is nearest" at Iceland scale.
+function dist2(a: [number, number], b: [number, number]): number {
+  const dLat = a[0] - b[0];
+  const dLng = a[1] - b[1];
+  return dLat * dLat + dLng * dLng;
+}
 
 // Bounding box that keeps the map pinned to Iceland (SW corner, NE corner),
 // with a little breathing room around the coastline.
@@ -152,6 +165,53 @@ function ClanMarkers() {
   return null;
 }
 
+// Connection lines from a clan's seats to the battles it fought. Each battle is
+// linked to that clan's *nearest* seat, so the lines stay readable and trace a
+// sensible geography (e.g. the northern wars hang off the Eyjafjörður seat).
+function ConnectionLines({ clan }: { clan: ClanId }) {
+  const map = useMap();
+
+  useEffect(() => {
+    const seats = powerCenters.filter((pc) => pc.clan === clan);
+    if (seats.length === 0) return;
+
+    const cfg = CLAN_CONFIG[clan];
+    const lines: L.Polyline[] = [];
+
+    (CLAN_BATTLES[clan] ?? []).forEach((eventId) => {
+      const ev = EVENTS_BY_ID.get(eventId);
+      if (!ev) return; // skip unknown ids defensively
+
+      // pick this clan's seat nearest to the battle
+      let nearest = seats[0];
+      let best = dist2(nearest.coordinates, ev.coordinates);
+      for (const s of seats) {
+        const d = dist2(s.coordinates, ev.coordinates);
+        if (d < best) {
+          best = d;
+          nearest = s;
+        }
+      }
+
+      const line = L.polyline([nearest.coordinates, ev.coordinates], {
+        color: cfg.color,
+        weight: 2,
+        opacity: 0.75,
+        dashArray: '5,6',
+      });
+      line.bindTooltip(`${cfg.label} → ${ev.name}`, { sticky: true, opacity: 0.95 });
+      line.addTo(map);
+      lines.push(line);
+    });
+
+    return () => {
+      lines.forEach((l) => l.remove());
+    };
+  }, [map, clan]);
+
+  return null;
+}
+
 interface BattleMapProps {
   events: ConflictEvent[];
   selectedEvent: ConflictEvent | null;
@@ -166,6 +226,14 @@ export function BattleMap({
   onResetFilters,
 }: BattleMapProps) {
   const [showClans, setShowClans] = useState(false);
+  const [highlightClan, setHighlightClan] = useState<ClanId | null>(null);
+
+  const toggleClanLayer = () => {
+    setShowClans((v) => {
+      if (v) setHighlightClan(null); // turning the layer off clears any highlight
+      return !v;
+    });
+  };
 
   return (
     <div className="map-wrap">
@@ -194,13 +262,14 @@ export function BattleMap({
           onSelect={onSelectEvent}
         />
         {showClans && <ClanMarkers />}
+        {showClans && highlightClan && <ConnectionLines clan={highlightClan} />}
       </MapContainer>
 
-      {/* Clan power-centers layer: toggle + colour legend */}
+      {/* Clan power-centers layer: toggle + interactive colour legend */}
       <div className="clan-control">
         <button
           className={`clan-toggle${showClans ? ' active' : ''}`}
-          onClick={() => setShowClans((v) => !v)}
+          onClick={toggleClanLayer}
           aria-pressed={showClans}
           title="Show the seats of the great chieftain families"
         >
@@ -208,15 +277,27 @@ export function BattleMap({
         </button>
         {showClans && (
           <div className="clan-legend">
+            <div className="clan-legend-hint">Click a family to trace its wars</div>
             {CLAN_ORDER.map((id) => {
               const c = CLAN_CONFIG[id];
+              const count = (CLAN_BATTLES[id] ?? []).length;
+              const active = highlightClan === id;
               return (
-                <div className="clan-legend-row" key={id}>
+                <button
+                  key={id}
+                  type="button"
+                  className={`clan-legend-row${active ? ' active' : ''}`}
+                  disabled={count === 0}
+                  aria-pressed={active}
+                  title={count === 0 ? `${c.label}: no battles in this dataset` : `Trace ${c.label} conflicts`}
+                  onClick={() => setHighlightClan((cur) => (cur === id ? null : id))}
+                >
                   <span className="clan-legend-swatch" style={{ background: c.color }}>
                     {c.crest}
                   </span>
                   <span className="clan-legend-label">{c.label}</span>
-                </div>
+                  <span className="clan-legend-count">{count}</span>
+                </button>
               );
             })}
           </div>
