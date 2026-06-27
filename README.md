@@ -108,6 +108,18 @@ Saga-era events often have uncertain exact locations. Use the closest known mode
 - **More events** — Commonwealth-era feuds and 13th-century raids
 - **Photo/illustration** — add an optional `imageUrl` field to `ConflictEvent`
 - **Cluster markers** — use Leaflet.markercluster for when many events overlap
+
+## Deployment
+
+The app is a static Vite SPA, so any static host works. It's deployed on
+**Vercel** (zero-config: framework `Vite`, build `npm run build`, output `dist`).
+Pushing to `main` triggers a new production deploy when the GitHub integration
+is connected.
+
+## License
+
+MIT — see [LICENSE](LICENSE). Historical content is compiled from public
+sources (linked per event); please verify details before reuse.
 - **Nearby events** — show "also in this region" list in the event panel
 - **Export** — let users download event data as CSV or JSON
 - **Translations** — add Icelandic UI translation (i18n)
