@@ -91,8 +91,8 @@ export const events: ConflictEvent[] = [
     dateText: 'Saga Age — date uncertain',
     period: 'Saga Age / Icelandic Commonwealth',
     type: 'battle',
-    locationName: 'Mávahlíð, Snæfellsnes (coordinates approximate — verify)',
-    coordinates: [64.88, -23.2],
+    locationName: 'Mávahlíð, Snæfellsnes (below Búlandshöfði; coordinates approximate)',
+    coordinates: [64.926, -23.501],
     factions: [
       'Þórarinn svarti and his supporters',
       'Þorbjörn digri and his supporters',
@@ -169,8 +169,8 @@ export const events: ConflictEvent[] = [
     dateText: 'c. 1011 according to Njáls saga',
     period: 'Saga Age / Icelandic Commonwealth',
     type: 'burning',
-    locationName: 'Bergþórshvoll, Vestur-Landeyjar (coordinates approximate — verify)',
-    coordinates: [63.68, -20.15],
+    locationName: 'Bergþórshvoll, Vestur-Landeyjar',
+    coordinates: [63.636, -20.33],
     factions: [
       'Flosi Þórðarson of Svínafell and the burners',
       'Njáll Þorgeirsson\'s household',
@@ -298,8 +298,8 @@ export const events: ConflictEvent[] = [
     dateText: 'August 29–30, 1220',
     period: 'Age of the Sturlungs',
     type: 'battle',
-    locationName: 'Helgastaðir in Reykjadalur, Northeast Iceland (coordinates approximate — verify)',
-    coordinates: [65.83, -17.36],
+    locationName: 'Helgastaðir in Reykjadalur, Northeast Iceland (near Laugar; coordinates approximate)',
+    coordinates: [65.767, -17.4],
     factions: [
       'Followers of Bishop Guðmundur Arason',
       'Forces of Sighvatur Sturluson and Arnór Tumason',
@@ -347,9 +347,9 @@ export const events: ConflictEvent[] = [
     ],
     keyPeople: ['Sighvatur Sturluson', 'Sturla Sighvatsson', 'Guðmundur Arason'],
     winner: 'Sighvatur Sturluson and Sturla Sighvatsson',
-    casualtyEstimate: 'Around 30–40 killed, depending on source wording',
+    casualtyEstimate: '~12 of the bishop\'s men killed on the island; 30+ of the attackers drowned on the way back',
     summary:
-      'A revenge expedition to Grímsey that turned Guðmundur the Good\'s church conflict into a bloodbath. Sighvatur Sturluson and his son Sturla attacked the bishop\'s followers on the island and killed dozens.',
+      'A revenge expedition to Grímsey that turned Guðmundur the Good\'s church conflict into a bloodbath. Sighvatur Sturluson and his son Sturla attacked the bishop\'s followers on the island; about a dozen defenders were killed, and dozens more of the attackers drowned on the way home.',
     eli12:
       'The bishop\'s people were hiding out on an island. Their enemies sailed over, attacked them, and killed a lot of them. This was not a polite political disagreement anymore.',
     whyItHappened:
@@ -668,11 +668,11 @@ export const events: ConflictEvent[] = [
     dateText: 'July 19, 1255',
     period: 'Age of the Sturlungs',
     type: 'battle',
-    locationName: 'Þveráreyrar in Eyjafjörður (coordinates approximate — verify)',
-    coordinates: [65.72, -18.1],
+    locationName: 'Þveráreyrar by Munkaþverá in Eyjafjörður (coordinates approximate)',
+    coordinates: [65.55, -18.09],
     factions: [
-      'Sturlungar and Svínfellingar',
-      'Hvammverjar and Seldælir / allies of Gissur\'s faction',
+      'Eyjólfur ofsi Þorsteinsson and Hrafn Oddsson (the Flugumýri burners\' faction)',
+      'Þorvarður Þórarinsson and Þorgils skarði Böðvarsson (avenging Oddi Þórarinsson)',
     ],
     keyPeople: [
       'Eyjólfur ofsi Þorsteinsson',
@@ -680,7 +680,7 @@ export const events: ConflictEvent[] = [
       'Þorvarður Þórarinsson',
       'Þorgils skarði Böðvarsson',
     ],
-    winner: 'Hvammverjar and Seldælir / anti-Sturlung coalition',
+    winner: 'Þorvarður Þórarinsson and Þorgils skarði Böðvarsson',
     casualtyEstimate: 'Around 15–17 killed, including Eyjólfur ofsi',
     summary:
       'A nasty northern battle in the power vacuum after Gissur Þorvaldsson left for Norway. Eyjólfur ofsi and his allies were caught in the grinder of revenge politics, and Eyjólfur was killed.',
@@ -758,7 +758,7 @@ export const events: ConflictEvent[] = [
       'Teitur Þorleifsson ríki and opposing local powers',
     ],
     keyPeople: ['Jón Arason', 'Teitur Þorleifsson'],
-    winner: 'Jón Arason\'s faction, according to later accounts',
+    winner: 'Unclear / disputed — Teitur Þorleifsson came out ahead soon after (elected lawman and acquitted at the Alþingi)',
     casualtyEstimate: 'Unclear; source accounts emphasize the armed confrontation more than a casualty count',
     summary:
       'A pre-Reformation power clash that shows Jón Arason was already a political fighter long before his final showdown with Danish Lutheran power. Sveinsstaðir was church politics with horses, weapons, and hard men.',
@@ -1018,7 +1018,7 @@ export const events: ConflictEvent[] = [
   {
     id: 'operation-fork-1940',
     name: 'British Invasion of Iceland',
-    icelandicName: 'Operation Fork',
+    icelandicName: 'Hernám Breta',
     year: 1940,
     dateText: 'May 10, 1940',
     period: 'World War II',
