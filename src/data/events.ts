@@ -84,6 +84,40 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'kristnitakan-1000',
+    name: 'The Conversion of Iceland',
+    icelandicName: 'Kristnitakan',
+    year: 1000,
+    dateText: 'c. 999–1000, at the Alþingi',
+    period: 'Saga Age / Icelandic Commonwealth',
+    type: 'other',
+    locationName: 'Þingvellir (Lögberg), Alþingi',
+    coordinates: [64.2559, -21.13],
+    factions: [
+      'Christian chieftains (with Norwegian royal backing)',
+      'Pagan chieftains and the old gods',
+    ],
+    keyPeople: ['Þorgeir Ljósvetningagoði', 'Gizur hvíti', 'Hjalti Skeggjason', 'Síðu-Hallur'],
+    winner: 'Peaceful compromise — Iceland adopts Christianity',
+    casualtyEstimate: 'None at the assembly — the whole point was to avoid a civil war',
+    summary:
+      'Iceland switched religions without a battle. With Christians and pagans arming into two camps at the Alþingi, the law-speaker Þorgeir — himself a pagan — was asked to decide for everyone. He lay under a cloak for a day and a night, then ruled that Iceland would become Christian, with a few quiet concessions to the old ways.',
+    eli12:
+      'Iceland was about to split in two over religion: Christians versus people who believed in the old Norse gods. Instead of fighting, they let one trusted leader make the call for everybody. He picked Christianity — but let people keep some old customs quietly. Civil war avoided.',
+    whyItHappened:
+      'Norway\'s King Ólafur Tryggvason was pushing Iceland hard to convert, even holding Icelanders hostage. At home, missionaries had split the country, and both sides showed up to the Alþingi ready to declare separate laws — which would have meant war.',
+    whyItMatters:
+      'One of the most famous peaceful resolutions in medieval history. It kept Iceland in one piece, reshaped its culture and law, and is still told as a national origin story about choosing compromise over bloodshed.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Christianization of Iceland',
+        url: 'https://en.wikipedia.org/wiki/Christianization_of_Iceland',
+      },
+      { title: 'Wikipedia: Kristnitakan', url: 'https://is.wikipedia.org/wiki/Kristnitakan' },
+    ],
+  },
+  {
     id: 'mahlidingavig',
     name: 'Máhlíðingavíg',
     icelandicName: 'Máhlíðingamál',
@@ -451,6 +485,37 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'apavatnsfor-1238',
+    name: 'Apavatnsför',
+    icelandicName: 'Apavatnsför',
+    year: 1238,
+    dateText: 'Spring 1238',
+    period: 'Age of the Sturlungs',
+    type: 'raid',
+    locationName: 'Apavatn, South Iceland (coordinates approximate)',
+    coordinates: [64.16, -20.66],
+    factions: ['Sturla Sighvatsson / Sturlungar', 'Gissur Þorvaldsson / Haukdælir'],
+    keyPeople: ['Sturla Sighvatsson', 'Gissur Þorvaldsson'],
+    winner: 'Sturla Sighvatsson — but the gamble backfired',
+    casualtyEstimate: 'No mass killing; Gissur was seized, disarmed and forced to swear loyalty',
+    summary:
+      'Sturla Sighvatsson lured Gissur Þorvaldsson to a meeting at Apavatn with about 400 men against Gissur\'s 40, then had him captured, disarmed, and forced to swear loyalty. Sturla openly admitted Gissur was the one man he feared — and then let him live, which proved a fatal mistake.',
+    eli12:
+      'Sturla wanted to rule all of Iceland, and Gissur was the rival he feared most. He tricked Gissur into a meeting, surrounded him, and made him swear an oath of loyalty. Then he let him go — and Gissur immediately broke the oath and came back for revenge.',
+    whyItHappened:
+      'Sturla Sighvatsson was making his big push to dominate the whole country. Forcing Gissur to submit was meant to remove his last serious rival without a full battle.',
+    whyItMatters:
+      'Sparing Gissur was the blunder that doomed the Sturlungar. Within months Gissur and Kolbeinn ungi gathered an army and crushed them at Örlygsstaðir, where Sturla himself was killed.',
+    confidence: 'medium',
+    sources: [
+      { title: 'Wikipedia: Apavatnsför', url: 'https://is.wikipedia.org/wiki/Apavatnsf%C3%B6r' },
+      {
+        title: 'Wikipedia: Sturla Sighvatsson',
+        url: 'https://en.wikipedia.org/wiki/Sturla_Sighvatsson',
+      },
+    ],
+  },
+  {
     id: 'orlygsstadir-1238',
     name: 'Battle of Örlygsstaðir',
     icelandicName: 'Örlygsstaðabardagi',
@@ -744,6 +809,43 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'lenhardur-1502',
+    name: 'Killing of Lénharður the Bailiff',
+    icelandicName: 'Víg Lénharðs fógeta',
+    year: 1502,
+    dateText: '1502',
+    period: 'Late Catholic Iceland / Danish officials',
+    type: 'execution',
+    locationName: 'Hraun í Ölfusi, South Iceland (coordinates approximate)',
+    coordinates: [63.87, -21.05],
+    factions: [
+      'Torfi Jónsson í Klofa (sýslumaður) and his posse',
+      'Lénharður, a foreign royal bailiff (fógeti)',
+    ],
+    keyPeople: ['Torfi Jónsson í Klofa', 'Lénharður fógeti'],
+    winner: 'Torfi Jónsson',
+    casualtyEstimate: 'Lénharður and reportedly some of his men killed',
+    summary:
+      'The powerful chieftain Torfi Jónsson í Klofa hunted down Lénharður, a much-hated foreign bailiff accused of robbery and abuse, and had him killed at Hraun í Ölfusi. The bishop treated the slaying almost as a public service. A burial mound by the Ölfusá is still said to be his.',
+    eli12:
+      'A foreign official was throwing his weight around and stealing from people. A tough Icelandic chieftain got fed up, chased him down with a posse, and killed him. Almost nobody punished him — people were glad the bully was gone.',
+    whyItHappened:
+      'Foreign royal officials were resented for abusing their power over Icelanders. Lénharður had made enough enemies that a leading chieftain felt safe taking the law into his own hands.',
+    whyItMatters:
+      'An early flashpoint of Icelandic anger at heavy-handed foreign officials — the same friction that would explode far bigger during the Reformation and the long centuries of Danish rule.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Torfi Jónsson í Klofa',
+        url: 'https://en.wikipedia.org/wiki/Torfi_J%C3%B3nsson_%C3%AD_Klofa',
+      },
+      {
+        title: 'Ferlir: Hraun í Ölfusi – dys Lénharðs fógeta',
+        url: 'https://ferlir.is/hraun-i-olfusi-dys-lenhards-fogeta/',
+      },
+    ],
+  },
+  {
     id: 'sveinsstadir-1522',
     name: 'Sveinsstaðafundur',
     icelandicName: 'Sveinsstaðareið',
@@ -979,6 +1081,43 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'kopavogur-1662',
+    name: 'The Kópavogur Oath',
+    icelandicName: 'Kópavogsfundurinn / Erfðahyllingin',
+    year: 1662,
+    dateText: 'July 28, 1662',
+    period: 'Danish Rule / Absolutism',
+    type: 'occupation',
+    locationName: 'Kópavogsþingstaður (Þinghóll), Kópavogur (coordinates approximate)',
+    coordinates: [64.1057, -21.9118],
+    factions: [
+      'Danish Crown (Frederick III) via commissioner Henrik Bjelke',
+      'Icelandic officials, clergy and lawmen',
+    ],
+    keyPeople: ['Henrik Bjelke', 'Árni Oddsson', 'Brynjólfur Sveinsson'],
+    winner: 'Danish Crown',
+    casualtyEstimate: 'None — a coerced political submission, not a battle',
+    summary:
+      'Iceland\'s leaders gathered at Kópavogur and swore an oath accepting Frederick III as hereditary and absolute monarch. A famous later tradition says Bjelke had soldiers on hand and that the aged lawman Árni Oddsson signed in tears — though contemporary sources do not actually confirm the threat.',
+    eli12:
+      'Denmark\'s king wanted total, inherited power over Iceland. Icelandic leaders were summoned to Kópavogur and made to sign their agreement. The legend says soldiers stood by and an old judge wept as he signed — but we can\'t be sure that part really happened.',
+    whyItHappened:
+      'After costly wars, Frederick III turned Denmark into an absolute monarchy and made his overseas lands, Iceland included, formally submit. Letters in 1662 ordered Icelandic representatives to come and pledge the new oath.',
+    whyItMatters:
+      'It locked Iceland into Danish absolutism for nearly two centuries and became a powerful symbol in the later independence struggle — the moment Icelanders were said to have signed away their freedom under threat.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Kópavogsfundurinn',
+        url: 'https://is.wikipedia.org/wiki/K%C3%B3pavogsfundurinn',
+      },
+      {
+        title: 'Vísindavefurinn: Kópavogsfundurinn',
+        url: 'https://www.visindavefur.is/svar.php?id=61371',
+      },
+    ],
+  },
+  {
     id: 'jorgensen-1809',
     name: 'Jørgen Jørgensen\'s Revolution',
     icelandicName: 'Jörundarhundadagarnir',
@@ -1016,6 +1155,33 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'guttoslagurinn-1932',
+    name: 'The Gúttó Riot',
+    icelandicName: 'Gúttóslagurinn',
+    year: 1932,
+    dateText: 'November 9, 1932',
+    period: 'Kingdom of Iceland / Great Depression',
+    type: 'other',
+    locationName: 'Góðtemplarahúsið (Gúttó), by Tjörnin, Reykjavík',
+    coordinates: [64.1462, -21.942],
+    factions: ['Reykjavík workers and the unemployed', 'Reykjavík police'],
+    keyPeople: ['Hermann Jónasson (police chief)', 'Reykjavík labour movement'],
+    winner: 'The workers — the wage cut was dropped',
+    casualtyEstimate: 'No deaths; 20 of 28 police injured, plus injured townspeople',
+    summary:
+      'At the depth of the Great Depression, the city council tried to cut the wages of its unemployment-relief work. A furious crowd packed into Gúttó, the fighting spilled into the streets, and the police were overwhelmed — nearly every officer was hurt. The council backed down and never raised the cut again.',
+    eli12:
+      'During a terrible economic crisis, the city tried to pay jobless people even less for relief work. People were so angry they fought the police outside the meeting hall and won. The city got scared and cancelled the pay cut.',
+    whyItHappened:
+      'Mass unemployment in the Depression made the relief wage a lifeline. Cutting it felt like an attack on people already on the edge, and Reykjavík\'s growing labour movement was ready to fight back.',
+    whyItMatters:
+      'The biggest clash of Iceland\'s labour struggles — a moment when ordinary workers physically beat the authorities. It pushed Iceland to build a real organised police force and deepened the country\'s left-right divide.',
+    confidence: 'high',
+    sources: [
+      { title: 'Wikipedia: Gúttóslagurinn', url: 'https://en.wikipedia.org/wiki/G%C3%BAtt%C3%B3slagurinn' },
+    ],
+  },
+  {
     id: 'operation-fork-1940',
     name: 'British Invasion of Iceland',
     icelandicName: 'Hernám Breta',
@@ -1049,6 +1215,43 @@ export const events: ConflictEvent[] = [
       {
         title: 'Wikipedia: Iceland in World War II',
         url: 'https://en.wikipedia.org/wiki/Iceland_in_World_War_II',
+      },
+    ],
+  },
+  {
+    id: 'austurvollur-1949',
+    name: 'Anti-NATO Riot on Austurvöllur',
+    icelandicName: 'Óeirðirnar á Austurvelli 1949',
+    year: 1949,
+    dateText: 'March 30, 1949',
+    period: 'Republic of Iceland / Cold War',
+    type: 'other',
+    locationName: 'Austurvöllur, in front of the Alþingi, Reykjavík',
+    coordinates: [64.1466, -21.9408],
+    factions: [
+      'Opponents of NATO membership',
+      'Police, reinforcements and pro-NATO supporters',
+    ],
+    keyPeople: ['Alþingi', 'Anti-NATO demonstrators'],
+    winner: 'The government — NATO membership was approved',
+    casualtyEstimate: 'No deaths; many injured by stones and batons; tear gas used',
+    summary:
+      'As the Alþingi voted to join NATO, thousands gathered on Austurvöllur. Some pelted the parliament building with stones and eggs; police and pro-membership volunteers answered with batons and tear gas. It became the largest riot in Icelandic history — and Iceland joined NATO anyway.',
+    eli12:
+      'Iceland was deciding whether to join the military alliance NATO. Many people hated the idea and protested outside parliament, some throwing rocks. Police fought back with tear gas. It got really violent, but parliament voted yes anyway.',
+    whyItHappened:
+      'Joining a military alliance horrified many Icelanders — a country with no army and a strong neutralist and socialist tradition. The vote pushed the disagreement out into the streets.',
+    whyItMatters:
+      'It exposed a deep, lasting split in Iceland over Western military ties, foreign bases and neutrality — an argument that ran through the whole Cold War.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: 1949 anti-NATO riot in Iceland',
+        url: 'https://en.wikipedia.org/wiki/1949_anti-NATO_riot_in_Iceland',
+      },
+      {
+        title: 'Wikipedia: Óeirðirnar á Austurvelli 1949',
+        url: 'https://is.wikipedia.org/wiki/%C3%93eir%C3%B0irnar_%C3%A1_Austurvelli_1949',
       },
     ],
   },
