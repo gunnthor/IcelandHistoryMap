@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { ConflictEvent } from '../types';
+import { ConflictEvent, PowerCenter } from '../types';
 import { EVENT_CONFIG } from '../utils/eventConfig';
+import { CLAN_CONFIG, CLAN_ORDER } from '../utils/clanConfig';
+import { powerCenters } from '../data/powerCenters';
 
 // Bounding box that keeps the map pinned to Iceland (SW corner, NE corner),
 // with a little breathing room around the coastline.
@@ -86,6 +88,70 @@ function EventMarkers({
   return null;
 }
 
+// Clan power-centers layer: the seats of the great chieftain families.
+// These are informational markers (hover tooltip + click popup), kept separate
+// from the event-selection flow so they don't hijack the EventPanel.
+function ClanMarkers() {
+  const map = useMap();
+
+  useEffect(() => {
+    const markers: L.Marker[] = [];
+
+    powerCenters.forEach((pc: PowerCenter) => {
+      const cfg = CLAN_CONFIG[pc.clan];
+
+      const icon = L.divIcon({
+        html: `<div class="clan-marker" style="background:${cfg.color}" aria-label="${pc.name}, ${cfg.label} seat"><span class="clan-marker-crest">${cfg.crest}</span></div>`,
+        className: '',
+        iconSize: [26, 26],
+        iconAnchor: [13, 13],
+        popupAnchor: [0, -16],
+      });
+
+      const sourcesHtml = (pc.sources ?? [])
+        .filter((s) => s.url)
+        .map(
+          (s) => `<a href="${s.url}" target="_blank" rel="noopener noreferrer">${s.title}</a>`,
+        )
+        .join('');
+
+      const popupHtml = `
+        <div class="clan-popup">
+          <div class="clan-popup-head">
+            <span class="clan-popup-crest" style="background:${cfg.color}">${cfg.crest}</span>
+            <div>
+              <strong>${pc.name}</strong>
+              <div class="clan-popup-clan" style="color:${cfg.color}">${cfg.label} · ${pc.role}</div>
+            </div>
+          </div>
+          <p class="clan-popup-desc">${pc.description}</p>
+          ${pc.approximate ? '<p class="clan-popup-approx">⚠ Location approximate</p>' : ''}
+          ${sourcesHtml ? `<div class="clan-popup-sources">${sourcesHtml}</div>` : ''}
+        </div>`;
+
+      const marker = L.marker(pc.coordinates as L.LatLngExpression, {
+        icon,
+        zIndexOffset: -200, // sit behind event markers when they overlap
+      });
+
+      marker.bindTooltip(`${pc.name} · ${cfg.label}`, {
+        direction: 'top',
+        offset: [0, -14],
+        opacity: 0.95,
+      });
+      marker.bindPopup(popupHtml, { className: 'clan-popup-wrap', maxWidth: 260 });
+      marker.addTo(map);
+      markers.push(marker);
+    });
+
+    return () => {
+      markers.forEach((m) => m.remove());
+    };
+  }, [map]);
+
+  return null;
+}
+
 interface BattleMapProps {
   events: ConflictEvent[];
   selectedEvent: ConflictEvent | null;
@@ -99,6 +165,8 @@ export function BattleMap({
   onSelectEvent,
   onResetFilters,
 }: BattleMapProps) {
+  const [showClans, setShowClans] = useState(false);
+
   return (
     <div className="map-wrap">
       <MapContainer
@@ -125,7 +193,35 @@ export function BattleMap({
           selectedId={selectedEvent?.id ?? null}
           onSelect={onSelectEvent}
         />
+        {showClans && <ClanMarkers />}
       </MapContainer>
+
+      {/* Clan power-centers layer: toggle + colour legend */}
+      <div className="clan-control">
+        <button
+          className={`clan-toggle${showClans ? ' active' : ''}`}
+          onClick={() => setShowClans((v) => !v)}
+          aria-pressed={showClans}
+          title="Show the seats of the great chieftain families"
+        >
+          ⚑ Clan seats
+        </button>
+        {showClans && (
+          <div className="clan-legend">
+            {CLAN_ORDER.map((id) => {
+              const c = CLAN_CONFIG[id];
+              return (
+                <div className="clan-legend-row" key={id}>
+                  <span className="clan-legend-swatch" style={{ background: c.color }}>
+                    {c.crest}
+                  </span>
+                  <span className="clan-legend-label">{c.label}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       {/* Decorative compass rose — pure flourish, hidden from a11y tree */}
       <div className="map-compass" aria-hidden="true">

@@ -42,3 +42,26 @@ export interface FilterState {
   confidence: Confidence | 'all';
   yearRange: [number, number];
 }
+
+// ── Clan power-centers layer ──
+// The seats/strongholds of the major chieftain families. These are *places*,
+// not dated events, so they live in their own dataset + map layer rather than
+// in events[] (which is year-stamped and drives the timeline/filters).
+export type ClanId =
+  | 'sturlungar'
+  | 'asbirningar'
+  | 'haukdaelir'
+  | 'oddaverjar'
+  | 'svinfellingar'
+  | 'vatnsfirdingar';
+
+export interface PowerCenter {
+  id: string;
+  name: string;
+  clan: ClanId;
+  coordinates: [number, number]; // [lat, lng]
+  role: string; // short tag, e.g. "Ancestral seat"
+  description: string;
+  approximate?: boolean; // coordinates not precisely verified
+  sources?: Source[];
+}
