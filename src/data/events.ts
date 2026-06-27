@@ -127,6 +127,47 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'hrafn-sveinbjarnarson-1213',
+    name: 'Killing of Hrafn Sveinbjarnarson',
+    icelandicName: 'Vígs Hrafns Sveinbjarnarsonar',
+    year: 1213,
+    dateText: 'March 4, 1213',
+    period: 'Early Sturlung Age / Westfjords Feuds',
+    type: 'execution',
+    locationName: 'Eyri / Hrafnseyri, Arnarfjörður (coordinates approximate — verify)',
+    coordinates: [65.75, -23.46],
+    factions: [
+      'Þorvaldur Snorrason Vatnsfirðingur and his men',
+      'Hrafn Sveinbjarnarson and the Seldælir network',
+    ],
+    keyPeople: ['Hrafn Sveinbjarnarson', 'Þorvaldur Snorrason Vatnsfirðingur'],
+    winner: 'Þorvaldur Snorrason Vatnsfirðingur',
+    casualtyEstimate: 'Hrafn captured and beheaded; wider feud continued',
+    summary:
+      'Hrafn Sveinbjarnarson was a chieftain, healer, and unusually well-traveled Icelander. His feud with Þorvaldur Snorrason ended with Hrafn being captured and beheaded, a grim early warning sign for the Sturlung Age.',
+    eli12:
+      'Hrafn was basically a doctor-chieftain: powerful, respected, and useful. But he had a dangerous enemy. That enemy caught him and had him killed, which made the feud even nastier.',
+    whyItHappened:
+      'Hrafn and Þorvaldur were locked in a western Iceland power feud. Honor, local control, revenge, and old grudges all piled up until normal settlements stopped working.',
+    whyItMatters:
+      'This event shows that the Sturlung Age did not begin as one big civil war overnight. It grew out of local feuds like this, where personal rivalry and regional politics turned lethal.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Hrafn Sveinbjarnarson',
+        url: 'https://is.wikipedia.org/wiki/Hrafn_Sveinbjarnarson',
+      },
+      {
+        title: 'Wikipedia: Hrafns saga Sveinbjarnarsonar',
+        url: 'https://is.wikipedia.org/wiki/Hrafns_saga_Sveinbjarnarsonar',
+      },
+      {
+        title: 'Coordinates are approximate — marker uses Hrafnseyri/Eyri in Arnarfjörður',
+        url: '',
+      },
+    ],
+  },
+  {
     id: 'helgastadir-1220',
     name: 'Helgastaðabardagi',
     icelandicName: 'Helgastaðabardagi',
@@ -205,6 +246,47 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'saudafellsfor-1229',
+    name: 'Sauðafellsför',
+    icelandicName: 'Sauðafellsför',
+    year: 1229,
+    dateText: '1229',
+    period: 'Age of the Sturlungs',
+    type: 'raid',
+    locationName: 'Sauðafell in Dalir, West Iceland (coordinates approximate — verify)',
+    coordinates: [65.06, -21.68],
+    factions: [
+      'Sturla Sighvatsson and Sturlungar supporters',
+      'Snorri Sturluson and his household network',
+    ],
+    keyPeople: ['Sturla Sighvatsson', 'Snorri Sturluson', 'Sighvatur Sturluson'],
+    winner: 'Sturla Sighvatsson / Sturlungar pressure campaign',
+    casualtyEstimate: 'Unclear; remembered more as intimidation and humiliation than a mass killing',
+    summary:
+      'A Sturlung pressure raid against Snorri Sturluson\'s world in the west. Sturla Sighvatsson used force and fear to bend rivals toward his family\'s expanding power.',
+    eli12:
+      'This was not a clean battlefield moment. It was more like powerful relatives showing up with armed men to scare, punish, and squeeze another powerful relative.',
+    whyItHappened:
+      'The Sturlungar were trying to turn family prestige into real control across Iceland. Snorri had wealth, followers, and influence, so Sturla pushed into his sphere with violence and intimidation.',
+    whyItMatters:
+      'Sauðafellsför helps explain why the Sturlung Age feels so messy. The war was not just famous battles; it was raids, threats, humiliation, and constant pressure between ambitious kin groups.',
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Wikipedia: Snorri Sturluson',
+        url: 'https://en.wikipedia.org/wiki/Snorri_Sturluson',
+      },
+      {
+        title: 'Wikipedia: Sturla Sighvatsson',
+        url: 'https://en.wikipedia.org/wiki/Sturla_Sighvatsson',
+      },
+      {
+        title: 'Coordinates and casualty details need verification against Sturlunga saga/local sources',
+        url: '',
+      },
+    ],
+  },
+  {
     id: 'baejarbardagi-1237',
     name: 'Bæjarbardagi',
     icelandicName: 'Bæjarbardagi',
@@ -279,6 +361,43 @@ export const events: ConflictEvent[] = [
       {
         title: 'Íslendinga saga (Sturlungasaga)',
         url: 'https://en.wikipedia.org/wiki/Sturlunga_saga',
+      },
+    ],
+  },
+  {
+    id: 'snorri-sturluson-1241',
+    name: 'Assassination of Snorri Sturluson',
+    icelandicName: 'Snorri Sturluson drepinn',
+    year: 1241,
+    dateText: 'September 23, 1241',
+    period: 'Age of the Sturlungs',
+    type: 'execution',
+    locationName: 'Reykholt, Borgarfjörður',
+    coordinates: [64.6631, -21.2928],
+    factions: [
+      'Gissur Þorvaldsson and men acting with royal backing',
+      'Snorri Sturluson and his household',
+    ],
+    keyPeople: ['Snorri Sturluson', 'Gissur Þorvaldsson', 'King Hákon Hákonarson'],
+    winner: 'Gissur Þorvaldsson / Norwegian royal faction',
+    casualtyEstimate: 'Snorri Sturluson killed in his cellar; household casualties unclear',
+    summary:
+      'Snorri Sturluson, the most famous writer-politician in Icelandic history, was killed at Reykholt after falling out with the Norwegian king. Gissur Þorvaldsson\'s men found him hiding and cut him down.',
+    eli12:
+      'Snorri was a brilliant writer, but also a political player. He got on the wrong side of bigger powers. Armed men came to his farm, found him hiding, and killed him.',
+    whyItHappened:
+      'Snorri had deep ties to Norwegian royal politics but did not reliably obey King Hákon. In Iceland, Gissur Þorvaldsson had both local reasons and royal permission to remove him.',
+    whyItMatters:
+      'This is where literature and civil war collide. The man tied to the Prose Edda and Heimskringla died as part of the same power struggle that was dragging Iceland toward Norwegian rule.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Snorri Sturluson',
+        url: 'https://en.wikipedia.org/wiki/Snorri_Sturluson',
+      },
+      {
+        title: 'Wikipedia: Gissur Þorvaldsson',
+        url: 'https://en.wikipedia.org/wiki/Gissur_%C3%9Eorvaldsson',
       },
     ],
   },
@@ -539,6 +658,47 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'saudafell-1550',
+    name: 'Battle of Sauðafell',
+    icelandicName: 'Sauðafellsbardagi',
+    year: 1550,
+    dateText: 'October 1550',
+    period: 'Danish Rule / Reformation',
+    type: 'battle',
+    locationName: 'Sauðafell in Dalir, West Iceland (coordinates approximate — verify)',
+    coordinates: [65.06, -21.68],
+    factions: [
+      'Catholic resistance: Jón Arason and his sons',
+      'Daði Guðmundsson and Lutheran / royal-aligned Icelandic forces',
+    ],
+    keyPeople: ['Jón Arason', 'Björn Jónsson', 'Ari Jónsson', 'Daði Guðmundsson'],
+    winner: 'Daði Guðmundsson / Lutheran royal-aligned faction',
+    casualtyEstimate: 'Low or unclear; Jón Arason and his sons were captured, then executed later at Skálholt',
+    summary:
+      'Jón Arason\'s last armed stand collapsed at Sauðafell. Daði Guðmundsson defeated and captured the Catholic bishop and his sons, setting up their execution at Skálholt weeks later.',
+    eli12:
+      'This is the fight right before the beheading. Jón Arason tried to resist the Reformation with force, lost the battle, got captured with his sons, and was taken toward his death.',
+    whyItHappened:
+      'The Danish crown was forcing Lutheran reform through Iceland, while Jón Arason defended Catholic power, church property, and northern political independence. The argument had moved beyond sermons into armed force.',
+    whyItMatters:
+      'Sauðafell is the missing step between religious tension and the execution already on the map. Without this defeat, Jón Arason does not end up helpless at Skálholt.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Jón Arason',
+        url: 'https://en.wikipedia.org/wiki/J%C3%B3n_Arason',
+      },
+      {
+        title: 'Wikipedia: Daði Guðmundsson',
+        url: 'https://en.wikipedia.org/wiki/Da%C3%B0i_Gu%C3%B0mundsson',
+      },
+      {
+        title: 'Coordinates and casualty details need verification against Icelandic Reformation sources',
+        url: '',
+      },
+    ],
+  },
+  {
     id: 'reformation-1550',
     name: 'Reformation Conflict & Execution of Jón Arason',
     icelandicName: 'Siðaskiptin',
@@ -651,6 +811,80 @@ export const events: ConflictEvent[] = [
       {
         title: 'Wikipedia: Murat Reis the Younger',
         url: 'https://en.wikipedia.org/wiki/Murat_Reis_the_Younger',
+      },
+    ],
+  },
+  {
+    id: 'jorgensen-1809',
+    name: 'Jørgen Jørgensen\'s Revolution',
+    icelandicName: 'Jörundarhundadagarnir',
+    year: 1809,
+    dateText: 'June–August 1809',
+    period: 'Danish Rule / Napoleonic Era',
+    type: 'occupation',
+    locationName: 'Reykjavík (representative marker)',
+    coordinates: [64.1466, -21.9426],
+    factions: [
+      'Jørgen Jørgensen and British merchant allies',
+      'Danish colonial administration in Iceland',
+    ],
+    keyPeople: ['Jørgen Jørgensen', 'Frederik Trampe', 'Samuel Phelps'],
+    winner: 'Jørgen Jørgensen temporarily, then Danish authority restored',
+    casualtyEstimate: 'No major battle casualties; a political coup rather than a battlefield war',
+    summary:
+      'For a few wild weeks in 1809, Danish adventurer Jørgen Jørgensen arrested the Danish governor and declared Iceland independent under his own protection. It was bold, bizarre, and very temporary.',
+    eli12:
+      'A Danish adventurer showed up with British backing, grabbed the governor, and basically said, "Iceland is free now, and I am in charge." Then Britain shut the whole thing down.',
+    whyItHappened:
+      'The Napoleonic Wars disrupted Denmark, Britain, trade, and North Atlantic politics. Iceland was isolated and vulnerable, and Jørgensen used the chaos to stage a takeover.',
+    whyItMatters:
+      'It is not a normal battle, but it is one of Iceland\'s strangest political conflicts. It shows how global war could suddenly reach Reykjavík and shake Danish rule, even briefly.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Jørgen Jørgensen',
+        url: 'https://en.wikipedia.org/wiki/J%C3%B8rgen_J%C3%B8rgensen',
+      },
+      {
+        title: 'Wikipedia: Jörundarhundadagarnir',
+        url: 'https://is.wikipedia.org/wiki/J%C3%B6rundarhundadagarnir',
+      },
+    ],
+  },
+  {
+    id: 'operation-fork-1940',
+    name: 'British Invasion of Iceland',
+    icelandicName: 'Operation Fork',
+    year: 1940,
+    dateText: 'May 10, 1940',
+    period: 'World War II',
+    type: 'occupation',
+    locationName: 'Reykjavík harbour and key sites around Iceland',
+    coordinates: [64.1503, -21.9419],
+    factions: [
+      'United Kingdom / Royal Marines',
+      'Neutral Iceland under Danish sovereignty',
+    ],
+    keyPeople: ['Royal Marines', 'Icelandic government', 'British government'],
+    winner: 'United Kingdom occupation force',
+    casualtyEstimate: 'No combat deaths; Iceland had no army and did not fight the landing',
+    summary:
+      'British forces landed in Reykjavík in 1940 to keep Iceland out of German hands after Denmark fell. Iceland was neutral and had no army, so the invasion was tense but nearly bloodless.',
+    eli12:
+      'Britain was afraid Nazi Germany might use Iceland as a North Atlantic base. So British troops showed up, took control of key places, and Iceland could not really stop them.',
+    whyItHappened:
+      'Germany had occupied Denmark in April 1940, leaving Iceland strategically exposed. Britain wanted control of the island\'s harbours, airfields, and North Atlantic position before Germany could move.',
+    whyItMatters:
+      'Operation Fork pulled Iceland directly into World War II strategy. It also led to later American defense arrangements and helped push Iceland toward full independence from Denmark in 1944.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: British invasion of Iceland',
+        url: 'https://en.wikipedia.org/wiki/British_invasion_of_Iceland',
+      },
+      {
+        title: 'Wikipedia: Iceland in World War II',
+        url: 'https://en.wikipedia.org/wiki/Iceland_in_World_War_II',
       },
     ],
   },
