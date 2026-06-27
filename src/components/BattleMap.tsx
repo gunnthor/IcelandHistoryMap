@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { ConflictEvent, PowerCenter, ClanId } from '../types';
@@ -7,6 +7,11 @@ import { CLAN_CONFIG, CLAN_ORDER } from '../utils/clanConfig';
 import { powerCenters } from '../data/powerCenters';
 import { events as allEvents } from '../data/events';
 import { CLAN_BATTLES } from '../data/clanBattles';
+import { createSpiderfier, OMSInstance } from '../utils/oms';
+
+// Tag we stash on each Leaflet marker so the shared OMS click handler can map
+// a clicked marker back to its event.
+type TaggedMarker = L.Marker & { _event?: ConflictEvent };
 
 // Lookup of every event by id (for the clan→battle connection lines, which
 // must reach events regardless of the current year/type filters).
@@ -47,8 +52,31 @@ function EventMarkers({
   onSelect: (e: ConflictEvent) => void;
 }) {
   const map = useMap();
+  const omsRef = useRef<OMSInstance | null>(null);
+  const omsInitRef = useRef(false);
+  // Keep the latest onSelect in a ref so the single OMS click listener (added
+  // once) always calls the current handler without being re-registered.
+  const onSelectRef = useRef(onSelect);
+  onSelectRef.current = onSelect;
 
   useEffect(() => {
+    // Create the spiderfier once for this map. Clicking a spot where markers
+    // overlap fans them out instead of firing a (random) marker's click. If the
+    // plugin failed to load, oms is null and we fall back to plain clicks.
+    if (!omsInitRef.current) {
+      omsInitRef.current = true;
+      const oms = createSpiderfier(map, { keepSpiderfied: true, nearbyDistance: 22 });
+      omsRef.current = oms;
+      if (oms) {
+        oms.addListener('click', (marker) => {
+          const ev = (marker as TaggedMarker)._event;
+          if (ev) onSelectRef.current(ev);
+        });
+      }
+    }
+    const oms = omsRef.current;
+    if (oms) oms.clearMarkers();
+
     const markers: L.Marker[] = [];
 
     events.forEach((event) => {
@@ -68,15 +96,23 @@ function EventMarkers({
         icon,
         zIndexOffset: isSelected ? 1000 : 0,
         keyboard: false, // we wire our own keyboard handling on the inner element
-      });
+      }) as TaggedMarker;
+      marker._event = event;
 
-      marker.on('click', () => onSelect(event));
+      // Selection is routed through OMS's 'click' (see listener above) so that
+      // overlapping markers spiderfy instead of selecting one at random.
       marker.bindTooltip(`${event.name} · ${event.year}`, {
         direction: 'top',
         offset: [0, -18],
         opacity: 0.95,
       });
       marker.addTo(map);
+      if (oms) {
+        oms.addMarker(marker);
+      } else {
+        // Fallback when the spiderfier isn't available: plain click-to-select.
+        marker.on('click', () => onSelectRef.current(event));
+      }
 
       // Make the marker keyboard-operable (Enter / Space).
       const el = marker.getElement();
@@ -85,7 +121,7 @@ function EventMarkers({
         inner.addEventListener('keydown', (ev: KeyboardEvent) => {
           if (ev.key === 'Enter' || ev.key === ' ') {
             ev.preventDefault();
-            onSelect(event);
+            onSelectRef.current(event);
           }
         });
       }
@@ -94,9 +130,10 @@ function EventMarkers({
     });
 
     return () => {
+      if (oms) oms.clearMarkers();
       markers.forEach((m) => m.remove());
     };
-  }, [events, selectedId, onSelect, map]);
+  }, [events, selectedId, map]);
 
   return null;
 }
@@ -241,7 +278,7 @@ export function BattleMap({
         center={[64.96, -18.9]}
         zoom={6}
         minZoom={6}
-        maxZoom={12}
+        maxZoom={14}
         // Hard-lock the view to Iceland: you can't pan or zoom out to the
         // rest of the world. Box has a little padding around the coastline.
         maxBounds={ICELAND_BOUNDS}
@@ -253,7 +290,7 @@ export function BattleMap({
           attribution='Tiles &copy; <a href="https://www.esri.com">Esri</a> — Source: Esri, USGS, NOAA'
           url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
           maxNativeZoom={13}
-          maxZoom={12}
+          maxZoom={14}
         />
         <MapController event={selectedEvent} />
         <EventMarkers
