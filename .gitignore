@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+
+# Local / editor
+*.local
+.DS_Store
+*.log
+.vite
+.vscode/*
+!.vscode/extensions.json
+
+# Claude Code local settings (machine-specific)
+.claude/settings.local.json
