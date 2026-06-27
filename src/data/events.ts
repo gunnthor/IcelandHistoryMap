@@ -2,6 +2,88 @@ import { ConflictEvent } from '../types';
 
 export const events: ConflictEvent[] = [
   {
+    id: 'hrafnkell-einar-freyfaxi',
+    name: 'Hrafnkell Kills Einar',
+    icelandicName: 'Vígs Einars í Hrafnkels sögu',
+    year: 970,
+    dateText: 'Saga Age — date uncertain',
+    period: 'Saga Age / East Iceland',
+    type: 'execution',
+    locationName: 'Aðalból / Hrafnkelsdalur, East Iceland (coordinates approximate — verify)',
+    coordinates: [65.08, -15.43],
+    factions: [
+      'Hrafnkell Freysgoði of Aðalból',
+      'Einar Þorbjarnarson and his family network',
+    ],
+    keyPeople: ['Hrafnkell Freysgoði', 'Einar Þorbjarnarson', 'Sámur Bjarnason'],
+    winner: 'Hrafnkell Freysgoði at first; Sámur later forces him down',
+    casualtyEstimate: 'Einar killed; later revenge and legal humiliation follow',
+    summary:
+      'The famous spark of Hrafnkels saga. Hrafnkell warned that nobody should ride his sacred horse Freyfaxi. Einar did it anyway, and Hrafnkell killed him for it. One horse ride became an East Iceland power crisis.',
+    eli12:
+      'A powerful chieftain had a horse he treated like a holy animal. A worker rode it, even though he was told not to. Hrafnkell killed him, and then the dead man\'s family came for justice.',
+    whyItHappened:
+      'The saga turns a personal rule into a test of power. Hrafnkell thinks his status and oath matter more than Einar\'s life; Einar\'s family refuses to accept that quietly.',
+    whyItMatters:
+      'This gives the map a strong East Iceland saga marker. It is not a documented battlefield, but it shows how honor, religion, property, and law could all collide in one violent act.',
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Wikipedia: Hrafnkels saga',
+        url: 'https://en.wikipedia.org/wiki/Hrafnkels_saga',
+      },
+      {
+        title: 'Icelandic Saga Database: Hrafnkels saga Freysgoða',
+        url: 'https://sagadb.org/hrafnkels_saga_freysgoda',
+      },
+      {
+        title: 'Coordinates are approximate — marker uses the Aðalból/Hrafnkelsdalur area',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'vopnfirdinga-feud',
+    name: 'Vápnfirðinga Feud',
+    icelandicName: 'Vápnfirðinga saga',
+    year: 980,
+    dateText: 'Saga Age — date uncertain',
+    period: 'Saga Age / East Iceland',
+    type: 'other',
+    locationName: 'Vopnafjörður, East Iceland (representative marker; coordinates approximate — verify)',
+    coordinates: [65.75, -14.83],
+    factions: [
+      'Brodd-Helgi and his supporters',
+      'Geitir Lýtingsson and allied families',
+    ],
+    keyPeople: ['Brodd-Helgi', 'Geitir Lýtingsson', 'Þorkell Geitisson'],
+    winner: 'No clean winner; the feud rolls across generations',
+    casualtyEstimate: 'Several killings across the feud; exact numbers vary by saga tradition',
+    summary:
+      'A hard local feud from Vopnafjörður, full of status fights, killings, and revenge. It is less one neat battle than a long East Iceland pressure cooker.',
+    eli12:
+      'Two powerful local families keep clashing. Someone gets killed, relatives demand revenge, and the next generation inherits the mess.',
+    whyItHappened:
+      'Vápnfirðinga saga is driven by honor, kinship, insult, and control of local power. In a society without a central state, a family feud could become the main political weather system of a fjord.',
+    whyItMatters:
+      'This adds a proper Austfirðir saga conflict to the map. It helps show that saga violence was not just a south-and-west Iceland thing.',
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Wikipedia: Vápnfirðinga saga',
+        url: 'https://en.wikipedia.org/wiki/V%C3%A1pnfir%C3%B0inga_saga',
+      },
+      {
+        title: 'Icelandic Saga Database: Vápnfirðinga saga',
+        url: 'https://sagadb.org/vapnfirdinga_saga',
+      },
+      {
+        title: 'Representative Vopnafjörður marker — exact saga locations need local verification',
+        url: '',
+      },
+    ],
+  },
+  {
     id: 'mahlidingavig',
     name: 'Máhlíðingavíg',
     icelandicName: 'Máhlíðingamál',
@@ -39,6 +121,47 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'droplaugarsona-feud',
+    name: 'Droplaugarsons\' Feud',
+    icelandicName: 'Droplaugarsona saga',
+    year: 1000,
+    dateText: 'Saga Age — date uncertain',
+    period: 'Saga Age / East Iceland',
+    type: 'other',
+    locationName: 'Fljótsdalur / Lagarfljót area, East Iceland (representative marker; coordinates approximate — verify)',
+    coordinates: [65.04, -14.95],
+    factions: [
+      'Helgi and Grímur Droplaugarsynir',
+      'Helgi Ásbjarnarson and rival local powers',
+    ],
+    keyPeople: ['Helgi Droplaugarson', 'Grímur Droplaugarson', 'Helgi Ásbjarnarson'],
+    winner: 'No simple winner; revenge and counter-revenge drive the story',
+    casualtyEstimate: 'Several saga killings; exact count uncertain',
+    summary:
+      'A compact East Iceland feud around Fljótsdalur and Lagarfljót. The sons of Droplaug get pulled into local rivalry, violence, and revenge until the feud becomes the whole point of the story.',
+    eli12:
+      'This is another saga feud: two brothers, local enemies, a bunch of pride, and violence that keeps answering violence.',
+    whyItHappened:
+      'The saga world runs on kinship and reputation. Once one side is shamed or harmed, backing down can look like weakness, so the conflict keeps feeding itself.',
+    whyItMatters:
+      'Droplaugarsona saga is useful because it gives the map a real Fljótsdalur/Lagarfljót conflict, not just the famous battles from the north and west.',
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Wikipedia: Droplaugarsona saga',
+        url: 'https://en.wikipedia.org/wiki/Droplaugarsona_saga',
+      },
+      {
+        title: 'Wikipedia: Fljótsdæla saga',
+        url: 'https://en.wikipedia.org/wiki/Flj%C3%B3tsd%C3%A6la_saga',
+      },
+      {
+        title: 'Representative marker only — exact episode coordinates need saga/place-name verification',
+        url: '',
+      },
+    ],
+  },
+  {
     id: 'njalsbrenna-1011',
     name: 'Njálsbrenna',
     icelandicName: 'Burning of Bergþórshvoll',
@@ -49,7 +172,7 @@ export const events: ConflictEvent[] = [
     locationName: 'Bergþórshvoll, Vestur-Landeyjar (coordinates approximate — verify)',
     coordinates: [63.68, -20.15],
     factions: [
-      'Flosi Þórðarson and the burners',
+      'Flosi Þórðarson of Svínafell and the burners',
       'Njáll Þorgeirsson\'s household',
     ],
     keyPeople: [
@@ -773,6 +896,47 @@ export const events: ConflictEvent[] = [
       },
       {
         title: 'Representative marker only — killings happened in multiple Westfjords locations',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'tyrkjaranid-austfirdir-1627',
+    name: 'Turkish Abductions on the Eastfjords',
+    icelandicName: 'Tyrkjaránið á Austfjörðum',
+    year: 1627,
+    dateText: 'July 5–13, 1627',
+    period: 'Danish Rule',
+    type: 'raid',
+    locationName: 'Berufjörður and Breiðdalur, East Iceland (representative marker near Djúpivogur)',
+    coordinates: [64.66, -14.28],
+    factions: [
+      'Barbary corsairs raiding the Eastfjords',
+      'Icelandic coastal communities in Berufjörður and Breiðdalur',
+    ],
+    keyPeople: ['Barbary corsairs', 'East Iceland coastal communities'],
+    winner: 'Barbary corsairs',
+    casualtyEstimate: 'Around 110 people taken from the Eastfjords; local casualty details vary',
+    summary:
+      'Before the better-known Vestmannaeyjar raid, corsairs hit the Eastfjords. They raided around Berufjörður and Breiðdalur, taking about 110 people from small coastal communities.',
+    eli12:
+      'Pirates did not only attack the Westman Islands. They also came to East Iceland first, grabbed people from fjord farms and villages, and sailed away with them.',
+    whyItHappened:
+      'The corsairs were raiding European coasts for captives to sell into slavery. East Iceland was remote, lightly defended, and exposed to ships moving along the coast.',
+    whyItMatters:
+      'This gives the Austfirðir their own marker instead of hiding them inside the general Tyrkjaránið event. The trauma was national, but the first shock hit eastern communities hard.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Turkish Abductions',
+        url: 'https://en.wikipedia.org/wiki/Turkish_Abductions',
+      },
+      {
+        title: 'Wikipedia: Tyrkjaránið',
+        url: 'https://is.wikipedia.org/wiki/Tyrkjar%C3%A1ni%C3%B0',
+      },
+      {
+        title: 'Representative marker near Djúpivogur — raids affected multiple Eastfjords locations',
         url: '',
       },
     ],
