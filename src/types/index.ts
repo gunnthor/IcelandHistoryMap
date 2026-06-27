@@ -3,6 +3,7 @@ export type EventType =
   | 'sea_battle'
   | 'raid'
   | 'burning'
+  | 'massacre'
   | 'occupation'
   | 'execution'
   | 'other';

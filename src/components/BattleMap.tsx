@@ -4,6 +4,13 @@ import L from 'leaflet';
 import { ConflictEvent } from '../types';
 import { EVENT_CONFIG } from '../utils/eventConfig';
 
+// Bounding box that keeps the map pinned to Iceland (SW corner, NE corner),
+// with a little breathing room around the coastline.
+const ICELAND_BOUNDS: L.LatLngBoundsExpression = [
+  [62.7, -25.8],
+  [67.2, -12.2],
+];
+
 // Fly to the selected event whenever it changes.
 function MapController({ event }: { event: ConflictEvent | null }) {
   const map = useMap();
@@ -95,18 +102,22 @@ export function BattleMap({
   return (
     <div className="map-wrap">
       <MapContainer
-        center={[65.0, -18.5]}
+        center={[64.96, -18.9]}
         zoom={6}
-        minZoom={5}
-        maxZoom={14}
+        minZoom={6}
+        maxZoom={12}
+        // Hard-lock the view to Iceland: you can't pan or zoom out to the
+        // rest of the world. Box has a little padding around the coastline.
+        maxBounds={ICELAND_BOUNDS}
+        maxBoundsViscosity={1.0}
         style={{ width: '100%', height: '100%' }}
         zoomControl={true}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          subdomains="abcd"
-          maxZoom={20}
+          attribution='Tiles &copy; <a href="https://www.esri.com">Esri</a> — Source: Esri, USGS, NOAA'
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
+          maxNativeZoom={13}
+          maxZoom={12}
         />
         <MapController event={selectedEvent} />
         <EventMarkers
@@ -115,6 +126,22 @@ export function BattleMap({
           onSelect={onSelectEvent}
         />
       </MapContainer>
+
+      {/* Decorative compass rose — pure flourish, hidden from a11y tree */}
+      <div className="map-compass" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <circle className="compass-ring" cx="50" cy="50" r="47" />
+          <circle className="compass-ring" cx="50" cy="50" r="39" />
+          <line className="compass-tick" x1="50" y1="50" x2="73" y2="27" />
+          <line className="compass-tick" x1="50" y1="50" x2="27" y2="27" />
+          <line className="compass-tick" x1="50" y1="50" x2="27" y2="73" />
+          <line className="compass-tick" x1="50" y1="50" x2="73" y2="73" />
+          <polygon className="compass-rose compass-ew" points="9,50 50,56 91,50 50,44" />
+          <polygon className="compass-rose compass-ns" points="50,9 56,50 50,91 44,50" />
+          <circle className="compass-hub" cx="50" cy="50" r="3.4" />
+          <text className="compass-n" x="50" y="22" textAnchor="middle">N</text>
+        </svg>
+      </div>
 
       {events.length === 0 && (
         <div className="map-empty-state">

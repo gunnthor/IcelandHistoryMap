@@ -37,6 +37,13 @@ export const EVENT_CONFIG: Record<EventType, TypeConfig> = {
     bgColor: '#fce4e4',
     borderColor: '#c0392b',
   },
+  massacre: {
+    label: 'Massacre',
+    symbol: '✕',
+    color: '#5f1111',
+    bgColor: '#f4cccc',
+    borderColor: '#8a1f1f',
+  },
   execution: {
     label: 'Execution',
     symbol: '☩',

@@ -1,21 +1,23 @@
-/* ── Variables ── */
+/* ── Variables (antique "adventure" theme) ── */
 :root {
-  --bg: #f5f0e8;
-  --header-bg: #1c1c2e;
-  --header-text: #f0ede6;
-  --accent: #c0392b;
-  --accent-hover: #a93226;
-  --panel-bg: #ffffff;
-  --panel-border: #e0d8cc;
-  --text: #1a1a2e;
-  --text-muted: #6b6b8a;
-  --timeline-bg: #1c1c2e;
-  --timeline-text: #d0ccc4;
-  --chip-bg: #eee8db;
-  --chip-active-bg: #1c1c2e;
-  --chip-active-text: #ffffff;
-  --shadow: 0 2px 12px rgba(0,0,0,0.12);
-  --shadow-lg: 0 4px 24px rgba(0,0,0,0.18);
+  --bg: #e7dcc4;            /* parchment */
+  --header-bg: #17120c;     /* dark ink / charcoal-brown */
+  --header-text: #f3e9d2;   /* warm parchment text */
+  --accent: #8a1f1f;        /* blood red */
+  --accent-hover: #6f1717;
+  --gold: #c9a44c;          /* aged gold */
+  --gold-soft: #a9883c;
+  --panel-bg: #f3e9d3;      /* aged paper */
+  --panel-border: #cdb992;  /* tan border */
+  --text: #2a2017;          /* dark brown-black */
+  --text-muted: #6e5e44;    /* muted brown */
+  --timeline-bg: #17120c;
+  --timeline-text: #d8c6a0;
+  --chip-bg: #ddcdab;
+  --chip-active-bg: #8a1f1f;
+  --chip-active-text: #f3e9d2;
+  --shadow: 0 2px 12px rgba(40,28,12,0.22);
+  --shadow-lg: 0 6px 28px rgba(40,28,12,0.32);
   --radius: 8px;
   --panel-width: 380px;
   --header-height: 64px;
@@ -751,4 +753,171 @@ a:hover { color: var(--accent-hover); }
 .panel-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* ── Leaflet tooltip ── */
-.leaflet-tooltip { font-weight: 600; font-size: 0.78rem; }
+.leaflet-tooltip {
+  font-weight: 600;
+  font-size: 0.78rem;
+  background: var(--panel-bg);
+  border: 1px solid var(--gold-soft);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.leaflet-tooltip-top::before { border-top-color: var(--gold-soft); }
+
+/* ════════════════════════════════════════════════════════════════
+   Antique "adventure" theme — parchment map, fantasy type, gold trim
+   (rules below override the base styling above via source order)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Fantasy typography ── */
+.header-title,
+.panel-event-name,
+.panel-placeholder h3,
+.map-empty-state h3,
+.tour-event-name {
+  font-family: 'Cinzel', Georgia, 'Times New Roman', serif;
+}
+.panel-section-title,
+.filter-label,
+.tour-label,
+.timeline-label,
+.meta-label {
+  font-family: 'Cinzel', Georgia, serif;
+}
+.header-subtitle,
+.panel-icelandic-name,
+.map-disclaimer,
+.source-note {
+  font-family: 'IM Fell English', Georgia, serif;
+}
+
+/* ── Header ── */
+.header {
+  background:
+    linear-gradient(to bottom, rgba(201,164,76,0.06), rgba(0,0,0,0)),
+    var(--header-bg);
+  border-bottom: 2px solid var(--gold-soft);
+}
+.header-title {
+  color: var(--gold);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}
+.header-subtitle {
+  color: #bca878;
+  font-style: italic;
+  font-size: 0.82rem;
+  letter-spacing: 0.2px;
+}
+
+/* ── Map: aged parchment treatment ── */
+.map-wrap .leaflet-container {
+  background: #d8c6a0; /* parchment shows through while tiles load */
+}
+/* Sepia-tint only the map tiles, so markers keep their vivid colours. */
+.map-wrap .leaflet-tile-pane {
+  filter: sepia(0.5) saturate(0.78) brightness(1.04) contrast(1.04);
+}
+/* Subtle paper grain over the map. */
+.map-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 440;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* Vignette / aged edges. */
+.map-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 450;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(40,26,10,0.28) 100%);
+  box-shadow: inset 0 0 120px 30px rgba(40,26,10,0.32);
+}
+
+/* ── Markers: aged-paper rim, gold selection ring ── */
+.marker-icon {
+  border-color: var(--panel-bg);
+  box-shadow: 0 2px 6px rgba(30,18,6,0.55);
+}
+.marker-icon.selected {
+  box-shadow: 0 0 0 3px var(--panel-bg), 0 0 0 5px var(--gold), 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* ── Compass rose ── */
+.map-compass {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 92px;
+  height: 92px;
+  z-index: 600;
+  pointer-events: none;
+  color: var(--gold);
+  opacity: 0.92;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.45));
+}
+.map-compass svg { width: 100%; height: 100%; display: block; }
+.compass-ring { fill: rgba(243,233,211,0.32); stroke: var(--gold); stroke-width: 1.2; }
+.compass-tick { stroke: var(--gold-soft); stroke-width: 1; opacity: 0.65; }
+.compass-rose { stroke: rgba(23,18,12,0.45); stroke-width: 0.6; }
+.compass-ew { fill: var(--gold-soft); }
+.compass-ns { fill: var(--gold); }
+.compass-hub { fill: var(--header-bg); stroke: var(--gold); stroke-width: 1; }
+.compass-n {
+  fill: var(--header-bg);
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* ── Leaflet controls + attribution ── */
+.leaflet-bar { border: 1px solid var(--gold-soft); box-shadow: var(--shadow); }
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  background: var(--panel-bg);
+  color: var(--text);
+  border-bottom-color: var(--panel-border);
+}
+.leaflet-bar a:hover { background: var(--chip-bg); }
+.leaflet-control-attribution {
+  background: rgba(243,233,211,0.82) !important;
+  color: #5b4a30;
+}
+.leaflet-control-attribution a { color: var(--accent); }
+
+/* ── Map disclaimer ── */
+.map-disclaimer {
+  background: rgba(23,18,12,0.82);
+  color: #cdbb95;
+  border: 1px solid rgba(201,164,76,0.3);
+  font-style: italic;
+}
+
+/* ── Panel + section accents ── */
+.panel-section-title {
+  color: var(--accent);
+  letter-spacing: 0.8px;
+}
+
+/* ── Tour banner ── */
+.tour-banner {
+  background: #1c140d;
+  border-bottom: 1px solid var(--gold-soft);
+}
+.tour-label { color: var(--gold); }
+
+/* ── Timeline ── */
+.timeline-label { color: var(--gold-soft); }
+.timeline-dot-year { color: var(--timeline-text); }
+
+/* ── Compass on small screens ── */
+@media (max-width: 768px) {
+  .map-compass { width: 62px; height: 62px; top: 10px; right: 10px; }
+}

@@ -148,7 +148,7 @@ export default function App() {
         <div className="header-branding">
           <div className="header-title">⚔ Battle Map of Iceland</div>
           <div className="header-subtitle">
-            A simple interactive map of Iceland's messiest historical conflicts.
+            Sagas of blood, fire &amp; feud across the old North.
           </div>
         </div>
         <div className="header-controls">

@@ -9,7 +9,16 @@ interface FilterBarProps {
   onReset: () => void;
 }
 
-const EVENT_TYPES: EventType[] = ['battle', 'sea_battle', 'raid', 'burning', 'execution', 'other'];
+const EVENT_TYPES: EventType[] = [
+  'battle',
+  'sea_battle',
+  'raid',
+  'burning',
+  'massacre',
+  'execution',
+  'occupation',
+  'other',
+];
 const CONFIDENCES: Confidence[] = ['high', 'medium', 'low'];
 
 export function FilterBar({ filters, onChange, resultCount, active, onReset }: FilterBarProps) {

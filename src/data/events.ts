@@ -2,6 +2,250 @@ import { ConflictEvent } from '../types';
 
 export const events: ConflictEvent[] = [
   {
+    id: 'mahlidingavig',
+    name: 'Máhlíðingavíg',
+    icelandicName: 'Máhlíðingamál',
+    year: 1000,
+    dateText: 'Saga Age — date uncertain',
+    period: 'Saga Age / Icelandic Commonwealth',
+    type: 'battle',
+    locationName: 'Mávahlíð, Snæfellsnes (coordinates approximate — verify)',
+    coordinates: [64.88, -23.2],
+    factions: [
+      'Þórarinn svarti and his supporters',
+      'Þorbjörn digri and his supporters',
+    ],
+    keyPeople: ['Þórarinn svarti', 'Þorbjörn digri'],
+    winner: 'Þórarinn svarti\'s side',
+    casualtyEstimate: 'Þorbjörn digri and several others killed; details vary by saga source',
+    summary:
+      'A local feud from saga tradition that turned deadly around Mávahlíð on Snæfellsnes. Þórarinn svarti clashed with Þorbjörn digri, and the fight became one of those small-looking Icelandic disputes that spiraled into bloodshed.',
+    eli12:
+      'This is saga-age neighborhood violence. Two local power groups had a feud, people showed up armed, and Þorbjörn digri ended up dead. It is the kind of story where a personal insult can become a regional crisis.',
+    whyItHappened:
+      'The saga tradition presents it as a feud over honor, alliances, and local power. In early Iceland, there was no king or police force to settle these fights cleanly, so families and followers often settled them with weapons.',
+    whyItMatters:
+      'It shows the smaller-scale violence that made saga society so unstable. Not every conflict was a giant battle; many were local feuds that still shaped law cases, alliances, and family memory for generations.',
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Wikipedia: Eyrbyggja saga',
+        url: 'https://en.wikipedia.org/wiki/Eyrbyggja_saga',
+      },
+      {
+        title: 'Coordinates are approximate — verify against local place-name sources for Mávahlíð',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'njalsbrenna-1011',
+    name: 'Njálsbrenna',
+    icelandicName: 'Burning of Bergþórshvoll',
+    year: 1011,
+    dateText: 'c. 1011 according to Njáls saga',
+    period: 'Saga Age / Icelandic Commonwealth',
+    type: 'burning',
+    locationName: 'Bergþórshvoll, Vestur-Landeyjar (coordinates approximate — verify)',
+    coordinates: [63.68, -20.15],
+    factions: [
+      'Flosi Þórðarson and the burners',
+      'Njáll Þorgeirsson\'s household',
+    ],
+    keyPeople: [
+      'Njáll Þorgeirsson',
+      'Bergþóra',
+      'Skarphéðinn Njálsson',
+      'Kári Sölmundarson',
+      'Flosi Þórðarson',
+    ],
+    winner: 'Attackers, though the saga treats the victory as morally cursed',
+    casualtyEstimate: 'Around 11 killed in the burning, depending on source tradition',
+    summary:
+      'The most famous burning in Icelandic literature. Flosi Þórðarson and his allies surrounded Bergþórshvoll and burned Njáll, Bergþóra, and their household inside. Kári escaped, which meant the story was far from over.',
+    eli12:
+      'A group of enemies trapped a family inside their house and set it on fire. The wise old Njáll stayed inside with his wife. One survivor got away, and that survivor had revenge on his mind.',
+    whyItHappened:
+      'Njáls saga builds toward the burning through years of insults, lawsuits, revenge killings, and failed settlements. By the time Flosi acts, the feud has become too poisoned for normal law to calm it down.',
+    whyItMatters:
+      'Even if it is saga literature more than clean documentary history, Njálsbrenna is one of Iceland\'s defining conflict stories. It teaches how feud culture could turn legal arguments and family honor into catastrophe.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Njáls saga',
+        url: 'https://en.wikipedia.org/wiki/Nj%C3%A1ls_saga',
+      },
+      {
+        title: 'Icelandic Saga Database: Brennu-Njáls saga',
+        url: 'https://sagadb.org/brennu-njals_saga',
+      },
+      {
+        title: 'Coordinates are approximate — Bergþórshvoll marker should be verified locally',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'vidines-1208',
+    name: 'Battle of Víðines',
+    icelandicName: 'Víðinesbardagi',
+    year: 1208,
+    dateText: '1208',
+    period: 'Early Sturlung Age / Church vs Chieftains',
+    type: 'battle',
+    locationName: 'Víðines near Hólar in Hjaltadalur, Skagafjörður (coordinates approximate — verify)',
+    coordinates: [65.73, -19.11],
+    factions: [
+      'Secular chieftains: Kolbeinn Tumason, Arnór Tumason, Ásbirningar, with Svínfellingar support',
+      'Bishop Guðmundur Arason and his followers',
+    ],
+    keyPeople: ['Kolbeinn Tumason', 'Guðmundur Arason', 'Arnór Tumason'],
+    winner: 'Bishop Guðmundur\'s side / church followers',
+    casualtyEstimate: 'Around 10 killed, including Kolbeinn Tumason',
+    summary:
+      'A sharp early clash between church authority and secular chieftain power. Kolbeinn Tumason marched against Bishop Guðmundur Arason near Hólar, but the bishop\'s followers held out and Kolbeinn was killed.',
+    eli12:
+      'A powerful chieftain tried to force a stubborn bishop back under control. It went badly. Kolbeinn Tumason died, and the bishop\'s side walked away with a shocking win.',
+    whyItHappened:
+      'Guðmundur Arason pushed hard for church independence and protection for poor followers. Icelandic chieftains saw that as a threat to their control over people, courts, and money. Víðines was that argument turning into blades.',
+    whyItMatters:
+      'Kolbeinn Tumason is traditionally linked with the hymn "Heyr, himna smiður," so this battle sits at the weird intersection of politics, violence, and one of Iceland\'s most beloved religious poems.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Guðmundur Arason',
+        url: 'https://en.wikipedia.org/wiki/Gu%C3%B0mundur_Arason',
+      },
+      {
+        title: 'Wikipedia: Kolbeinn Tumason',
+        url: 'https://en.wikipedia.org/wiki/Kolbeinn_Tumason',
+      },
+      {
+        title: 'Coordinates are approximate — marker uses the Hólar/Víðines area',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'helgastadir-1220',
+    name: 'Helgastaðabardagi',
+    icelandicName: 'Helgastaðabardagi',
+    year: 1220,
+    dateText: 'August 29–30, 1220',
+    period: 'Age of the Sturlungs',
+    type: 'battle',
+    locationName: 'Helgastaðir in Reykjadalur, Northeast Iceland (coordinates approximate — verify)',
+    coordinates: [65.83, -17.36],
+    factions: [
+      'Followers of Bishop Guðmundur Arason',
+      'Forces of Sighvatur Sturluson and Arnór Tumason',
+    ],
+    keyPeople: ['Guðmundur Arason', 'Sighvatur Sturluson', 'Arnór Tumason'],
+    winner: 'Secular chieftain forces / negotiated surrender',
+    casualtyEstimate: 'Unclear; saga accounts focus more on the siege and surrender than a clean tally',
+    summary:
+      'A tiny churchyard siege with big Sturlung Age energy. Bishop Guðmundur\'s followers defended themselves at Helgastaðir, then fled into the church as the secular chieftain forces pressed them.',
+    eli12:
+      'Imagine a medieval standoff around a church. One side hides in the churchyard, the other side attacks, and everyone is trying to win without turning holy ground into a total disaster.',
+    whyItHappened:
+      'The long fight over Guðmundur Arason\'s authority kept dragging northern Iceland into violence. Chieftains wanted the bishop\'s armed followers broken up; the bishop\'s men saw themselves as defending a holy cause.',
+    whyItMatters:
+      'It is a great map event because it makes the church-versus-chieftain conflict feel physical: not abstract politics, but armed men crowding around a rural church and forcing a surrender.',
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Wikipedia: Guðmundur Arason',
+        url: 'https://en.wikipedia.org/wiki/Gu%C3%B0mundur_Arason',
+      },
+      {
+        title: 'Sturlunga saga reference context',
+        url: 'https://en.wikipedia.org/wiki/Sturlunga_saga',
+      },
+      {
+        title: 'Coordinates are approximate — verify the Helgastaðir/Reykjadalur site',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'grimseyjarfor-1222',
+    name: 'Grímseyjarför',
+    icelandicName: 'Grímseyjarför',
+    year: 1222,
+    dateText: '1222',
+    period: 'Age of the Sturlungs',
+    type: 'raid',
+    locationName: 'Grímsey island, North Iceland',
+    coordinates: [66.54, -18.0],
+    factions: [
+      'Sighvatur Sturluson and Sturla Sighvatsson',
+      'Bishop Guðmundur Arason\'s followers',
+    ],
+    keyPeople: ['Sighvatur Sturluson', 'Sturla Sighvatsson', 'Guðmundur Arason'],
+    winner: 'Sighvatur Sturluson and Sturla Sighvatsson',
+    casualtyEstimate: 'Around 30–40 killed, depending on source wording',
+    summary:
+      'A revenge expedition to Grímsey that turned Guðmundur the Good\'s church conflict into a bloodbath. Sighvatur Sturluson and his son Sturla attacked the bishop\'s followers on the island and killed dozens.',
+    eli12:
+      'The bishop\'s people were hiding out on an island. Their enemies sailed over, attacked them, and killed a lot of them. This was not a polite political disagreement anymore.',
+    whyItHappened:
+      'After years of conflict around Bishop Guðmundur, his followers were seen by chieftains as a dangerous armed faction. Sighvatur and Sturla wanted to crush that problem decisively.',
+    whyItMatters:
+      'Grímseyjarför shows how quickly religious politics became clan violence. It also foreshadows the brutal style of the Sturlung Age: alliances, revenge, sudden raids, and very little mercy.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Guðmundur Arason',
+        url: 'https://en.wikipedia.org/wiki/Gu%C3%B0mundur_Arason',
+      },
+      {
+        title: 'Wikipedia: Sturla Sighvatsson',
+        url: 'https://en.wikipedia.org/wiki/Sturla_Sighvatsson',
+      },
+    ],
+  },
+  {
+    id: 'baejarbardagi-1237',
+    name: 'Bæjarbardagi',
+    icelandicName: 'Bæjarbardagi',
+    year: 1237,
+    dateText: 'April 28, 1237',
+    period: 'Age of the Sturlungs',
+    type: 'battle',
+    locationName: 'Bær in Bæjarsveit, Borgarfjörður (coordinates approximate — verify)',
+    coordinates: [64.6224, -21.5499],
+    factions: [
+      'Sturla Sighvatsson / Sturlungar',
+      'Snorri Sturluson\'s interests, Þorleifur Þórðarson, Mýramenn and Garðamenn',
+    ],
+    keyPeople: ['Sturla Sighvatsson', 'Snorri Sturluson', 'Þorleifur Þórðarson'],
+    winner: 'Sturla Sighvatsson / Sturlungar',
+    casualtyEstimate: 'About 30+ killed',
+    summary:
+      'A Sturlung family power struggle with real "Game of Thrones Iceland" flavor. Sturla Sighvatsson attacked forces tied to Snorri Sturluson\'s interests at Bær and came out on top.',
+    eli12:
+      'This is a family power fight, but with armies. Sturla wanted more control. Snorri was politically involved but did not personally stand in the front line. Sturla won and a lot of men died.',
+    whyItHappened:
+      'Sturla was aggressively expanding Sturlung power, while Snorri\'s network still mattered in the west. Their rivalry mixed family ambition, property, law-court influence, and raw intimidation.',
+    whyItMatters:
+      'Bæjarbardagi shows the Sturlung Age eating its own family tree. The conflict was not just clan against clan; it was often relatives, in-laws, and former allies turning on each other.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Sturla Sighvatsson',
+        url: 'https://en.wikipedia.org/wiki/Sturla_Sighvatsson',
+      },
+      {
+        title: 'Wikipedia: Snorri Sturluson',
+        url: 'https://en.wikipedia.org/wiki/Snorri_Sturluson',
+      },
+      {
+        title: 'Coordinates are approximate — marker uses Bær/Bæjarsveit area',
+        url: '',
+      },
+    ],
+  },
+  {
     id: 'orlygsstadir-1238',
     name: 'Battle of Örlygsstaðir',
     icelandicName: 'Örlygsstaðabardagi',
@@ -35,6 +279,43 @@ export const events: ConflictEvent[] = [
       {
         title: 'Íslendinga saga (Sturlungasaga)',
         url: 'https://en.wikipedia.org/wiki/Sturlunga_saga',
+      },
+    ],
+  },
+  {
+    id: 'skalholtsbardagi-1242',
+    name: 'Skálholtsbardagi',
+    icelandicName: 'Skálholtsbardagi',
+    year: 1242,
+    dateText: 'January 1242',
+    period: 'Age of the Sturlungs',
+    type: 'battle',
+    locationName: 'Skálholt, South Iceland',
+    coordinates: [64.1265, -20.5242],
+    factions: [
+      'Órækja Snorrason / Sturlungar',
+      'Gissur Þorvaldsson / Haukdælir',
+    ],
+    keyPeople: ['Órækja Snorrason', 'Gissur Þorvaldsson'],
+    winner: 'Gissur Þorvaldsson / Haukdælir',
+    casualtyEstimate: 'Low; some accounts describe only 1 killed despite many armed men',
+    summary:
+      'A surprisingly large confrontation at Skálholt, one of Iceland\'s most important religious and political centers. Órækja Snorrason and Gissur Þorvaldsson faced off, but the bloodshed was much smaller than the crowd suggested.',
+    eli12:
+      'A lot of armed men gathered at one of Iceland\'s most important church centers. It looked like it could become a disaster, but compared with other Sturlung Age fights, the death toll stayed oddly low.',
+    whyItHappened:
+      'After Snorri Sturluson\'s death, the Sturlung world was full of revenge claims and power grabs. Órækja Snorrason challenged Gissur Þorvaldsson, who was one of the strongest men in the country.',
+    whyItMatters:
+      'Skálholtsbardagi shows how even holy and administrative centers could become armed political stages. In the Sturlung Age, nowhere important was safely outside the feud system.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Órækja Snorrason',
+        url: 'https://en.wikipedia.org/wiki/%C3%93r%C3%A6kja_Snorrason',
+      },
+      {
+        title: 'Wikipedia: Gissur Þorvaldsson',
+        url: 'https://en.wikipedia.org/wiki/Gissur_%C3%9Eorvaldsson',
       },
     ],
   },
@@ -138,6 +419,126 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'thverarfundur-1255',
+    name: 'Þverárfundur',
+    icelandicName: 'Þverárbardagi',
+    year: 1255,
+    dateText: 'July 19, 1255',
+    period: 'Age of the Sturlungs',
+    type: 'battle',
+    locationName: 'Þveráreyrar in Eyjafjörður (coordinates approximate — verify)',
+    coordinates: [65.72, -18.1],
+    factions: [
+      'Sturlungar and Svínfellingar',
+      'Hvammverjar and Seldælir / allies of Gissur\'s faction',
+    ],
+    keyPeople: [
+      'Eyjólfur ofsi Þorsteinsson',
+      'Hrafn Oddsson',
+      'Þorvarður Þórarinsson',
+      'Þorgils skarði Böðvarsson',
+    ],
+    winner: 'Hvammverjar and Seldælir / anti-Sturlung coalition',
+    casualtyEstimate: 'Around 15–17 killed, including Eyjólfur ofsi',
+    summary:
+      'A nasty northern battle in the power vacuum after Gissur Þorvaldsson left for Norway. Eyjólfur ofsi and his allies were caught in the grinder of revenge politics, and Eyjólfur was killed.',
+    eli12:
+      'The big boss was away, so everyone else started fighting over the leftovers. Two factions met in Eyjafjörður, the fighting got ugly, and one of the major troublemakers died.',
+    whyItHappened:
+      'The Sturlung Age was collapsing into faction math: who owed revenge, who had switched sides, and who could grab power before Gissur returned. Þverárfundur was one of those calculations turning violent.',
+    whyItMatters:
+      'It shows how unstable Iceland remained even after the biggest battles. Killing one powerful man did not solve the system; it usually created the next feud.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Sturlunga saga',
+        url: 'https://en.wikipedia.org/wiki/Sturlunga_saga',
+      },
+      {
+        title: 'Wikipedia: Hrafn Oddsson',
+        url: 'https://en.wikipedia.org/wiki/Hrafn_Oddsson',
+      },
+      {
+        title: 'Coordinates are approximate — verify Þveráreyrar in Eyjafjörður',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'grundarbardagi-1362',
+    name: 'Grundarbardagi',
+    icelandicName: 'Grundarbardagi',
+    year: 1362,
+    dateText: 'July 8, 1362',
+    period: 'Norwegian Rule / Post-Commonwealth Iceland',
+    type: 'battle',
+    locationName: 'Grund in Eyjafjörður (coordinates approximate — verify)',
+    coordinates: [65.52, -18.15],
+    factions: [
+      'Smiður Andrésson, royal official / hirðstjóri',
+      'Eyfirðingar / local Icelandic faction',
+    ],
+    keyPeople: ['Smiður Andrésson', 'Jón Guttormsson'],
+    winner: 'Eyfirðingar',
+    casualtyEstimate: 'Smiður Andrésson, Jón Guttormsson, and others killed',
+    summary:
+      'Proof that Icelandic conflict did not magically stop after the Commonwealth ended. At Grund in Eyjafjörður, local Icelandic power pushed violently back against Smiður Andrésson, a royal official.',
+    eli12:
+      'Iceland was under Norway now, but people still fought. A royal official got into a deadly clash with locals in Eyjafjörður, and the locals won.',
+    whyItHappened:
+      'Royal government added a new layer to Icelandic politics, but old local power did not vanish. When officials, local elites, and personal enemies collided, violence was still very much on the table.',
+    whyItMatters:
+      'Grundarbardagi widens the map beyond the Sturlung Age. It shows that Norwegian rule changed the political frame, but Icelandic elites could still settle disputes with force.',
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: History of Iceland',
+        url: 'https://en.wikipedia.org/wiki/History_of_Iceland',
+      },
+      {
+        title: 'Coordinates are approximate — verify the Grund/Eyjafjörður marker',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'sveinsstadir-1522',
+    name: 'Sveinsstaðafundur',
+    icelandicName: 'Sveinsstaðareið',
+    year: 1522,
+    dateText: '1522',
+    period: 'Late Catholic Iceland / Pre-Reformation',
+    type: 'battle',
+    locationName: 'Sveinsstaðir in Húnaþing (coordinates approximate — verify)',
+    coordinates: [65.56, -20.33],
+    factions: [
+      'Jón Arason, then bishop-elect / northern church faction',
+      'Teitur Þorleifsson ríki and opposing local powers',
+    ],
+    keyPeople: ['Jón Arason', 'Teitur Þorleifsson'],
+    winner: 'Jón Arason\'s faction, according to later accounts',
+    casualtyEstimate: 'Unclear; source accounts emphasize the armed confrontation more than a casualty count',
+    summary:
+      'A pre-Reformation power clash that shows Jón Arason was already a political fighter long before his final showdown with Danish Lutheran power. Sveinsstaðir was church politics with horses, weapons, and hard men.',
+    eli12:
+      'Before Jón Arason became the famous last Catholic bishop, he was already fighting local power battles. This was one of the moments where church leadership looked a lot like clan politics.',
+    whyItHappened:
+      'Northern Icelandic church offices were valuable, political, and tied to family power. Jón Arason and Teitur Þorleifsson stood on opposite sides of that struggle.',
+    whyItMatters:
+      'It works as a lead-up to the 1550 Reformation conflict. Jón Arason did not suddenly become political at the end of his life; he had been navigating armed Icelandic power politics for decades.',
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Wikipedia: Jón Arason',
+        url: 'https://en.wikipedia.org/wiki/J%C3%B3n_Arason',
+      },
+      {
+        title: 'Coordinates, winner, and casualty details need verification against Icelandic local histories',
+        url: '',
+      },
+    ],
+  },
+  {
     id: 'reformation-1550',
     name: 'Reformation Conflict & Execution of Jón Arason',
     icelandicName: 'Siðaskiptin',
@@ -171,6 +572,47 @@ export const events: ConflictEvent[] = [
       },
       {
         title: '⚠️ Coordinates are approximate — verify against historical sources',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'spanverjavigin-1615',
+    name: 'Slaying of the Basques',
+    icelandicName: 'Spánverjavígin',
+    year: 1615,
+    dateText: 'Autumn 1615',
+    period: 'Danish Rule',
+    type: 'massacre',
+    locationName: 'Westfjords — Ísafjarðardjúp / Æðey / Sandeyri area (representative marker; coordinates approximate — verify)',
+    coordinates: [66.09, -22.66],
+    factions: [
+      'Stranded Basque whalers',
+      'Icelandic local authorities and armed locals under Ari Magnússon of Ögur',
+    ],
+    keyPeople: ['Ari Magnússon', 'Martín de Villafranca', 'Jón Guðmundsson lærði'],
+    winner: 'Icelandic local authorities',
+    casualtyEstimate: 'Around 31–32 Basques killed',
+    summary:
+      'One of the darkest and strangest events in Icelandic history. Basque whalers were shipwrecked in the Westfjords, survival turned into conflict with locals, and Icelandic authorities ordered killings across the Ísafjarðardjúp area.',
+    eli12:
+      'A group of foreign whalers got stranded after their ships were wrecked. Things got tense with local Icelanders, and instead of solving it peacefully, armed locals hunted and killed dozens of them.',
+    whyItHappened:
+      'The Basques were far from home, short on options, and trying to survive after shipwrecks. Local officials saw them as dangerous outsiders and used harsh legal authority to justify violence.',
+    whyItMatters:
+      'Spánverjavígin is remembered partly because Jón Guðmundsson lærði condemned the killings. It is a brutal warning that fear, hunger, and official power can turn a disaster into a massacre.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Slaying of the Basques',
+        url: 'https://en.wikipedia.org/wiki/Slaying_of_the_Basques',
+      },
+      {
+        title: 'Wikipedia: Jón Guðmundsson lærði',
+        url: 'https://en.wikipedia.org/wiki/J%C3%B3n_Gu%C3%B0mundsson_l%C3%A6r%C3%B0i',
+      },
+      {
+        title: 'Representative marker only — killings happened in multiple Westfjords locations',
         url: '',
       },
     ],
