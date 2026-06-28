@@ -1,5 +1,5 @@
 import { EventType, Confidence, FilterState } from '../types';
-import { EVENT_CONFIG, CONFIDENCE_CONFIG } from '../utils/eventConfig';
+import { EVENT_CONFIG, CONFIDENCE_CONFIG, Era } from '../utils/eventConfig';
 
 interface FilterBarProps {
   filters: FilterState;
@@ -7,6 +7,9 @@ interface FilterBarProps {
   resultCount: number;
   active: boolean;
   onReset: () => void;
+  eras: Era[];
+  activeEraId: string | null;
+  onSelectEra: (era: Era) => void;
 }
 
 const EVENT_TYPES: EventType[] = [
@@ -21,12 +24,39 @@ const EVENT_TYPES: EventType[] = [
 ];
 const CONFIDENCES: Confidence[] = ['high', 'medium', 'low'];
 
-export function FilterBar({ filters, onChange, resultCount, active, onReset }: FilterBarProps) {
+export function FilterBar({
+  filters,
+  onChange,
+  resultCount,
+  active,
+  onReset,
+  eras,
+  activeEraId,
+  onSelectEra,
+}: FilterBarProps) {
   const setType = (type: EventType | 'all') => onChange({ ...filters, type });
   const setConf = (confidence: Confidence | 'all') => onChange({ ...filters, confidence });
 
   return (
     <div className="filter-bar">
+      {/* Era presets: snap the timeline to a period (Sturlung Age also reveals
+          the clan-seats layer). */}
+      <span className="filter-label">Era</span>
+      {eras.map((era) => (
+        <button
+          key={era.id}
+          className={`chip${activeEraId === era.id ? ' active' : ''}`}
+          onClick={() => onSelectEra(era)}
+          aria-pressed={activeEraId === era.id}
+          title={era.hint}
+        >
+          {era.showClans && <span className="chip-symbol">⚑</span>}
+          {era.label}
+        </button>
+      ))}
+
+      <div className="filter-divider" />
+
       {/* Type filters */}
       <span className="filter-label">Type</span>
       <button

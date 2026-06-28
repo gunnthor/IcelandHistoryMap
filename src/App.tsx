@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { ConflictEvent, FilterState } from './types';
 import { events as allEvents } from './data/events';
-import { getYearBounds } from './utils/eventConfig';
+import { getYearBounds, ERAS, clampRange, Era } from './utils/eventConfig';
 import { BattleMap } from './components/BattleMap';
 import { EventPanel, MobileDrawer } from './components/EventPanel';
 import { FilterBar } from './components/FilterBar';
@@ -26,8 +26,24 @@ export default function App() {
   const [selectedEvent, setSelectedEvent] = useState<ConflictEvent | null>(null);
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showClans, setShowClans] = useState(false);
   const [tourActive, setTourActive] = useState(false);
   const [tourStep, setTourStep] = useState(0);
+
+  // Era presets, with ranges clamped to the years we actually have data for.
+  const eras = useMemo(
+    () => ERAS.map((e) => ({ ...e, range: clampRange(e.range, MIN_YEAR, MAX_YEAR) })),
+    [],
+  );
+
+  // The era whose range exactly matches the current year slider, if any. Drives
+  // which era chip shows as active; null once the user nudges the slider away.
+  const activeEraId = useMemo(() => {
+    const match = eras.find(
+      (e) => e.range[0] === filters.yearRange[0] && e.range[1] === filters.yearRange[1],
+    );
+    return match?.id ?? null;
+  }, [eras, filters.yearRange]);
 
   const filteredEvents = useMemo(() => {
     return allEvents.filter((event) => {
@@ -63,7 +79,22 @@ export default function App() {
   const resetFilters = useCallback(() => {
     setFilters(INITIAL_FILTERS);
     setSearchQuery('');
+    setShowClans(false); // leaving any era hides the clan-seats layer
   }, []);
+
+  // Pick an era: snap the timeline to its range and reveal the clan-seats layer
+  // for the Sturlung Age (and only then). Re-clicking the active era clears it.
+  const selectEra = useCallback(
+    (era: Era) => {
+      if (activeEraId === era.id) {
+        resetFilters();
+        return;
+      }
+      setFilters((f) => ({ ...f, yearRange: era.range }));
+      setShowClans(!!era.showClans);
+    },
+    [activeEraId, resetFilters],
+  );
 
   const startTour = () => {
     setTourActive(true);
@@ -72,6 +103,7 @@ export default function App() {
     // Reset filters so every tour stop is visible on the map.
     setFilters(INITIAL_FILTERS);
     setSearchQuery('');
+    setShowClans(false);
   };
 
   const exitTour = () => {
@@ -179,6 +211,9 @@ export default function App() {
         resultCount={filteredEvents.length}
         active={filtersActive}
         onReset={resetFilters}
+        eras={eras}
+        activeEraId={activeEraId}
+        onSelectEra={selectEra}
       />
 
       {/* Main: map + desktop panel */}
@@ -188,6 +223,8 @@ export default function App() {
           selectedEvent={selectedEvent}
           onSelectEvent={handleSelectEvent}
           onResetFilters={resetFilters}
+          showClans={showClans}
+          onShowClansChange={setShowClans}
         />
         <EventPanel event={selectedEvent} onClose={handleCloseEvent} />
       </div>

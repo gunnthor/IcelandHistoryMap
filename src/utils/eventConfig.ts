@@ -103,3 +103,58 @@ export function getYearBounds(events: { year: number }[]): [number, number] {
   const years = events.map((e) => e.year);
   return [Math.min(...years), Math.max(...years)];
 }
+
+// ── Historical eras ──
+// One-click presets that snap the timeline to a period. The Sturlung Age is the
+// only era for which the clan power-centres existed, so picking it auto-shows
+// the clan-seats layer (and leaving it hides them again).
+export interface Era {
+  id: string;
+  label: string;
+  range: [number, number]; // inclusive [from, to]; clamped to data bounds
+  showClans?: boolean; // reveal the clan-seats layer while this era is active
+  hint: string; // tooltip
+}
+
+export const ERAS: Era[] = [
+  {
+    id: 'saga',
+    label: 'Saga Age',
+    range: [870, 1130],
+    hint: 'Settlement and the classic saga feuds (c. 870–1130)',
+  },
+  {
+    id: 'sturlung',
+    label: 'Sturlung Age',
+    range: [1200, 1264],
+    showClans: true,
+    hint: 'Civil war of the great chieftain families (c. 1220–1264) — clan seats shown',
+  },
+  {
+    id: 'late-medieval',
+    label: 'Late Medieval',
+    range: [1264, 1540],
+    hint: 'Norwegian and early Danish rule (1264–1540)',
+  },
+  {
+    id: 'danish',
+    label: 'Danish Rule',
+    range: [1540, 1918],
+    hint: 'Reformation to sovereignty (1540–1918)',
+  },
+  {
+    id: 'modern',
+    label: 'Modern',
+    range: [1918, 2100],
+    hint: 'Republic and the World Wars (1918 onward)',
+  },
+];
+
+/** Clamp an era's range to the available data bounds. */
+export function clampRange(
+  range: [number, number],
+  min: number,
+  max: number,
+): [number, number] {
+  return [Math.max(range[0], min), Math.min(range[1], max)];
+}

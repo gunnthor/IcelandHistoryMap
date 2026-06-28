@@ -254,6 +254,9 @@ interface BattleMapProps {
   selectedEvent: ConflictEvent | null;
   onSelectEvent: (e: ConflictEvent) => void;
   onResetFilters: () => void;
+  // Clan-seats layer is controlled by App so era presets can reveal it too.
+  showClans: boolean;
+  onShowClansChange: (show: boolean) => void;
 }
 
 export function BattleMap({
@@ -261,16 +264,18 @@ export function BattleMap({
   selectedEvent,
   onSelectEvent,
   onResetFilters,
+  showClans,
+  onShowClansChange,
 }: BattleMapProps) {
-  const [showClans, setShowClans] = useState(false);
   const [highlightClan, setHighlightClan] = useState<ClanId | null>(null);
 
-  const toggleClanLayer = () => {
-    setShowClans((v) => {
-      if (v) setHighlightClan(null); // turning the layer off clears any highlight
-      return !v;
-    });
-  };
+  // Whenever the layer goes away (manual toggle or leaving the Sturlung era),
+  // drop any clan highlight so we don't draw lines for a hidden layer.
+  useEffect(() => {
+    if (!showClans) setHighlightClan(null);
+  }, [showClans]);
+
+  const toggleClanLayer = () => onShowClansChange(!showClans);
 
   return (
     <div className="map-wrap">
