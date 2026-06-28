@@ -2,6 +2,47 @@ import { ConflictEvent } from '../types';
 
 export const events: ConflictEvent[] = [
   {
+    id: 'ingolfur-vestmannaeyjar-thralls',
+    name: 'Ingólfur Slays the Irish Thralls',
+    icelandicName: 'Víg Vestmanna í Eyjum',
+    year: 875,
+    dateText: 'Settlement era — date traditional (c. 875)',
+    period: 'Settlement Age / Landnám',
+    type: 'massacre',
+    locationName: 'Vestmannaeyjar (Heimaey), off the south coast (coordinates approximate)',
+    coordinates: [63.435, -20.27],
+    factions: [
+      'Ingólfur Arnarson, first settler of Iceland',
+      'Hjörleifur\'s Irish thralls, led by Dufþakur',
+    ],
+    keyPeople: ['Ingólfur Arnarson', 'Hjörleifur Hróðmarsson', 'Dufþakur'],
+    winner: 'Ingólfur — every thrall killed or driven off the cliffs',
+    casualtyEstimate: 'Hjörleifur and his men killed first; then the whole band of thralls slain',
+    summary:
+      'According to Landnámabók, Hjörleifur\'s Irish thralls murdered him at Hjörleifshöfði and fled with the women to the islands offshore. His foster-brother Ingólfur tracked them down and killed them all — Dufþakur leapt to his death off the cliff later called Dufþekja. The islands were named Vestmannaeyjar, the "Isles of the West Men", after the Irish thralls.',
+    eli12:
+      'Iceland\'s first settler had a foster-brother whose Irish slaves killed him and ran to some nearby islands. Ingólfur hunted them down and killed them all. The islands are still called the "Westman Islands" after those slaves.',
+    whyItHappened:
+      'Hjörleifur\'s thralls were enslaved Irish captives who wanted their freedom; they staged his death and fled. In a society built on kinship and revenge, Ingólfur was bound to avenge his foster-brother.',
+    whyItMatters:
+      'It is the founding-era story behind the name Vestmannaeyjar and a vivid reminder that Norse settlement leaned on enslaved Irish people. The tale is from Landnámabók, so treat it as tradition rather than documented fact.',
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Wikipedia: Vestmannaeyjar',
+        url: 'https://en.wikipedia.org/wiki/Vestmannaeyjar',
+      },
+      {
+        title: 'Landnámabók (Sturlubók) — full text',
+        url: 'https://www.snerpa.is/net/snorri/landnama.htm',
+      },
+      {
+        title: 'Legendary settlement-era event — marker uses Heimaey; the exact site is uncertain',
+        url: '',
+      },
+    ],
+  },
+  {
     id: 'hrafnkell-einar-freyfaxi',
     name: 'Hrafnkell Kills Einar',
     icelandicName: 'Vígs Einars í Hrafnkels sögu',
@@ -1151,6 +1192,47 @@ export const events: ConflictEvent[] = [
       {
         title: 'Wikipedia: Jörundarhundadagarnir',
         url: 'https://is.wikipedia.org/wiki/J%C3%B6rundarhundadagarnir',
+      },
+    ],
+  },
+  {
+    id: 'dyrafjordur-royalist-1899',
+    name: 'Hannes Hafstein vs. the Trawler Royalist',
+    icelandicName: 'Dýrafjarðarslysið / Royalist-málið',
+    year: 1899,
+    dateText: '10 October 1899',
+    period: 'Danish Rule / Trawler Disputes',
+    type: 'sea_battle',
+    locationName: 'Dýrafjörður, Westfjords (off Þingeyri; coordinates approximate — verify)',
+    coordinates: [65.92, -23.62],
+    factions: [
+      'Hannes Hafstein, sheriff of Ísafjarðarsýsla, and his boat crew',
+      'Crew of the British trawler Royalist',
+    ],
+    keyPeople: ['Hannes Hafstein', 'Crew of the Royalist'],
+    winner: 'The trawler escaped; three of the sheriff\'s men drowned',
+    casualtyEstimate: 'Three Icelanders drowned (Jóhannes, Jón Þórðarson and Guðmundur Jónsson); the Royalist got away',
+    summary:
+      'Sheriff Hannes Hafstein rowed out to arrest the British trawler Royalist for fishing illegally inside Dýrafjörður. The trawler resisted and ran, the open boat swamped in the wake, and three of his men drowned. Hannes barely survived.',
+    eli12:
+      'A local lawman tried to arrest an English fishing ship that was stealing fish too close to shore. The ship would not stop, the little rowboat tipped over, and three of his men drowned. He nearly died too.',
+    whyItHappened:
+      'British steam trawlers were dragging the fjords for fish faster than Icelanders could, often inside the protected coastal waters. Denmark policed Iceland only with a summer gunboat, so once it left, local officials like Hannes had almost no way to stop them.',
+    whyItMatters:
+      'The disaster became a national symbol of how defenceless Iceland was in its own waters. It pushed for year-round coastal patrols (the Falk) and is an early chapter in the long fight over fishing limits that later became the Cod Wars.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Hannes Hafstein',
+        url: 'https://is.wikipedia.org/wiki/Hannes_Hafstein',
+      },
+      {
+        title: 'Stjórnarráðið: Fyrsti ráðherrann (Hannes Hafstein)',
+        url: 'https://www.stjornarradid.is/rikisstjorn/sogulegt-efni/heimastjorn-1904-1918/fyrsti-radherrann/',
+      },
+      {
+        title: 'Exact spot in Dýrafjörður is approximate — marker uses the outer fjord off Þingeyri',
+        url: '',
       },
     ],
   },
