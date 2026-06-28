@@ -58,6 +58,20 @@ export const EVENT_CONFIG: Record<EventType, TypeConfig> = {
     bgColor: '#d5f5e3',
     borderColor: '#27ae60',
   },
+  eruption: {
+    label: 'Eruption',
+    symbol: '🌋',
+    color: '#a8341a',
+    bgColor: '#fbe0d3',
+    borderColor: '#c0560f',
+  },
+  plague: {
+    label: 'Plague',
+    symbol: '🦠',
+    color: '#4a5d23',
+    bgColor: '#e7edd6',
+    borderColor: '#6b8e23',
+  },
   other: {
     label: 'Other',
     symbol: '?',

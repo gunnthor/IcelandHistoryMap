@@ -1159,6 +1159,152 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'storabola-1707',
+    name: 'The Great Smallpox',
+    icelandicName: 'Stórabóla',
+    year: 1707,
+    dateText: '1707–1709',
+    period: 'Danish Rule / Plague & Famine',
+    type: 'plague',
+    locationName: 'Nationwide — representative marker at Skálholt',
+    coordinates: [64.1224, -20.5234],
+    factions: [
+      'The people of Iceland against the smallpox epidemic (Stórabóla)',
+    ],
+    keyPeople: [],
+    winner: 'No winner — roughly a third of all Icelanders died',
+    casualtyEstimate: 'About 18,000 dead — close to one third of the population of ~50,000',
+    summary:
+      'A smallpox ship reached Iceland in 1707 and the disease tore through an island with no immunity. Over two years it killed around 18,000 people — perhaps a third of everyone alive in Iceland. Whole farms and families simply emptied.',
+    eli12:
+      'A sickness called smallpox arrived by ship. Icelanders had never been exposed to it, so they had no defence, and about one in every three people died within two years. It was one of the deadliest things ever to happen to the country.',
+    whyItHappened:
+      'Iceland was isolated, so its people rarely met smallpox and built up no immunity. When an infected person landed in 1707, the virus spread unchecked through a population that had no resistance and no real medicine.',
+    whyItMatters:
+      'It is not a battle, but it reshaped the country more than any war could — collapsing the workforce, emptying farms, and deepening the poverty and dependence that defined 18th-century Iceland under Danish rule.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Stórabóla',
+        url: 'https://is.wikipedia.org/wiki/St%C3%B3rab%C3%B3la',
+      },
+      {
+        title: 'Nationwide epidemic — marker uses Skálholt as a representative point',
+        url: '',
+      },
+    ],
+  },
+  {
+    id: 'drekkingarhylur-storidomur',
+    name: 'The Drowning Pool of Þingvellir',
+    icelandicName: 'Drekkingarhylur / Stóridómur',
+    year: 1749,
+    dateText: '1618–1749 (last drowning 1749)',
+    period: 'Danish Rule / Stóridómur',
+    type: 'execution',
+    locationName: 'Drekkingarhylur, in the Öxará at Þingvellir',
+    coordinates: [64.2558, -21.129],
+    factions: [
+      'The Stóridómur moral code and the church-state courts',
+      'Women and men condemned for "moral crimes"',
+    ],
+    keyPeople: [],
+    winner: undefined,
+    casualtyEstimate: 'At least 18 women drowned here between 1618 and 1749; men were beheaded for the same offences',
+    summary:
+      'Under the harsh moral code Stóridómur, Icelanders found guilty of adultery, incest or having children out of wedlock could be put to death. Women were sewn into a sack and held under the water of this pool at Þingvellir until they drowned; men were beheaded. The last woman was drowned here in 1749.',
+    eli12:
+      'For a long time, Iceland had brutally strict laws about sex and family. People who broke them could be executed — women were drowned in this pool at Þingvellir and men were beheaded. The last drowning happened in 1749.',
+    whyItHappened:
+      'After the Reformation, church and crown enforced morality through the 1564 Stóridómur code. Sex outside marriage and especially incest were treated as capital crimes, and Þingvellir — the old assembly site — became the place of execution.',
+    whyItMatters:
+      'It is the 18th century\'s quiet, institutional bloodshed: not a war but the state itself killing its own people for private sins. Drekkingarhylur is now one of the most sombre spots at Þingvellir.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Stóridómur',
+        url: 'https://is.wikipedia.org/wiki/St%C3%B3rid%C3%B3mur',
+      },
+      {
+        title: 'Wikipedia: Drekkingarhylur',
+        url: 'https://is.wikipedia.org/wiki/Drekkingarhylur',
+      },
+    ],
+  },
+  {
+    id: 'skuli-innrettingar-monopoly',
+    name: 'Skúli Magnússon vs. the Trade Monopoly',
+    icelandicName: 'Innréttingarnar og einokunarverslunin',
+    year: 1752,
+    dateText: '1750s (Innréttingar founded 1752)',
+    period: 'Danish Rule / Trade Monopoly',
+    type: 'other',
+    locationName: 'Reykjavík (Aðalstræti — the Innréttingar workshops)',
+    coordinates: [64.1475, -21.9418],
+    factions: [
+      'Skúli Magnússon and the Innréttingar enterprise',
+      'The Danish trade monopoly and its merchants',
+    ],
+    keyPeople: ['Skúli Magnússon', 'King Frederik V'],
+    winner: 'A draw in his lifetime — the monopoly lasted to 1787, but Reykjavík was born',
+    casualtyEstimate: 'No bloodshed — an economic and legal war, fought in courtrooms and ledgers',
+    summary:
+      'Skúli Magnússon, Iceland\'s first native land-steward, declared war on the corrupt Danish trade monopoly — suing merchants for selling mouldy flour and bad iron above the legal price. To break their grip he founded the Innréttingar, a wool-and-fisheries enterprise at Reykjavík, which grew into the modern town.',
+    eli12:
+      'Denmark forced Icelanders to trade only with certain merchants, who cheated them with rotten food and high prices. Skúli Magnússon fought back — he took the merchants to court and started Iceland\'s first big company. That company is why Reykjavík became a town.',
+    whyItHappened:
+      'The Danish monopoly (from 1602) left Icelanders at the mercy of a handful of licensed merchants. Skúli, having seen the cheating from the inside as a young clerk, used his official position to challenge it and build a homegrown alternative.',
+    whyItMatters:
+      'It is a conflict fought with lawsuits and looms instead of swords, and it founded Reykjavík. Skúli "fógeti" became a national hero — the man who started Iceland\'s long climb out of monopoly dependence.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Skúli Magnússon',
+        url: 'https://en.wikipedia.org/wiki/Sk%C3%BAli_Magn%C3%BAsson',
+      },
+      {
+        title: 'Wikipedia: Innréttingarnar',
+        url: 'https://is.wikipedia.org/wiki/Innr%C3%A9ttingarnar',
+      },
+    ],
+  },
+  {
+    id: 'modunhardindin-laki-1783',
+    name: 'The Laki Eruption & the Haze Famine',
+    icelandicName: 'Skaftáreldar / Móðuharðindin',
+    year: 1783,
+    dateText: '1783–1785',
+    period: 'Danish Rule / Plague & Famine',
+    type: 'eruption',
+    locationName: 'Lakagígar (Laki craters), Síða highlands',
+    coordinates: [64.0667, -18.2333],
+    factions: [
+      'Iceland\'s farms and people against the Laki eruption and the famine it brought',
+    ],
+    keyPeople: ['Jón Steingrímsson'],
+    winner: 'No winner — roughly a fifth of all Icelanders died',
+    casualtyEstimate: 'About 9,000–10,000 dead (~20% of the population); the majority of the livestock killed by fluorine poisoning',
+    summary:
+      'In June 1783 the Laki fissure tore open and erupted for eight months, blanketing Iceland in a poisonous haze. Fluorine and sulphur killed most of the livestock, and the famine that followed — the "Haze Hardships" — killed around a fifth of all Icelanders. At Kirkjubæjarklaustur, the priest Jón Steingrímsson preached the famous "fire sermon" as the lava advanced.',
+    eli12:
+      'A long crack in the ground erupted for months and poisoned the air, grass and animals. So many sheep, cows and horses died that people starved, and about one in five Icelanders died too. A brave priest gave a sermon while the lava came — and it stopped near his church.',
+    whyItHappened:
+      'The Laki fissure released enormous amounts of fluorine and sulphur dioxide. The fluorine poisoned the grass and the animals that ate it, and the loss of livestock in a subsistence farming country meant mass starvation over the next two winters.',
+    whyItMatters:
+      'It is the defining catastrophe of 18th-century Iceland — so devastating that Denmark briefly considered evacuating the whole island. Its haze chilled and starved much of Europe too, making it a disaster of global reach.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Laki',
+        url: 'https://en.wikipedia.org/wiki/Laki',
+      },
+      {
+        title: 'Wikipedia: Móðuharðindin',
+        url: 'https://is.wikipedia.org/wiki/M%C3%B3%C3%B0uhar%C3%B0indin',
+      },
+    ],
+  },
+  {
     id: 'jorgensen-1809',
     name: 'Jørgen Jørgensen\'s Revolution',
     icelandicName: 'Jörundarhundadagarnir',

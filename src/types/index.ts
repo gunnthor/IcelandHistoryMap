@@ -6,6 +6,8 @@ export type EventType =
   | 'massacre'
   | 'occupation'
   | 'execution'
+  | 'eruption'
+  | 'plague'
   | 'other';
 
 export type Confidence = 'high' | 'medium' | 'low';
