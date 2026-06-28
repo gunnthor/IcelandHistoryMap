@@ -1166,20 +1166,20 @@ export const events: ConflictEvent[] = [
     dateText: '1707–1709',
     period: 'Danish Rule / Plague & Famine',
     type: 'plague',
-    locationName: 'Nationwide — representative marker at Skálholt',
-    coordinates: [64.1224, -20.5234],
+    locationName: 'Arrived at Eyrarbakki, 2 June 1707 — then nationwide',
+    coordinates: [63.866, -21.158],
     factions: [
       'The people of Iceland against the smallpox epidemic (Stórabóla)',
     ],
-    keyPeople: [],
-    winner: 'No winner — roughly a third of all Icelanders died',
-    casualtyEstimate: 'About 18,000 dead — close to one third of the population of ~50,000',
+    keyPeople: ['Gísli Bjarnason'],
+    winner: 'No winner — roughly a quarter to a third of all Icelanders died',
+    casualtyEstimate: 'An estimated 12,000–18,000 dead — about a quarter to a third of the ~50,000 population',
     summary:
-      'A smallpox ship reached Iceland in 1707 and the disease tore through an island with no immunity. Over two years it killed around 18,000 people — perhaps a third of everyone alive in Iceland. Whole farms and families simply emptied.',
+      'The infection landed at the trading port of Eyrarbakki on 2 June 1707. By tradition it came in a chest of clothes belonging to Gísli Bjarnason, who had died of smallpox in Copenhagen; his sister opened the chest, fell ill, and the disease spread across an island with no immunity — killing perhaps a quarter to a third of all Icelanders over two years.',
     eli12:
-      'A sickness called smallpox arrived by ship. Icelanders had never been exposed to it, so they had no defence, and about one in every three people died within two years. It was one of the deadliest things ever to happen to the country.',
+      'The sickness arrived at the port of Eyrarbakki in 1707, said to be hidden in a dead man\'s chest of clothes sent home from Copenhagen. Icelanders had never met smallpox, so they had no defence, and roughly one in three or four died within two years.',
     whyItHappened:
-      'Iceland was isolated, so its people rarely met smallpox and built up no immunity. When an infected person landed in 1707, the virus spread unchecked through a population that had no resistance and no real medicine.',
+      'Iceland was isolated, so its people rarely met smallpox and built up no immunity. When the infected clothing came ashore at Eyrarbakki in 1707, the virus spread unchecked through a population with no resistance and no real medicine.',
     whyItMatters:
       'It is not a battle, but it reshaped the country more than any war could — collapsing the workforce, emptying farms, and deepening the poverty and dependence that defined 18th-century Iceland under Danish rule.',
     confidence: 'high',
@@ -1189,7 +1189,11 @@ export const events: ConflictEvent[] = [
         url: 'https://is.wikipedia.org/wiki/St%C3%B3rab%C3%B3la',
       },
       {
-        title: 'Nationwide epidemic — marker uses Skálholt as a representative point',
+        title: 'Wikipedia: 1707–08 Iceland smallpox epidemic',
+        url: 'https://en.wikipedia.org/wiki/1707%E2%80%9308_Iceland_smallpox_epidemic',
+      },
+      {
+        title: 'Marker placed at Eyrarbakki, the documented point of arrival',
         url: '',
       },
     ],
