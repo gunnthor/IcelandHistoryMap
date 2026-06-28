@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import { ConflictEvent, PowerCenter, ClanId } from '../types';
 import { EVENT_CONFIG } from '../utils/eventConfig';
@@ -7,6 +7,8 @@ import { CLAN_CONFIG, CLAN_ORDER } from '../utils/clanConfig';
 import { powerCenters } from '../data/powerCenters';
 import { events as allEvents } from '../data/events';
 import { CLAN_BATTLES } from '../data/clanBattles';
+import { glaciers } from '../data/glaciers';
+import { HistoricFlags } from './HistoricFlags';
 import { createSpiderfier, OMSInstance } from '../utils/oms';
 
 // Tag we stash on each Leaflet marker so the shared OMS click handler can map
@@ -39,6 +41,54 @@ function MapController({ event }: { event: ConflictEvent | null }) {
       map.flyTo(event.coordinates, 10, { duration: 1.2 });
     }
   }, [event, map]);
+  return null;
+}
+
+// Glacier layer: Iceland's ice caps as snowy "white realms". Painted icy white
+// with a soft glow so they pop against the warm parchment basemap. Purely
+// decorative — non-interactive, and sits below the event/clan markers.
+function GlacierLayer() {
+  const map = useMap();
+
+  useEffect(() => {
+    const layers: L.Layer[] = [];
+
+    glaciers.forEach((g) => {
+      g.rings.forEach((ring) => {
+        const poly = L.polygon(ring as L.LatLngExpression[], {
+          interactive: false,
+          className: 'glacier-shape',
+          color: '#cfe6f2', // pale icy stroke
+          weight: 1,
+          fillColor: '#ffffff',
+          fillOpacity: 0.88,
+        });
+        poly.addTo(map);
+        layers.push(poly);
+      });
+
+      if (g.label) {
+        const labelIcon = L.divIcon({
+          html: `<span class="glacier-label">${g.name}</span>`,
+          className: '',
+          iconSize: [0, 0],
+        });
+        const labelMarker = L.marker(g.label as L.LatLngExpression, {
+          icon: labelIcon,
+          interactive: false,
+          keyboard: false,
+          zIndexOffset: -1000, // keep labels behind the event pins
+        });
+        labelMarker.addTo(map);
+        layers.push(labelMarker);
+      }
+    });
+
+    return () => {
+      layers.forEach((l) => l.remove());
+    };
+  }, [map]);
+
   return null;
 }
 
@@ -289,8 +339,9 @@ export function BattleMap({
         maxBounds={ICELAND_BOUNDS}
         maxBoundsViscosity={1.0}
         style={{ width: '100%', height: '100%' }}
-        zoomControl={true}
+        zoomControl={false}
       >
+        <ZoomControl position="topright" />
         <TileLayer
           attribution='Tiles &copy; <a href="https://www.esri.com">Esri</a> — Source: Esri, USGS, NOAA'
           url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
@@ -298,6 +349,7 @@ export function BattleMap({
           maxZoom={14}
         />
         <MapController event={selectedEvent} />
+        <GlacierLayer />
         <EventMarkers
           events={events}
           selectedId={selectedEvent?.id ?? null}
@@ -306,6 +358,12 @@ export function BattleMap({
         {showClans && <ClanMarkers />}
         {showClans && highlightClan && <ConnectionLines clan={highlightClan} />}
       </MapContainer>
+
+      {/* Ornate map frame — fantasy-chart border flourish */}
+      <div className="map-frame" aria-hidden="true" />
+
+      {/* Historic banners of Iceland (decorative cartouche, top-left) */}
+      <HistoricFlags />
 
       {/* Clan power-centers layer: toggle + interactive colour legend */}
       <div className="clan-control">

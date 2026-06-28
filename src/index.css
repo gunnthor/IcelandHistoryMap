@@ -225,6 +225,9 @@ a:hover { color: var(--accent-hover); }
 .marker-burning    { background: #e74c3c; }
 .marker-execution  { background: #7d3c98; }
 .marker-occupation { background: #1e8449; }
+.marker-massacre   { background: #8a1f1f; }
+.marker-eruption   { background: #b5391f; }
+.marker-plague     { background: #5f7a2e; }
 .marker-other      { background: #717d7e; }
 
 /* ── Clan power-centers layer ── */
@@ -1042,9 +1045,10 @@ a:hover { color: var(--accent-hover); }
 .map-wrap .leaflet-container {
   background: #d8c6a0; /* parchment shows through while tiles load */
 }
-/* Sepia-tint only the map tiles, so markers keep their vivid colours. */
+/* Sepia-tint only the map tiles, so markers keep their vivid colours.
+   Warmed slightly toward aged-gold parchment for the LOTR feel. */
 .map-wrap .leaflet-tile-pane {
-  filter: sepia(0.5) saturate(0.78) brightness(1.04) contrast(1.04);
+  filter: sepia(0.62) saturate(0.85) brightness(1.03) contrast(1.05) hue-rotate(-8deg);
 }
 /* Subtle paper grain over the map. */
 .map-wrap::before {
@@ -1066,6 +1070,75 @@ a:hover { color: var(--accent-hover); }
   pointer-events: none;
   background: radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(40,26,10,0.28) 100%);
   box-shadow: inset 0 0 120px 30px rgba(40,26,10,0.32);
+}
+
+/* ── Glaciers: snowy white realms ── */
+.glacier-shape {
+  filter: drop-shadow(0 0 5px rgba(190,225,242,0.85));
+}
+.glacier-label {
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  color: #5d7385;            /* cool slate, readable on white ice */
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.95), 0 0 5px rgba(255,255,255,0.85);
+  pointer-events: none;
+}
+
+/* Zoom control lives top-right now; nudge it below the compass rose. */
+.map-wrap .leaflet-top.leaflet-right { top: 116px; }
+
+/* ── Historic banners cartouche (top-left) ── */
+.map-flags {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 900;
+  background: linear-gradient(180deg, rgba(243,233,211,0.96), rgba(224,209,175,0.96));
+  border: 1px solid var(--gold-soft);
+  border-radius: 6px;
+  padding: 5px 7px 6px;
+  box-shadow: var(--shadow);
+}
+.map-flags-title {
+  font-family: 'IM Fell English', Georgia, serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.map-flags-row { display: flex; gap: 5px; }
+.map-flag { width: 30px; height: 22px; display: block; cursor: help; }
+.map-flag svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 1px solid rgba(23,18,12,0.45);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  transition: transform 0.12s;
+}
+.map-flag:hover svg { transform: scale(1.18); }
+
+/* ── Ornate fantasy frame around the chart ── */
+.map-frame {
+  position: absolute;
+  inset: 8px;
+  z-index: 460;
+  pointer-events: none;
+  border: 2px solid rgba(201,164,76,0.55);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 0 0 1px rgba(23,18,12,0.35),
+    inset 0 0 0 4px rgba(201,164,76,0.16);
 }
 
 /* ── Markers: aged-paper rim, gold selection ring ── */
