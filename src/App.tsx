@@ -8,6 +8,7 @@ import { FilterBar } from './components/FilterBar';
 import { Timeline } from './components/Timeline';
 import { SearchBar } from './components/SearchBar';
 import { TourBanner } from './components/TourBanner';
+import { AboutModal } from './components/AboutModal';
 
 // Year bounds are derived from the data so adding events outside 1238–1627
 // (e.g. the Cod Wars) automatically extends the timeline and slider range.
@@ -29,6 +30,7 @@ export default function App() {
   const [showClans, setShowClans] = useState(false);
   const [tourActive, setTourActive] = useState(false);
   const [tourStep, setTourStep] = useState(0);
+  const [aboutOpen, setAboutOpen] = useState(false);
 
   // Era presets, with ranges clamped to the years we actually have data for.
   const eras = useMemo(
@@ -190,8 +192,17 @@ export default function App() {
               🧭 Start Here
             </button>
           )}
+          <button
+            className="btn btn-secondary"
+            onClick={() => setAboutOpen(true)}
+            title="About this site"
+          >
+            ⓘ About
+          </button>
         </div>
       </header>
+
+      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
 
       {/* Tour banner */}
       {tourActive && (
