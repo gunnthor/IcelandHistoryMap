@@ -8,7 +8,9 @@ import { FilterBar } from './components/FilterBar';
 import { Timeline } from './components/Timeline';
 import { SearchBar } from './components/SearchBar';
 import { TourBanner } from './components/TourBanner';
+import { TourPicker } from './components/TourPicker';
 import { AboutModal } from './components/AboutModal';
+import { Tour, resolveTourEvents } from './data/tours';
 
 // Year bounds are derived from the data so adding events outside 1238–1627
 // (e.g. the Cod Wars) automatically extends the timeline and slider range.
@@ -20,17 +22,21 @@ const INITIAL_FILTERS: FilterState = {
   yearRange: [MIN_YEAR, MAX_YEAR],
 };
 
-// Tour order: chronological.
-const TOUR_EVENTS = [...allEvents].sort((a, b) => a.year - b.year);
-
 export default function App() {
   const [selectedEvent, setSelectedEvent] = useState<ConflictEvent | null>(null);
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS);
   const [searchQuery, setSearchQuery] = useState('');
   const [showClans, setShowClans] = useState(false);
-  const [tourActive, setTourActive] = useState(false);
+  const [activeTour, setActiveTour] = useState<Tour | null>(null);
   const [tourStep, setTourStep] = useState(0);
+  const [pickerOpen, setPickerOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+
+  // The active route's stops, in route order.
+  const tourEvents = useMemo(
+    () => (activeTour ? resolveTourEvents(activeTour) : []),
+    [activeTour],
+  );
 
   // Era presets, with ranges clamped to the years we actually have data for.
   const eras = useMemo(
@@ -98,10 +104,13 @@ export default function App() {
     [activeEraId, resetFilters],
   );
 
-  const startTour = () => {
-    setTourActive(true);
+  const startTour = (tour: Tour) => {
+    const stops = resolveTourEvents(tour);
+    if (!stops.length) return;
+    setPickerOpen(false);
+    setActiveTour(tour);
     setTourStep(0);
-    setSelectedEvent(TOUR_EVENTS[0]);
+    setSelectedEvent(stops[0]);
     // Reset filters so every tour stop is visible on the map.
     setFilters(INITIAL_FILTERS);
     setSearchQuery('');
@@ -109,20 +118,20 @@ export default function App() {
   };
 
   const exitTour = () => {
-    setTourActive(false);
+    setActiveTour(null);
     setSelectedEvent(null);
   };
 
   const tourNext = () => {
-    const next = Math.min(tourStep + 1, TOUR_EVENTS.length - 1);
+    const next = Math.min(tourStep + 1, tourEvents.length - 1);
     setTourStep(next);
-    setSelectedEvent(TOUR_EVENTS[next]);
+    setSelectedEvent(tourEvents[next]);
   };
 
   const tourPrev = () => {
     const prev = Math.max(tourStep - 1, 0);
     setTourStep(prev);
-    setSelectedEvent(TOUR_EVENTS[prev]);
+    setSelectedEvent(tourEvents[prev]);
   };
 
   // Deep-link: read an event id from the URL hash on first load.
@@ -147,12 +156,12 @@ export default function App() {
       const target = e.target as HTMLElement | null;
       const typing = !!target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA');
       if (e.key === 'Escape') {
-        if (tourActive) exitTour();
+        if (activeTour) exitTour();
         else if (selectedEvent) handleCloseEvent();
         return;
       }
       if (typing) return;
-      if (tourActive) {
+      if (activeTour) {
         if (e.key === 'ArrowRight') {
           e.preventDefault();
           tourNext();
@@ -166,7 +175,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
     // selectedEvent in deps means fresh closures on every tour step.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tourActive, selectedEvent]);
+  }, [activeTour, selectedEvent]);
 
   const filtersActive =
     filters.type !== 'all' ||
@@ -187,9 +196,9 @@ export default function App() {
         </div>
         <div className="header-controls">
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
-          {!tourActive && (
-            <button className="btn btn-primary" onClick={startTour}>
-              🧭 Start Here
+          {!activeTour && (
+            <button className="btn btn-primary" onClick={() => setPickerOpen(true)}>
+              🧭 Story Routes
             </button>
           )}
           <button
@@ -204,10 +213,14 @@ export default function App() {
 
       <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
 
+      {/* Story-route picker */}
+      <TourPicker open={pickerOpen} onClose={() => setPickerOpen(false)} onSelect={startTour} />
+
       {/* Tour banner */}
-      {tourActive && (
+      {activeTour && (
         <TourBanner
-          events={TOUR_EVENTS}
+          tour={activeTour}
+          events={tourEvents}
           step={tourStep}
           onNext={tourNext}
           onPrev={tourPrev}

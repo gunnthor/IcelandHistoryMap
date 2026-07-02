@@ -48,7 +48,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           burnings and feuds from the Saga Age through the Sturlung civil war and into modern
           times. Each marker carries a plain-language summary, why it happened, why it matters,
           a confidence rating and its sources. Use the era presets and timeline to travel
-          through the centuries, or hit <strong>Start Here</strong> for a guided tour.
+          through the centuries, or pick a <strong>Story Route</strong> for a guided tour.
         </p>
 
         <div className="about-divider" />
