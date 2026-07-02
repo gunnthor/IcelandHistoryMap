@@ -35,6 +35,12 @@ export interface ConflictEvent {
   eli12: string;
   whyItHappened: string;
   whyItMatters: string;
+  /** The betrayal / greed / stupidity / revenge angle — the human hook. */
+  humanDrama?: string;
+  /** "What this would be like today" — a modern-day analogy. */
+  modernTranslation?: string;
+  /** Why historians are sure or unsure it happened this way. */
+  confidenceNote?: string;
   confidence: Confidence;
   sources: Source[];
 }

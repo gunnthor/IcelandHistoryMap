@@ -77,6 +77,14 @@ function PanelContent({ event, onClose }: EventPanelProps) {
           <p>{event.eli12}</p>
         </div>
 
+        {/* Human drama */}
+        {event.humanDrama && (
+          <div className="drama-box">
+            <div className="drama-label">🎭 The drama</div>
+            <p>{event.humanDrama}</p>
+          </div>
+        )}
+
         {/* Factions */}
         <div className="panel-section">
           <div className="panel-section-title">Who fought who</div>
@@ -99,6 +107,14 @@ function PanelContent({ event, onClose }: EventPanelProps) {
           <p>{event.whyItHappened}</p>
         </div>
 
+        {/* Modern translation */}
+        {event.modernTranslation && (
+          <div className="modern-box">
+            <div className="modern-label">📱 If this happened today</div>
+            <p>{event.modernTranslation}</p>
+          </div>
+        )}
+
         {/* Winner */}
         {event.winner && (
           <div className="winner-box">
@@ -120,6 +136,14 @@ function PanelContent({ event, onClose }: EventPanelProps) {
           <div className="panel-section-title">Why it matters</div>
           <p>{event.whyItMatters}</p>
         </div>
+
+        {/* Confidence note */}
+        {event.confidenceNote && (
+          <div className="confidence-note-box">
+            <div className="confidence-note-label">🎯 How sure are we?</div>
+            <p>{event.confidenceNote}</p>
+          </div>
+        )}
 
         {/* Key people */}
         {event.keyPeople.length > 0 && (

@@ -26,6 +26,10 @@ export const events: ConflictEvent[] = [
       'Hjörleifur\'s thralls were enslaved Irish captives who wanted their freedom; they staged his death and fled. In a society built on kinship and revenge, Ingólfur was bound to avenge his foster-brother.',
     whyItMatters:
       'It is the founding-era story behind the name Vestmannaeyjar and a vivid reminder that Norse settlement leaned on enslaved Irish people. The tale is from Landnámabók, so treat it as tradition rather than documented fact.',
+    humanDrama:
+      'Iceland\'s origin story has a body count. The thralls weren\'t villains — they were enslaved men making a break for freedom, and their leader chose a cliff over capture. Ingólfur\'s verdict on his dead foster-brother says it all: this is what happens "when you have thralls do your sacrificing" — even the revenge came with a lecture.',
+    confidenceNote:
+      'Low. The only source is Landnámabók, written down some 250 years after the events by people with an interest in tidy founding legends. The place-names are real; whether the story behind them is, nobody can say.',
     confidence: 'low',
     sources: [
       {
@@ -67,6 +71,12 @@ export const events: ConflictEvent[] = [
       'The saga turns a personal rule into a test of power. Hrafnkell thinks his status and oath matter more than Einar\'s life; Einar\'s family refuses to accept that quietly.',
     whyItMatters:
       'This gives the map a strong East Iceland saga marker. It is not a documented battlefield, but it shows how honor, religion, property, and law could all collide in one violent act.',
+    humanDrama:
+      'A man died over a horse ride. Hrafnkell had sworn an oath to his god Freyr that he\'d kill anyone who rode Freyfaxi — so when a shepherd did it to round up lost sheep, Hrafnkell killed him almost apologetically, trapped by his own vow. The saga\'s bitter punchline: the oath, the god, and the horse were all worthless in the end.',
+    modernTranslation:
+      'Your boss tells everyone: "touch my car and you\'re finished." One day you need it for a genuine work emergency. He fires you on the spot — not because he\'s angry, but because he said he would, and in this world walking back your word costs more than a life.',
+    confidenceNote:
+      'Low. Hrafnkels saga is so neatly plotted that many scholars think it\'s closer to a medieval novel than a chronicle — it may be almost entirely fiction hung on real places and names.',
     confidence: 'low',
     sources: [
       {
@@ -108,6 +118,10 @@ export const events: ConflictEvent[] = [
       'Vápnfirðinga saga is driven by honor, kinship, insult, and control of local power. In a society without a central state, a family feud could become the main political weather system of a fjord.',
     whyItMatters:
       'This adds a proper Austfirðir saga conflict to the map. It helps show that saga violence was not just a south-and-west Iceland thing.',
+    humanDrama:
+      'Brodd-Helgi and Geitir started as brothers-in-law and close friends — then spent years destroying each other over money, status, and pride. Each ended up killed by the other\'s side, and their sons inherited the feud like a family heirloom nobody could refuse.',
+    confidenceNote:
+      'Low. The saga was written down centuries after the events it claims to describe. The families and the fjord are real; the blow-by-blow is literature.',
     confidence: 'low',
     sources: [
       {
@@ -149,6 +163,12 @@ export const events: ConflictEvent[] = [
       'Norway\'s King Ólafur Tryggvason was pushing Iceland hard to convert, even holding Icelanders hostage. At home, missionaries had split the country, and both sides showed up to the Alþingi ready to declare separate laws — which would have meant war.',
     whyItMatters:
       'One of the most famous peaceful resolutions in medieval history. It kept Iceland in one piece, reshaped its culture and law, and is still told as a national origin story about choosing compromise over bloodshed.',
+    humanDrama:
+      'The whole country\'s religion came down to one man lying under a cloak for a day and a night. Þorgeir was a pagan priest — and he ruled against his own gods, because he\'d decided that one law mattered more than which god it named. Then he went home and threw his idols into a waterfall, or so the story goes.',
+    modernTranslation:
+      'A country on the brink of civil war over an existential culture issue agrees to binding arbitration — and hands the decision to a judge from the losing side. He rules against his own camp to keep the country whole, with a few quiet carve-outs so the losers can live with it.',
+    confidenceNote:
+      'Medium. The core account comes from Ari fróði\'s Íslendingabók, written about 120 years later from named informants — unusually good sourcing for the era. The cloak scene and the idol-throwing are the parts most likely polished in the telling.',
     confidence: 'medium',
     sources: [
       {
@@ -183,6 +203,8 @@ export const events: ConflictEvent[] = [
       'The saga tradition presents it as a feud over honor, alliances, and local power. In early Iceland, there was no king or police force to settle these fights cleanly, so families and followers often settled them with weapons.',
     whyItMatters:
       'It shows the smaller-scale violence that made saga society so unstable. Not every conflict was a giant battle; many were local feuds that still shaped law cases, alliances, and family memory for generations.',
+    confidenceNote:
+      'Low. The episode comes from Eyrbyggja saga, written some 250 years later. Treat it as the kind of thing that happened rather than a documented incident.',
     confidence: 'low',
     sources: [
       {
@@ -220,6 +242,8 @@ export const events: ConflictEvent[] = [
       'The saga world runs on kinship and reputation. Once one side is shamed or harmed, backing down can look like weakness, so the conflict keeps feeding itself.',
     whyItMatters:
       'Droplaugarsona saga is useful because it gives the map a real Fljótsdalur/Lagarfljót conflict, not just the famous battles from the north and west.',
+    confidenceNote:
+      'Low. Like most family sagas, this was written down centuries after the fact. Real region, real family names, unverifiable plot.',
     confidence: 'low',
     sources: [
       {
@@ -267,6 +291,12 @@ export const events: ConflictEvent[] = [
       'Njáls saga builds toward the burning through years of insults, lawsuits, revenge killings, and failed settlements. By the time Flosi acts, the feud has become too poisoned for normal law to calm it down.',
     whyItMatters:
       'Even if it is saga literature more than clean documentary history, Njálsbrenna is one of Iceland\'s defining conflict stories. It teaches how feud culture could turn legal arguments and family honor into catastrophe.',
+    humanDrama:
+      'Njáll was the greatest legal mind of his age — and he burned to death because law finally ran out. The burners offered the women, children and old man safe passage out. Njáll refused: too old to avenge his sons, too proud to live shamed. He lay down with his wife under an oxhide and waited. His son Skarphéðinn died standing up, wedged against the wall.',
+    modernTranslation:
+      'Imagine a decades-long legal feud between two families — lawsuits, settlements, hit jobs, more settlements — until one side gives up on court entirely and firebombs the other\'s house. The one survivor spends years hunting the arsonists across three countries. And everyone involved knows the exact legal fee for each killing.',
+    confidenceNote:
+      'Medium. Njáls saga was written about 250 years after the events, and it\'s literature of the highest order — which cuts both ways. But a burning at Bergþórshvoll is treated as fact by other medieval sources, and excavations there have found burnt layers of the right general era.',
     confidence: 'medium',
     sources: [
       {
@@ -308,6 +338,10 @@ export const events: ConflictEvent[] = [
       'Guðmundur Arason pushed hard for church independence and protection for poor followers. Icelandic chieftains saw that as a threat to their control over people, courts, and money. Víðines was that argument turning into blades.',
     whyItMatters:
       'Kolbeinn Tumason is traditionally linked with the hymn "Heyr, himna smiður," so this battle sits at the weird intersection of politics, violence, and one of Iceland\'s most beloved religious poems.',
+    humanDrama:
+      'Kolbeinn marched against the bishop — and by tradition composed "Heyr, himna smiður" ("Hear, smith of heavens"), one of the most tender prayers in the language, right before dying in battle against the church he was praying to. He was killed by a stone to the head. Iceland still sings his hymn at funerals.',
+    confidenceNote:
+      'Medium. The battle and Kolbeinn\'s death are solidly attested in the Sturlunga-era sources; the story that he composed the hymn on the eve of the fight is tradition, though the attribution to him is old and widely accepted.',
     confidence: 'medium',
     sources: [
       {
@@ -349,6 +383,12 @@ export const events: ConflictEvent[] = [
       'Hrafn and Þorvaldur were locked in a western Iceland power feud. Honor, local control, revenge, and old grudges all piled up until normal settlements stopped working.',
     whyItMatters:
       'This event shows that the Sturlung Age did not begin as one big civil war overnight. It grew out of local feuds like this, where personal rivalry and regional politics turned lethal.',
+    humanDrama:
+      'Hrafn was the closest thing medieval Iceland had to a doctor — a healer trained abroad who treated patients for free, reportedly including men from his enemy\'s side. He\'d had Þorvaldur in his power before and let him live. Þorvaldur came back at night with fire and men, took Hrafn captive, and had him beheaded. Mercy, repaid in full.',
+    modernTranslation:
+      'The beloved town doctor has one bitter rival. Twice he has the chance to destroy him and declines, because that\'s not who he is. The rival, unburdened by any such principles, eventually shows up with armed men and kills him. Being the better man is a great epitaph and a terrible survival strategy.',
+    confidenceNote:
+      'Medium. Hrafns saga was written within living memory of the events — but by someone firmly on Hrafn\'s side, so the saintly-doctor portrait should be read with that in mind. The killing itself is not in doubt.',
     confidence: 'medium',
     sources: [
       {
@@ -390,6 +430,8 @@ export const events: ConflictEvent[] = [
       'The long fight over Guðmundur Arason\'s authority kept dragging northern Iceland into violence. Chieftains wanted the bishop\'s armed followers broken up; the bishop\'s men saw themselves as defending a holy cause.',
     whyItMatters:
       'It is a great map event because it makes the church-versus-chieftain conflict feel physical: not abstract politics, but armed men crowding around a rural church and forcing a surrender.',
+    confidenceNote:
+      'Low. The siege appears in the Sturlunga-era material around Bishop Guðmundur, but the details are thin and the exact site and casualty picture are uncertain.',
     confidence: 'low',
     sources: [
       {
@@ -431,6 +473,10 @@ export const events: ConflictEvent[] = [
       'After years of conflict around Bishop Guðmundur, his followers were seen by chieftains as a dangerous armed faction. Sighvatur and Sturla wanted to crush that problem decisively.',
     whyItMatters:
       'Grímseyjarför shows how quickly religious politics became clan violence. It also foreshadows the brutal style of the Sturlung Age: alliances, revenge, sudden raids, and very little mercy.',
+    humanDrama:
+      'The attackers won the fight and lost the trip: about a dozen of the bishop\'s men died on the island, then thirty-plus of the victorious raiders drowned sailing home. Medieval Icelanders did not need a moralist to point out what that looked like. The sea kept better accounts than the law did.',
+    confidenceNote:
+      'Medium. The expedition is well attested in Sturlunga saga, though the casualty figures — especially the drownings — vary between accounts.',
     confidence: 'medium',
     sources: [
       {
@@ -468,6 +514,8 @@ export const events: ConflictEvent[] = [
       'The Sturlungar were trying to turn family prestige into real control across Iceland. Snorri had wealth, followers, and influence, so Sturla pushed into his sphere with violence and intimidation.',
     whyItMatters:
       'Sauðafellsför helps explain why the Sturlung Age feels so messy. The war was not just famous battles; it was raids, threats, humiliation, and constant pressure between ambitious kin groups.',
+    confidenceNote:
+      'Low. The raid is part of the Sturlunga tradition, but which faction did what to whom at Sauðafell needs verification against the saga text — details here are marked for checking.',
     confidence: 'low',
     sources: [
       {
@@ -509,6 +557,10 @@ export const events: ConflictEvent[] = [
       'Sturla was aggressively expanding Sturlung power, while Snorri\'s network still mattered in the west. Their rivalry mixed family ambition, property, law-court influence, and raw intimidation.',
     whyItMatters:
       'Bæjarbardagi shows the Sturlung Age eating its own family tree. The conflict was not just clan against clan; it was often relatives, in-laws, and former allies turning on each other.',
+    humanDrama:
+      'Sturla and Snorri were uncle and nephew — both Sturlungar, both supposedly on the same side of Iceland\'s great divide. It didn\'t matter. Thirty men died so one branch of the family could squeeze the other. The civil war\'s dirty secret was that the biggest clan spent half its energy fighting itself.',
+    confidenceNote:
+      'Medium. Recorded in the Sturlunga compilation, written close to the events by people connected to the family — well-informed, but never neutral.',
     confidence: 'medium',
     sources: [
       {
@@ -547,6 +599,12 @@ export const events: ConflictEvent[] = [
       'Sturla Sighvatsson was making his big push to dominate the whole country. Forcing Gissur to submit was meant to remove his last serious rival without a full battle.',
     whyItMatters:
       'Sparing Gissur was the blunder that doomed the Sturlungar. Within months Gissur and Kolbeinn ungi gathered an army and crushed them at Örlygsstaðir, where Sturla himself was killed.',
+    humanDrama:
+      'Sturla had it all: 400 men, the rival he feared most disarmed and kneeling, an oath of loyalty sworn on the spot. And then — out of pride, or a need to look merciful — he let Gissur walk. Gissur rode straight home, tore up the oath, and started building the army that would kill Sturla and his father within the year. The single most expensive act of mercy in Icelandic history.',
+    modernTranslation:
+      'You corner your biggest rival, make him sign a loyalty pledge in front of everyone, and then let him go to look magnanimous. He drives home, rips up the contract, and spends the next six months assembling the coalition that ends you.',
+    confidenceNote:
+      'Medium. The episode is described in Sturlunga saga and is generally accepted, but the round troop figures (400 vs 40) are the saga\'s framing, and exact numbers should be read as dramatic shorthand rather than a headcount.',
     confidence: 'medium',
     sources: [
       { title: 'Wikipedia: Apavatnsför', url: 'https://is.wikipedia.org/wiki/Apavatnsf%C3%B6r' },
@@ -581,6 +639,12 @@ export const events: ConflictEvent[] = [
       'The Sturlungar had been pushing aggressively to dominate all of Iceland. Rival clans — the Ásbirningar and Haukdælir — formed a coalition to stop them. Tension had been building for years through feuds, marriages, and broken agreements.',
     whyItMatters:
       'It weakened the Sturlungar significantly and accelerated the chaos of the Sturlung Age, which eventually led to Iceland submitting to Norwegian rule in 1262. Often called the largest battle ever fought in Iceland.',
+    humanDrama:
+      'This is the bill coming due for Apavatn. The rival Sturla had captured and released showed up with a coalition and caught the Sturlungar off guard. Sturla and his father Sighvatur — a father-and-son ruling duo — both died on the same field the same day. The man everyone warned him to kill was the man standing over him at the end.',
+    modernTranslation:
+      'A family conglomerate that spent a decade buying out every competitor gets ambushed by an alliance of everyone they ever bullied. The founder and his heir are both wiped out in a single hostile takeover — the whole dynasty gutted in one afternoon.',
+    confidenceNote:
+      'High. One of the best-documented events of the era: Sturlunga saga (Íslendinga saga) gives a detailed, near-contemporary account, and the outcome and importance are widely accepted. Only the precise casualty count is an estimate.',
     confidence: 'high',
     sources: [
       {
@@ -618,6 +682,12 @@ export const events: ConflictEvent[] = [
       'Snorri had deep ties to Norwegian royal politics but did not reliably obey King Hákon. In Iceland, Gissur Þorvaldsson had both local reasons and royal permission to remove him.',
     whyItMatters:
       'This is where literature and civil war collide. The man tied to the Prose Edda and Heimskringla died as part of the same power struggle that was dragging Iceland toward Norwegian rule.',
+    humanDrama:
+      'The man who preserved Norse mythology for the entire world was found hiding in his cellar by armed men. His last recorded words: "Eigi skal höggva!" — "Do not strike!" They struck. The greatest writer of the medieval North, killed on the order of a king he\'d once served, by a man who used to be his son-in-law.',
+    modernTranslation:
+      'Imagine the country\'s most famous author — also a scheming politician with foreign backing — falling out with the superpower that sponsored him. The superpower quietly greenlights his removal, and his own former son-in-law leads the hit squad to his house.',
+    confidenceNote:
+      'High. The killing was documented in detail by Sturla Þórðarson — Snorri\'s own nephew — within living memory, and the date, place, and famous last words are firmly part of the record.',
     confidence: 'high',
     sources: [
       {
@@ -655,6 +725,10 @@ export const events: ConflictEvent[] = [
       'After Snorri Sturluson\'s death, the Sturlung world was full of revenge claims and power grabs. Órækja Snorrason challenged Gissur Þorvaldsson, who was one of the strongest men in the country.',
     whyItMatters:
       'Skálholtsbardagi shows how even holy and administrative centers could become armed political stages. In the Sturlung Age, nowhere important was safely outside the feud system.',
+    humanDrama:
+      'Órækja was avenging his father — Snorri Sturluson — against Gissur, the man behind the killing. Hundreds of armed men squared off at Iceland\'s holiest site... and by some accounts exactly one man died. The bishop stood between the armies, and for once in the Sturlung Age, standing between armies actually worked.',
+    confidenceNote:
+      'Medium. The confrontation is well attested in Sturlunga saga; the oddly low casualty count is what the sources actually say, not a gap in them.',
     confidence: 'medium',
     sources: [
       {
@@ -692,6 +766,10 @@ export const events: ConflictEvent[] = [
       'Þórður kakali had returned from Norway determined to reassert Sturlungar dominance after the disaster at Örlygsstaðir. Kolbeinn ungi controlled the north and stood in his way.',
     whyItMatters:
       'Kolbeinn ungi was one of the most powerful rivals to the Sturlungar. His death removed a major obstacle and helped Þórður kakali consolidate power in the north — at least temporarily.',
+    humanDrama:
+      'Þórður kakali came home from Norway to find his father and brothers dead at Örlygsstaðir and his family broken. His answer was to fight the north\'s strongest warlord with a scraped-together fleet of fishing boats — Iceland\'s only real naval battle, fought by a man with nothing left to lose against a man who had everything and was already dying.',
+    confidenceNote:
+      'High. Þórðar saga kakala, part of the Sturlunga compilation, describes the battle in detail close to the events. The exact link between Kolbeinn\'s wounds and his death soon after is the uncertain part.',
     confidence: 'high',
     sources: [
       {
@@ -725,6 +803,12 @@ export const events: ConflictEvent[] = [
       'The power struggle between the Sturlungar and Ásbirningar had been grinding on for years. Þórður kakali wanted revenge for Örlygsstaðir and total control of the north. The Ásbirningar under Brandur Kolbeinsson refused to give up.',
     whyItMatters:
       'This battle effectively ended Ásbirningar power. But the sheer scale of violence also alarmed the Norwegian king, who used Iceland\'s chaos as justification for taking direct control. Iceland submitted to Norway in 1262.',
+    humanDrama:
+      'Þórður kakali finally got his revenge for Örlygsstaðir — eight years and about 110 corpses later. Brandur Kolbeinsson fled the field, was run down, and killed. The grim postscript: nobody really won. The bloodletting was so extreme it became the Norwegian king\'s best argument that Icelanders couldn\'t govern themselves.',
+    modernTranslation:
+      'Scale it to population and this is a country losing the equivalent of a million people before dinner. And the atrocity\'s main beneficiary was a foreign power watching from across the water, taking notes for the takeover pitch: "Look at them. They clearly need adult supervision."',
+    confidenceNote:
+      'High. Well documented in the Sturlunga compilation, and the battle\'s reputation as Iceland\'s bloodiest is standard in the scholarship. The ~110 figure is the traditional count, not a forensic one.',
     confidence: 'high',
     sources: [
       {
@@ -758,6 +842,12 @@ export const events: ConflictEvent[] = [
       'Political vendettas were settled through violence in this era. Gissur Þorvaldsson had many enemies who wanted him dead. The burning was revenge — brutal, cowardly, and effective.',
     whyItMatters:
       'The Flugumýrarbrenna shocked even hardened contemporaries. It contributed to the perception that Iceland\'s ruling class had completely lost control, which helped justify Norwegian intervention and the end of the Icelandic Commonwealth.',
+    humanDrama:
+      'The timing is the gut-punch: the attack came just days after a wedding meant to make peace between feuding families. Enemies of Gissur crept up at night and torched the hall — and Gissur survived only by hiding in a vat of sour whey while his wife and sons burned. He crawled out having lost almost everyone he loved, and spent the rest of his life as the man who lived through it.',
+    modernTranslation:
+      'Two warring families throw a wedding to bury the hatchet. Days later one side firebombs the other\'s house in the middle of the night. The target lives only by hiding in the basement while his family dies upstairs — and everyone agrees this crossed a line even a brutal era wouldn\'t forgive.',
+    confidenceNote:
+      'High. Flugumýrarbrenna is recounted in vivid detail in Sturlunga saga and is one of the era\'s most firmly established events; the date and the roughly 25 dead are well supported, with only minor variation between accounts.',
     confidence: 'high',
     sources: [
       {
@@ -796,6 +886,10 @@ export const events: ConflictEvent[] = [
       'The Sturlung Age was collapsing into faction math: who owed revenge, who had switched sides, and who could grab power before Gissur returned. Þverárfundur was one of those calculations turning violent.',
     whyItMatters:
       'It shows how unstable Iceland remained even after the biggest battles. Killing one powerful man did not solve the system; it usually created the next feud.',
+    humanDrama:
+      'Eyjólfur ofsi — "the Violent" — was one of the men behind the Flugumýri burning two years earlier, where a family died in a fire days after a peace wedding. At Þverá the avengers caught up with him and killed him. In the Sturlung Age the arsonists rarely died of old age.',
+    confidenceNote:
+      'Medium. The battle and Eyjólfur\'s death are recorded in the Sturlunga material; the casualty range and some of the faction detail vary between sources.',
     confidence: 'medium',
     sources: [
       {
@@ -837,6 +931,12 @@ export const events: ConflictEvent[] = [
       'Royal government added a new layer to Icelandic politics, but old local power did not vanish. When officials, local elites, and personal enemies collided, violence was still very much on the table.',
     whyItMatters:
       'Grundarbardagi widens the map beyond the Sturlung Age. It shows that Norwegian rule changed the political frame, but Icelandic elites could still settle disputes with force.',
+    humanDrama:
+      'Smiður Andrésson was the crown\'s enforcer in Iceland, and by reputation a heavy-handed one. Northern farmers decided they\'d had enough, stormed Grund at night, and killed him along with the lawman at his side. The king\'s response was notably muted — even Copenhagen seemed to understand this one.',
+    modernTranslation:
+      'An unpopular governor sent in from abroad throws his weight around one district too many. Locals storm his residence at night and kill him — and the central government, reading the room, quietly declines to make an example of anyone.',
+    confidenceNote:
+      'Medium. The killing is recorded in the Icelandic annals with a firm date, but annal entries are terse — the buildup and motives are partly reconstruction.',
     confidence: 'medium',
     sources: [
       {
@@ -874,6 +974,12 @@ export const events: ConflictEvent[] = [
       'Foreign royal officials were resented for abusing their power over Icelanders. Lénharður had made enough enemies that a leading chieftain felt safe taking the law into his own hands.',
     whyItMatters:
       'An early flashpoint of Icelandic anger at heavy-handed foreign officials — the same friction that would explode far bigger during the Reformation and the long centuries of Danish rule.',
+    humanDrama:
+      'Lénharður had robbed and bullied his district until a chieftain simply decided the law was whatever a big enough posse said it was. After the killing, the bishop all but sent a thank-you note. When the church treats your murder as a public service, your legacy has problems.',
+    modernTranslation:
+      'A corrupt official with immunity from above keeps shaking down a region. Eventually a local strongman deals with him permanently, off the books — and prosecutors, judges, and clergy all discover urgent reasons to look elsewhere.',
+    confidenceNote:
+      'Medium. The killing is part of the documented record, but the details come partly through folklore — including the burial mound still pointed out by the Ölfusá.',
     confidence: 'medium',
     sources: [
       {
@@ -911,6 +1017,8 @@ export const events: ConflictEvent[] = [
       'Northern Icelandic church offices were valuable, political, and tied to family power. Jón Arason and Teitur Þorleifsson stood on opposite sides of that struggle.',
     whyItMatters:
       'It works as a lead-up to the 1550 Reformation conflict. Jón Arason did not suddenly become political at the end of his life; he had been navigating armed Icelandic power politics for decades.',
+    confidenceNote:
+      'Low. The confrontation is attested in Icelandic sources but thinly — the outcome, casualties, and even the exact site all need verification against local histories.',
     confidence: 'low',
     sources: [
       {
@@ -948,6 +1056,10 @@ export const events: ConflictEvent[] = [
       'The Danish crown was forcing Lutheran reform through Iceland, while Jón Arason defended Catholic power, church property, and northern political independence. The argument had moved beyond sermons into armed force.',
     whyItMatters:
       'Sauðafell is the missing step between religious tension and the execution already on the map. Without this defeat, Jón Arason does not end up helpless at Skálholt.',
+    humanDrama:
+      'A bishop in his sixties rode to war with his own sons at his side — priests\' sons, in a church that officially demanded celibacy, which tells you plenty about Jón Arason. Daði Guðmundsson beat and captured all three. Father and sons would die together weeks later, and Jón reportedly met the news with poetry.',
+    confidenceNote:
+      'Medium. The capture at Sauðafell is well established in Reformation-era sources; the tactical details of the fight itself are thinner and partly reconstructed.',
     confidence: 'medium',
     sources: [
       {
@@ -990,6 +1102,12 @@ export const events: ConflictEvent[] = [
       "The Protestant Reformation was sweeping Europe and Denmark's king imposed it on Iceland. Jón Arason, bishop of Hólar, was a powerful political figure who saw this as both religious betrayal and a loss of Icelandic autonomy.",
     whyItMatters:
       "Iceland's last armed resistance to the Reformation ended here. Church properties were seized, Icelandic cultural heritage was disrupted, and Danish royal control was cemented. Jón Arason is still remembered as a national hero by some.",
+    humanDrama:
+      'No trial — his captors decided a beheading now was safer than a court case later, since Jón\'s allies might rescue him by spring. He was executed with two of his sons on the same block, the old bishop last. Within a year, northern fishermen had hunted down and killed the men responsible. Iceland converted, but nobody called it consent.',
+    modernTranslation:
+      'A foreign power imposes a regime change and one aging regional leader refuses to fold, raising a private militia. Captured, he\'s executed without trial because holding him is too politically risky. The state wins; he gets the martyrdom and the statues.',
+    confidenceNote:
+      'The execution itself is rock-solid — date, place, and victims are firmly documented. The "low" rating here reflects the surrounding details and exact site placement, not any doubt that it happened.',
     confidence: 'low',
     sources: [
       {
@@ -1027,6 +1145,12 @@ export const events: ConflictEvent[] = [
       'The Basques were far from home, short on options, and trying to survive after shipwrecks. Local officials saw them as dangerous outsiders and used harsh legal authority to justify violence.',
     whyItMatters:
       'Spánverjavígin is remembered partly because Jón Guðmundsson lærði condemned the killings. It is a brutal warning that fear, hunger, and official power can turn a disaster into a massacre.',
+    humanDrama:
+      'These were shipwrecked men trying to survive the winter, declared outlaws by a local decree that made killing them legal — and their captain, Martín de Villafranca, was cut down mid-surrender by some accounts. One Icelander, Jón lærði, risked his own neck to write that his countrymen had murdered innocent men. It took until 2015 for the district to formally revoke the decree.',
+    modernTranslation:
+      'A group of stranded foreign workers falls out with the locals over food and property. Instead of mediation, the district issues a decree that they can be killed on sight — and armed posses go door to door. One local whistleblower documents everything and spends his life paying for it.',
+    confidenceNote:
+      'High. Documented from both sides — Icelandic accounts including Jón lærði\'s contemporary condemnation, and Basque records of the lost expedition. Exact numbers and sites vary slightly, but the massacre itself is beyond doubt.',
     confidence: 'high',
     sources: [
       {
@@ -1068,6 +1192,10 @@ export const events: ConflictEvent[] = [
       'The corsairs were raiding European coasts for captives to sell into slavery. East Iceland was remote, lightly defended, and exposed to ships moving along the coast.',
     whyItMatters:
       'This gives the Austfirðir their own marker instead of hiding them inside the general Tyrkjaránið event. The trauma was national, but the first shock hit eastern communities hard.',
+    humanDrama:
+      'Whole households vanished from fjord farms in a week — parents taken, children taken, neighbors deciding between hiding in the hills or watching. For the eastern fjords the "Turkish raid" wasn\'t a national story; it was a specific missing family on the next farm over.',
+    confidenceNote:
+      'High. The eastern raids are documented in contemporary accounts and church records; the ~110 figure for those taken from the Eastfjords is the standard scholarly estimate.',
     confidence: 'high',
     sources: [
       {
@@ -1109,6 +1237,12 @@ export const events: ConflictEvent[] = [
       "Barbary corsairs regularly raided European coastlines for enslaved people to sell in North African markets. Iceland's remote location and near-total lack of coastal defenses made it an easy target. The raids were coordinated and professionally executed.",
     whyItMatters:
       "The Tyrkjaránið left a deep scar on Icelandic memory. It exposed how undefended Iceland was under Danish rule. The Danish king's failure to protect Icelanders fueled lasting resentment. Survivor accounts were written and are still read today.",
+    humanDrama:
+      'Of ~400 taken, only around 37 ever came home. One of them was Guðríður Símonardóttir, ransomed after nearly a decade enslaved in Algiers — who on the way home fell in love with her catechism tutor, a young poet named Hallgrímur Pétursson. He became Iceland\'s greatest hymn writer; Reykjavík\'s biggest church is named after him. Iceland\'s most beloved sacred poetry exists because of a pirate raid.',
+    modernTranslation:
+      'Professional raiders hit an undefended country, kidnap 400 citizens, and openly ransom them back over the following decades. The colonial power responsible for defense does close to nothing — the ransoms end up crowdfunded. Nobody forgot which government wasn\'t there.',
+    confidenceNote:
+      'High. Among the best-documented events in early modern Icelandic history: survivor letters, ransom records, and detailed contemporary accounts from multiple captives survive and are still in print.',
     confidence: 'high',
     sources: [
       {
@@ -1146,6 +1280,12 @@ export const events: ConflictEvent[] = [
       'After costly wars, Frederick III turned Denmark into an absolute monarchy and made his overseas lands, Iceland included, formally submit. Letters in 1662 ordered Icelandic representatives to come and pledge the new oath.',
     whyItMatters:
       'It locked Iceland into Danish absolutism for nearly two centuries and became a powerful symbol in the later independence struggle — the moment Icelanders were said to have signed away their freedom under threat.',
+    humanDrama:
+      'The image that stuck: the elderly lawman Árni Oddsson — who had spent his career defending Icelandic law — signing away his country\'s remaining freedoms in tears, with Danish soldiers standing by. Whether the soldiers and the tears are fact or later legend, Icelanders retold that scene for two centuries. Sometimes the story a nation tells about a document matters more than the document.',
+    modernTranslation:
+      'The head office summons all regional managers to a mandatory meeting to "reaffirm their commitment" to a new contract that removes every protection they had. Attendance is not optional, security is visible, and everyone signs. Officially, it was voluntary.',
+    confidenceNote:
+      'High for the event — the oath, date, and signatories are firmly documented. The dramatic details (soldiers ready, Árni weeping) come from later tradition and are not confirmed by contemporary sources.',
     confidence: 'high',
     sources: [
       {
@@ -1182,6 +1322,12 @@ export const events: ConflictEvent[] = [
       'Iceland was isolated, so its people rarely met smallpox and built up no immunity. When the infected clothing came ashore at Eyrarbakki in 1707, the virus spread unchecked through a population with no resistance and no real medicine.',
     whyItMatters:
       'It is not a battle, but it reshaped the country more than any war could — collapsing the workforce, emptying farms, and deepening the poverty and dependence that defined 18th-century Iceland under Danish rule.',
+    humanDrama:
+      'By tradition, the apocalypse arrived in a box: a chest of clothes belonging to a man who had died of smallpox in Copenhagen, shipped home to his family. His sister opened it, sickened, and within two years a quarter to a third of everyone in Iceland was dead. Grief, in the most literal way possible, killed the country.',
+    modernTranslation:
+      'A population with zero immunity meets a virus the rest of the world had already survived. No vaccines, no quarantine system, no medicine — imagine a pandemic where one in three or four people you know dies within two years, traced back to a single package from abroad.',
+    confidenceNote:
+      'High for the epidemic — the arrival date, spread, and catastrophic death toll are well documented. The chest-of-clothes origin story is tradition: plausible, unprovable, and too good for the annals to leave out.',
     confidence: 'high',
     sources: [
       {
@@ -1223,6 +1369,12 @@ export const events: ConflictEvent[] = [
       'After the Reformation, church and crown enforced morality through the 1564 Stóridómur code. Sex outside marriage and especially incest were treated as capital crimes, and Þingvellir — the old assembly site — became the place of execution.',
     whyItMatters:
       'It is the 18th century\'s quiet, institutional bloodshed: not a war but the state itself killing its own people for private sins. Drekkingarhylur is now one of the most sombre spots at Þingvellir.',
+    humanDrama:
+      'There\'s no battle here — just the state, methodically, for 130 years. Women sewn into sacks and held under at the nation\'s most sacred site, most of them condemned for pregnancies outside marriage, some for being victims of the men who shared their sentence. The pool sits a short walk from where Iceland proudly adopted Christianity by peaceful compromise. Both things are true about the same place.',
+    modernTranslation:
+      'Imagine the government executing people for their private lives — publicly, at the national monument, with the full weight of court and church behind it. Not a mob, not a scandal: policy, renewed annually for over a century.',
+    confidenceNote:
+      'High. The Stóridómur code and the executions are matters of court record, including names and dates; the count of at least 18 women drowned at this pool is drawn from documented cases.',
     confidence: 'high',
     sources: [
       {
@@ -1260,6 +1412,12 @@ export const events: ConflictEvent[] = [
       'The Danish monopoly (from 1602) left Icelanders at the mercy of a handful of licensed merchants. Skúli, having seen the cheating from the inside as a young clerk, used his official position to challenge it and build a homegrown alternative.',
     whyItMatters:
       'It is a conflict fought with lawsuits and looms instead of swords, and it founded Reykjavík. Skúli "fógeti" became a national hero — the man who started Iceland\'s long climb out of monopoly dependence.',
+    humanDrama:
+      'Skúli had worked for the monopoly merchants as a young clerk — he\'d weighed the sacks and kept the books, so he knew exactly how the cheating worked. Then he spent decades using that insider knowledge against them, suing over mouldy flour and rigged scales. The merchants had the money; Skúli had the receipts.',
+    modernTranslation:
+      'A former employee of a price-gouging monopoly becomes a regulator, sues his old employers with insider evidence, and launches a competing startup to break their grip. The startup\'s campus grows into the capital city.',
+    confidenceNote:
+      'High. Skúli\'s lawsuits, the founding of the Innréttingar in 1752, and their role in Reykjavík\'s growth are all firmly documented in administrative records.',
     confidence: 'high',
     sources: [
       {
@@ -1296,6 +1454,12 @@ export const events: ConflictEvent[] = [
       'The Laki fissure released enormous amounts of fluorine and sulphur dioxide. The fluorine poisoned the grass and the animals that ate it, and the loss of livestock in a subsistence farming country meant mass starvation over the next two winters.',
     whyItMatters:
       'It is the defining catastrophe of 18th-century Iceland — so devastating that Denmark briefly considered evacuating the whole island. Its haze chilled and starved much of Europe too, making it a disaster of global reach.',
+    humanDrama:
+      'As the lava advanced on Kirkjubæjarklaustur, the priest Jón Steingrímsson gathered his terrified parishioners in the church and preached while the ground burned toward them — the famous eldmessa, the "fire sermon." The lava stopped short of the church. Jón then spent the famine years burying his parishioners, including his wife, and writing down everything with a scientist\'s precision and a survivor\'s grief.',
+    modernTranslation:
+      'A single geological event poisons a country\'s food supply for two years — a fifth of the population dies, and the government abroad seriously debates evacuating the entire nation. The ash cloud then disrupts harvests across a continent. Some historians trace part of the hunger before the French Revolution to this one Icelandic fissure.',
+    confidenceNote:
+      'High. Documented by an eyewitness of rare quality — Jón Steingrímsson\'s own account — plus Danish administrative records and modern volcanology confirming the eruption\'s scale and global effects.',
     confidence: 'high',
     sources: [
       {
@@ -1333,6 +1497,12 @@ export const events: ConflictEvent[] = [
       'The Napoleonic Wars disrupted Denmark, Britain, trade, and North Atlantic politics. Iceland was isolated and vulnerable, and Jørgensen used the chaos to stage a takeover.',
     whyItMatters:
       'It is not a normal battle, but it is one of Iceland\'s strangest political conflicts. It shows how global war could suddenly reach Reykjavík and shake Danish rule, even briefly.',
+    humanDrama:
+      'Jørgensen was a Danish ex-privateer who arrived on a British trading ship, arrested the Danish governor on a Sunday, and declared himself "Protector of all Iceland" — promising independence, a flag, and a parliament. Icelanders mostly shrugged and waited. Two months later a Royal Navy captain shut it down, and Jørgensen\'s life continued its arc: prison hulks, spying, gambling debts, and eventually a convict transport to Tasmania. Icelanders still call his reign the "Dog Days" — after the season, and maybe the vibe.',
+    modernTranslation:
+      'A charismatic foreign chancer with corporate backing walks into a power vacuum, arrests the local administration, and declares a new country with himself in charge "temporarily." The great powers take two months to notice, then delete the whole thing.',
+    confidenceNote:
+      'High. Thoroughly documented from British, Danish, and Icelandic records — Jørgensen was too flamboyant to go unrecorded, and wrote plenty about himself besides.',
     confidence: 'high',
     sources: [
       {
@@ -1370,6 +1540,12 @@ export const events: ConflictEvent[] = [
       'British steam trawlers were dragging the fjords for fish faster than Icelanders could, often inside the protected coastal waters. Denmark policed Iceland only with a summer gunboat, so once it left, local officials like Hannes had almost no way to stop them.',
     whyItMatters:
       'The disaster became a national symbol of how defenceless Iceland was in its own waters. It pushed for year-round coastal patrols (the Falk) and is an early chapter in the long fight over fishing limits that later became the Cod Wars.',
+    humanDrama:
+      'A sheriff in a rowboat tried to arrest an industrial steam trawler — that\'s the whole power imbalance of colonial Iceland in one image. The trawler dragged the boat under and three men drowned; Hannes Hafstein barely swam to safety. Five years later that same half-drowned sheriff became Iceland\'s first Home Rule minister. The country remembered who had actually gone out on the water.',
+    modernTranslation:
+      'A local cop in a dinghy tries to pull over a factory ship for poaching. The ship just... keeps going, and people die in its wake. No one is ever really held to account, because the poachers\' country is big and yours is small — so the incident becomes your national argument for getting a coast guard.',
+    confidenceNote:
+      'High. A well-documented modern event: contemporary newspaper accounts, official records, and the names of the drowned are all on record.',
     confidence: 'high',
     sources: [
       {
@@ -1408,6 +1584,12 @@ export const events: ConflictEvent[] = [
       'Mass unemployment in the Depression made the relief wage a lifeline. Cutting it felt like an attack on people already on the edge, and Reykjavík\'s growing labour movement was ready to fight back.',
     whyItMatters:
       'The biggest clash of Iceland\'s labour struggles — a moment when ordinary workers physically beat the authorities. It pushed Iceland to build a real organised police force and deepened the country\'s left-right divide.',
+    humanDrama:
+      'The city\'s answer to starving men was to cut their relief wages — so the starving men answered back with fists and table legs, and won. Twenty of Reykjavík\'s twenty-eight police officers were injured; for a day, the capital effectively had no functioning police force. The wage cut was never mentioned again.',
+    modernTranslation:
+      'Mid-recession, the city council votes to cut pay for its lowest-paid emergency-relief workers. The council meeting gets stormed, the police lose the street fight, and the cut is quietly reversed. Austerity, meet consequences.',
+    confidenceNote:
+      'High. A 20th-century event with newspaper coverage, police records, and living memory behind it — the injury figures come straight from the record.',
     confidence: 'high',
     sources: [
       { title: 'Wikipedia: Gúttóslagurinn', url: 'https://en.wikipedia.org/wiki/G%C3%BAtt%C3%B3slagurinn' },
@@ -1438,6 +1620,12 @@ export const events: ConflictEvent[] = [
       'Germany had occupied Denmark in April 1940, leaving Iceland strategically exposed. Britain wanted control of the island\'s harbours, airfields, and North Atlantic position before Germany could move.',
     whyItMatters:
       'Operation Fork pulled Iceland directly into World War II strategy. It also led to later American defense arrangements and helped push Iceland toward full independence from Denmark in 1944.',
+    humanDrama:
+      'The invasion force handed out leaflets in badly translated Icelandic asking everyone to stay calm. The government lodged a formal protest — and then asked people to treat the invaders "as guests." A policeman reportedly helped a Marine light a cigarette outside the German consulate while the consul burned his papers. As occupations go, it was aggressively polite, and the war economy that followed transformed the country.',
+    modernTranslation:
+      'A neutral country with no army wakes up to find allied troops in its harbor — not because of anything it did, but because of where it sits on the map. The official response is a strongly worded letter; the practical response is selling the occupiers fish and taking the construction jobs.',
+    confidenceNote:
+      'High. One of the most documented moments in Icelandic history — official records on both sides, photographs, and press coverage from day one.',
     confidence: 'high',
     sources: [
       {
@@ -1475,6 +1663,12 @@ export const events: ConflictEvent[] = [
       'Joining a military alliance horrified many Icelanders — a country with no army and a strong neutralist and socialist tradition. The vote pushed the disagreement out into the streets.',
     whyItMatters:
       'It exposed a deep, lasting split in Iceland over Western military ties, foreign bases and neutrality — an argument that ran through the whole Cold War.',
+    humanDrama:
+      'A nation that prided itself on a thousand years of settling things with words watched stones shatter the windows of its own parliament — with the MPs inside, mid-vote. Police used tear gas on Icelanders for the first time. The vote passed anyway, and families and friendships split over that day for a generation.',
+    modernTranslation:
+      'Parliament votes on joining a military alliance while a furious crowd outside pelts the building with rocks and the police respond with batons and tear gas. The treaty passes; the argument about whether it should have doesn\'t end for forty years.',
+    confidenceNote:
+      'High. Extensively documented in press, photographs, and parliamentary records; it remains the most studied riot in Icelandic history.',
     confidence: 'high',
     sources: [
       {
@@ -1513,6 +1707,12 @@ export const events: ConflictEvent[] = [
       "Fishing is the backbone of Iceland's economy. As fish stocks came under pressure, Iceland expanded its exclusive fishing zone (4 → 12 → 50 → 200 miles). Britain refused to recognise the new limits and sent the Royal Navy to protect its trawlers.",
     whyItMatters:
       "Iceland won every round. It even threatened to leave NATO and close a strategically vital US base — leverage that forced Britain to back down. The 200-mile exclusive economic zone Iceland fought for later became a global norm under international law.",
+    humanDrama:
+      'A country of 200,000 with no military took on the Royal Navy three times and won every round. The secret weapon wasn\'t a weapon: it was net-cutters, stubbornness, and the credible threat to kick NATO\'s most strategically placed radar station off the island. Britain sent frigates; Iceland sent a handful of gunboats and a geopolitical ultimatum. The frigates went home.',
+    modernTranslation:
+      'A tiny company beats a giant in three consecutive disputes, not by outspending it but by owning one asset the giant\'s biggest partner cannot live without — and being visibly willing to burn it. Leverage beats size, three times in a row.',
+    confidenceNote:
+      'High. Recent, exhaustively documented on both sides, and heavily studied by historians and international-law scholars — the confrontations, tactics, and outcomes are not in dispute.',
     confidence: 'high',
     sources: [
       {
