@@ -30,6 +30,7 @@ export const events: ConflictEvent[] = [
       'Iceland\'s origin story has a body count. The thralls weren\'t villains — they were enslaved men making a break for freedom, and their leader chose a cliff over capture. Ingólfur\'s verdict on his dead foster-brother says it all: this is what happens "when you have thralls do your sacrificing" — even the revenge came with a lecture.',
     confidenceNote:
       'Low. The only source is Landnámabók, written down some 250 years after the events by people with an interest in tidy founding legends. The place-names are real; whether the story behind them is, nobody can say.',
+    uncertaintyFlags: ['legendary', 'location_uncertain', 'date_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -77,6 +78,7 @@ export const events: ConflictEvent[] = [
       'Your boss tells everyone: "touch my car and you\'re finished." One day you need it for a genuine work emergency. He fires you on the spot — not because he\'s angry, but because he said he would, and in this world walking back your word costs more than a life.',
     confidenceNote:
       'Low. Hrafnkels saga is so neatly plotted that many scholars think it\'s closer to a medieval novel than a chronicle — it may be almost entirely fiction hung on real places and names.',
+    uncertaintyFlags: ['legendary', 'location_uncertain', 'date_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -122,6 +124,7 @@ export const events: ConflictEvent[] = [
       'Brodd-Helgi and Geitir started as brothers-in-law and close friends — then spent years destroying each other over money, status, and pride. Each ended up killed by the other\'s side, and their sons inherited the feud like a family heirloom nobody could refuse.',
     confidenceNote:
       'Low. The saga was written down centuries after the events it claims to describe. The families and the fjord are real; the blow-by-blow is literature.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized', 'location_uncertain', 'date_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -169,6 +172,7 @@ export const events: ConflictEvent[] = [
       'A country on the brink of civil war over an existential culture issue agrees to binding arbitration — and hands the decision to a judge from the losing side. He rules against his own camp to keep the country whole, with a few quiet carve-outs so the losers can live with it.',
     confidenceNote:
       'Medium. The core account comes from Ari fróði\'s Íslendingabók, written about 120 years later from named informants — unusually good sourcing for the era. The cloak scene and the idol-throwing are the parts most likely polished in the telling.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized'],
     confidence: 'medium',
     sources: [
       {
@@ -205,6 +209,7 @@ export const events: ConflictEvent[] = [
       'It shows the smaller-scale violence that made saga society so unstable. Not every conflict was a giant battle; many were local feuds that still shaped law cases, alliances, and family memory for generations.',
     confidenceNote:
       'Low. The episode comes from Eyrbyggja saga, written some 250 years later. Treat it as the kind of thing that happened rather than a documented incident.',
+    uncertaintyFlags: ['saga_dramatized', 'location_uncertain', 'date_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -244,6 +249,7 @@ export const events: ConflictEvent[] = [
       'Droplaugarsona saga is useful because it gives the map a real Fljótsdalur/Lagarfljót conflict, not just the famous battles from the north and west.',
     confidenceNote:
       'Low. Like most family sagas, this was written down centuries after the fact. Real region, real family names, unverifiable plot.',
+    uncertaintyFlags: ['saga_dramatized', 'location_uncertain', 'date_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -297,6 +303,7 @@ export const events: ConflictEvent[] = [
       'Imagine a decades-long legal feud between two families — lawsuits, settlements, hit jobs, more settlements — until one side gives up on court entirely and firebombs the other\'s house. The one survivor spends years hunting the arsonists across three countries. And everyone involved knows the exact legal fee for each killing.',
     confidenceNote:
       'Medium. Njáls saga was written about 250 years after the events, and it\'s literature of the highest order — which cuts both ways. But a burning at Bergþórshvoll is treated as fact by other medieval sources, and excavations there have found burnt layers of the right general era.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized', 'date_uncertain'],
     confidence: 'medium',
     sources: [
       {
@@ -342,6 +349,7 @@ export const events: ConflictEvent[] = [
       'Kolbeinn marched against the bishop — and by tradition composed "Heyr, himna smiður" ("Hear, smith of heavens"), one of the most tender prayers in the language, right before dying in battle against the church he was praying to. He was killed by a stone to the head. Iceland still sings his hymn at funerals.',
     confidenceNote:
       'Medium. The battle and Kolbeinn\'s death are solidly attested in the Sturlunga-era sources; the story that he composed the hymn on the eve of the fight is tradition, though the attribution to him is old and widely accepted.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
     confidence: 'medium',
     sources: [
       {
@@ -389,6 +397,7 @@ export const events: ConflictEvent[] = [
       'The beloved town doctor has one bitter rival. Twice he has the chance to destroy him and declines, because that\'s not who he is. The rival, unburdened by any such principles, eventually shows up with armed men and kills him. Being the better man is a great epitaph and a terrible survival strategy.',
     confidenceNote:
       'Medium. Hrafns saga was written within living memory of the events — but by someone firmly on Hrafn\'s side, so the saintly-doctor portrait should be read with that in mind. The killing itself is not in doubt.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized', 'location_uncertain'],
     confidence: 'medium',
     sources: [
       {
@@ -432,6 +441,7 @@ export const events: ConflictEvent[] = [
       'It is a great map event because it makes the church-versus-chieftain conflict feel physical: not abstract politics, but armed men crowding around a rural church and forcing a surrender.',
     confidenceNote:
       'Low. The siege appears in the Sturlunga-era material around Bishop Guðmundur, but the details are thin and the exact site and casualty picture are uncertain.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -477,6 +487,7 @@ export const events: ConflictEvent[] = [
       'The attackers won the fight and lost the trip: about a dozen of the bishop\'s men died on the island, then thirty-plus of the victorious raiders drowned sailing home. Medieval Icelanders did not need a moralist to point out what that looked like. The sea kept better accounts than the law did.',
     confidenceNote:
       'Medium. The expedition is well attested in Sturlunga saga, though the casualty figures — especially the drownings — vary between accounts.',
+    uncertaintyFlags: ['event_likely'],
     confidence: 'medium',
     sources: [
       {
@@ -516,6 +527,7 @@ export const events: ConflictEvent[] = [
       'Sauðafellsför helps explain why the Sturlung Age feels so messy. The war was not just famous battles; it was raids, threats, humiliation, and constant pressure between ambitious kin groups.',
     confidenceNote:
       'Low. The raid is part of the Sturlunga tradition, but which faction did what to whom at Sauðafell needs verification against the saga text — details here are marked for checking.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized', 'location_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -561,6 +573,7 @@ export const events: ConflictEvent[] = [
       'Sturla and Snorri were uncle and nephew — both Sturlungar, both supposedly on the same side of Iceland\'s great divide. It didn\'t matter. Thirty men died so one branch of the family could squeeze the other. The civil war\'s dirty secret was that the biggest clan spent half its energy fighting itself.',
     confidenceNote:
       'Medium. Recorded in the Sturlunga compilation, written close to the events by people connected to the family — well-informed, but never neutral.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
     confidence: 'medium',
     sources: [
       {
@@ -605,6 +618,7 @@ export const events: ConflictEvent[] = [
       'You corner your biggest rival, make him sign a loyalty pledge in front of everyone, and then let him go to look magnanimous. He drives home, rips up the contract, and spends the next six months assembling the coalition that ends you.',
     confidenceNote:
       'Medium. The episode is described in Sturlunga saga and is generally accepted, but the round troop figures (400 vs 40) are the saga\'s framing, and exact numbers should be read as dramatic shorthand rather than a headcount.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized'],
     confidence: 'medium',
     sources: [
       { title: 'Wikipedia: Apavatnsför', url: 'https://is.wikipedia.org/wiki/Apavatnsf%C3%B6r' },
@@ -729,6 +743,7 @@ export const events: ConflictEvent[] = [
       'Órækja was avenging his father — Snorri Sturluson — against Gissur, the man behind the killing. Hundreds of armed men squared off at Iceland\'s holiest site... and by some accounts exactly one man died. The bishop stood between the armies, and for once in the Sturlung Age, standing between armies actually worked.',
     confidenceNote:
       'Medium. The confrontation is well attested in Sturlunga saga; the oddly low casualty count is what the sources actually say, not a gap in them.',
+    uncertaintyFlags: ['event_likely'],
     confidence: 'medium',
     sources: [
       {
@@ -890,6 +905,7 @@ export const events: ConflictEvent[] = [
       'Eyjólfur ofsi — "the Violent" — was one of the men behind the Flugumýri burning two years earlier, where a family died in a fire days after a peace wedding. At Þverá the avengers caught up with him and killed him. In the Sturlung Age the arsonists rarely died of old age.',
     confidenceNote:
       'Medium. The battle and Eyjólfur\'s death are recorded in the Sturlunga material; the casualty range and some of the faction detail vary between sources.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
     confidence: 'medium',
     sources: [
       {
@@ -937,6 +953,7 @@ export const events: ConflictEvent[] = [
       'An unpopular governor sent in from abroad throws his weight around one district too many. Locals storm his residence at night and kill him — and the central government, reading the room, quietly declines to make an example of anyone.',
     confidenceNote:
       'Medium. The killing is recorded in the Icelandic annals with a firm date, but annal entries are terse — the buildup and motives are partly reconstruction.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
     confidence: 'medium',
     sources: [
       {
@@ -980,6 +997,7 @@ export const events: ConflictEvent[] = [
       'A corrupt official with immunity from above keeps shaking down a region. Eventually a local strongman deals with him permanently, off the books — and prosecutors, judges, and clergy all discover urgent reasons to look elsewhere.',
     confidenceNote:
       'Medium. The killing is part of the documented record, but the details come partly through folklore — including the burial mound still pointed out by the Ölfusá.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
     confidence: 'medium',
     sources: [
       {
@@ -1019,6 +1037,7 @@ export const events: ConflictEvent[] = [
       'It works as a lead-up to the 1550 Reformation conflict. Jón Arason did not suddenly become political at the end of his life; he had been navigating armed Icelandic power politics for decades.',
     confidenceNote:
       'Low. The confrontation is attested in Icelandic sources but thinly — the outcome, casualties, and even the exact site all need verification against local histories.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -1060,6 +1079,7 @@ export const events: ConflictEvent[] = [
       'A bishop in his sixties rode to war with his own sons at his side — priests\' sons, in a church that officially demanded celibacy, which tells you plenty about Jón Arason. Daði Guðmundsson beat and captured all three. Father and sons would die together weeks later, and Jón reportedly met the news with poetry.',
     confidenceNote:
       'Medium. The capture at Sauðafell is well established in Reformation-era sources; the tactical details of the fight itself are thinner and partly reconstructed.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
     confidence: 'medium',
     sources: [
       {
@@ -1108,6 +1128,7 @@ export const events: ConflictEvent[] = [
       'A foreign power imposes a regime change and one aging regional leader refuses to fold, raising a private militia. Captured, he\'s executed without trial because holding him is too politically risky. The state wins; he gets the martyrdom and the statues.',
     confidenceNote:
       'The execution itself is rock-solid — date, place, and victims are firmly documented. The "low" rating here reflects the surrounding details and exact site placement, not any doubt that it happened.',
+    uncertaintyFlags: ['location_uncertain'],
     confidence: 'low',
     sources: [
       {
@@ -1151,6 +1172,7 @@ export const events: ConflictEvent[] = [
       'A group of stranded foreign workers falls out with the locals over food and property. Instead of mediation, the district issues a decree that they can be killed on sight — and armed posses go door to door. One local whistleblower documents everything and spends his life paying for it.',
     confidenceNote:
       'High. Documented from both sides — Icelandic accounts including Jón lærði\'s contemporary condemnation, and Basque records of the lost expedition. Exact numbers and sites vary slightly, but the massacre itself is beyond doubt.',
+    uncertaintyFlags: ['location_uncertain'],
     confidence: 'high',
     sources: [
       {
@@ -1196,6 +1218,7 @@ export const events: ConflictEvent[] = [
       'Whole households vanished from fjord farms in a week — parents taken, children taken, neighbors deciding between hiding in the hills or watching. For the eastern fjords the "Turkish raid" wasn\'t a national story; it was a specific missing family on the next farm over.',
     confidenceNote:
       'High. The eastern raids are documented in contemporary accounts and church records; the ~110 figure for those taken from the Eastfjords is the standard scholarly estimate.',
+    uncertaintyFlags: ['location_uncertain'],
     confidence: 'high',
     sources: [
       {
@@ -1546,6 +1569,7 @@ export const events: ConflictEvent[] = [
       'A local cop in a dinghy tries to pull over a factory ship for poaching. The ship just... keeps going, and people die in its wake. No one is ever really held to account, because the poachers\' country is big and yours is small — so the incident becomes your national argument for getting a coast guard.',
     confidenceNote:
       'High. A well-documented modern event: contemporary newspaper accounts, official records, and the names of the drowned are all on record.',
+    uncertaintyFlags: ['location_uncertain'],
     confidence: 'high',
     sources: [
       {

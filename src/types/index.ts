@@ -14,6 +14,16 @@ export type EventType =
 
 export type Confidence = 'high' | 'medium' | 'low';
 
+// Structured source-quality flags: what exactly is (un)certain about an event.
+// Orthogonal to the overall confidence rating — a medium-confidence saga event
+// can be "event likely happened" AND "location uncertain" at the same time.
+export type UncertaintyFlag =
+  | 'event_likely' // the core event is accepted as historical, even if details wobble
+  | 'saga_dramatized' // known through saga literature, which polishes and dramatizes
+  | 'location_uncertain' // the marker is a best guess; exact site unverified
+  | 'date_uncertain' // the year is traditional, approximate, or debated
+  | 'legendary'; // may be legend or folklore more than history
+
 export interface Source {
   title: string;
   url: string;
@@ -43,6 +53,8 @@ export interface ConflictEvent {
   modernTranslation?: string;
   /** Why historians are sure or unsure it happened this way. */
   confidenceNote?: string;
+  /** Structured source-quality chips shown in the card header. */
+  uncertaintyFlags?: UncertaintyFlag[];
   confidence: Confidence;
   sources: Source[];
 }

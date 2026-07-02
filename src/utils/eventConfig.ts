@@ -1,4 +1,4 @@
-import { EventType, Confidence } from '../types';
+import { EventType, Confidence, UncertaintyFlag } from '../types';
 
 export interface TypeConfig {
   label: string;
@@ -118,6 +118,36 @@ export const CONFIDENCE_CONFIG: Record<Confidence, {
     description: 'Needs more source verification',
     color: '#721c24',
     bgColor: '#f8d7da',
+  },
+};
+
+// Source-quality flags: label + tooltip for the chips under the card badges.
+// Uncertainty is part of the fun — say exactly what is and isn't known.
+export const FLAG_CONFIG: Record<UncertaintyFlag, { label: string; symbol: string; description: string }> = {
+  event_likely: {
+    label: 'Event likely happened',
+    symbol: '✓',
+    description: 'The core event is accepted as historical, even if the details are debated.',
+  },
+  saga_dramatized: {
+    label: 'Saga account dramatized',
+    symbol: '📜',
+    description: 'Known mainly through saga literature, which polishes, compresses, and dramatizes.',
+  },
+  location_uncertain: {
+    label: 'Location approximate',
+    symbol: '📍',
+    description: 'The map marker is a best guess — the exact site is unverified or representative.',
+  },
+  date_uncertain: {
+    label: 'Date uncertain',
+    symbol: '🗓',
+    description: 'The year is traditional, approximate, or debated between sources.',
+  },
+  legendary: {
+    label: 'Legendary / folklore',
+    symbol: '🐉',
+    description: 'The story may be legend more than history — real places, unverifiable plot.',
   },
 };
 

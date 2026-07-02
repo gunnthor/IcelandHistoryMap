@@ -1,5 +1,5 @@
 import { ConflictEvent } from '../types';
-import { EVENT_CONFIG, CONFIDENCE_CONFIG } from '../utils/eventConfig';
+import { EVENT_CONFIG, CONFIDENCE_CONFIG, FLAG_CONFIG } from '../utils/eventConfig';
 
 interface EventPanelProps {
   event: ConflictEvent | null;
@@ -46,6 +46,20 @@ function PanelContent({ event, onClose }: EventPanelProps) {
             {event.confidence === 'high' ? '✓' : event.confidence === 'medium' ? '~' : '?'} {confCfg.label} confidence
           </span>
         </div>
+        {/* Source-quality flags: what exactly is (un)certain about this event */}
+        {event.uncertaintyFlags && event.uncertaintyFlags.length > 0 && (
+          <div className="flag-row">
+            {event.uncertaintyFlags.map((flag) => {
+              const cfg = FLAG_CONFIG[flag];
+              return (
+                <span key={flag} className={`flag-chip flag-${flag}`} title={cfg.description}>
+                  <span>{cfg.symbol}</span>
+                  {cfg.label}
+                </span>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <div className="panel-body">
