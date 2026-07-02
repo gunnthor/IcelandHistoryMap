@@ -4,11 +4,13 @@ export type EventType =
   | 'raid'
   | 'burning'
   | 'massacre'
+  | 'killing' // a targeted slaying or assassination (víg), as opposed to a judicial execution
+  | 'feud' // a long-running kin/clan conflict rather than one dated clash
   | 'occupation'
-  | 'execution'
+  | 'execution' // state or church putting someone to death with legal cover
+  | 'political' // conversions, oaths, riots, trade wars — conflict without (much) blood
   | 'eruption'
-  | 'plague'
-  | 'other';
+  | 'plague';
 
 export type Confidence = 'high' | 'medium' | 'low';
 

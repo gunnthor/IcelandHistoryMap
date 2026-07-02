@@ -53,7 +53,7 @@ export const events: ConflictEvent[] = [
     year: 970,
     dateText: 'Saga Age — date uncertain',
     period: 'Saga Age / East Iceland',
-    type: 'execution',
+    type: 'killing',
     locationName: 'Aðalból / Hrafnkelsdalur, East Iceland (coordinates approximate — verify)',
     coordinates: [65.08, -15.43],
     factions: [
@@ -100,7 +100,7 @@ export const events: ConflictEvent[] = [
     year: 980,
     dateText: 'Saga Age — date uncertain',
     period: 'Saga Age / East Iceland',
-    type: 'other',
+    type: 'feud',
     locationName: 'Vopnafjörður, East Iceland (representative marker; coordinates approximate — verify)',
     coordinates: [65.75, -14.83],
     factions: [
@@ -145,7 +145,7 @@ export const events: ConflictEvent[] = [
     year: 1000,
     dateText: 'c. 999–1000, at the Alþingi',
     period: 'Saga Age / Icelandic Commonwealth',
-    type: 'other',
+    type: 'political',
     locationName: 'Þingvellir (Lögberg), Alþingi',
     coordinates: [64.2559, -21.13],
     factions: [
@@ -224,7 +224,7 @@ export const events: ConflictEvent[] = [
     year: 1000,
     dateText: 'Saga Age — date uncertain',
     period: 'Saga Age / East Iceland',
-    type: 'other',
+    type: 'feud',
     locationName: 'Fljótsdalur / Lagarfljót area, East Iceland (representative marker; coordinates approximate — verify)',
     coordinates: [65.04, -14.95],
     factions: [
@@ -365,7 +365,7 @@ export const events: ConflictEvent[] = [
     year: 1213,
     dateText: 'March 4, 1213',
     period: 'Early Sturlung Age / Westfjords Feuds',
-    type: 'execution',
+    type: 'killing',
     locationName: 'Eyri / Hrafnseyri, Arnarfjörður (coordinates approximate — verify)',
     coordinates: [65.75, -23.46],
     factions: [
@@ -664,7 +664,7 @@ export const events: ConflictEvent[] = [
     year: 1241,
     dateText: 'September 23, 1241',
     period: 'Age of the Sturlungs',
-    type: 'execution',
+    type: 'killing',
     locationName: 'Reykholt, Borgarfjörður',
     coordinates: [64.6631, -21.2928],
     factions: [
@@ -956,7 +956,7 @@ export const events: ConflictEvent[] = [
     year: 1502,
     dateText: '1502',
     period: 'Late Catholic Iceland / Danish officials',
-    type: 'execution',
+    type: 'killing',
     locationName: 'Hraun í Ölfusi, South Iceland (coordinates approximate)',
     coordinates: [63.87, -21.05],
     factions: [
@@ -1262,7 +1262,7 @@ export const events: ConflictEvent[] = [
     year: 1662,
     dateText: 'July 28, 1662',
     period: 'Danish Rule / Absolutism',
-    type: 'occupation',
+    type: 'political',
     locationName: 'Kópavogsþingstaður (Þinghóll), Kópavogur (coordinates approximate)',
     coordinates: [64.1057, -21.9118],
     factions: [
@@ -1394,7 +1394,7 @@ export const events: ConflictEvent[] = [
     year: 1752,
     dateText: '1750s (Innréttingar founded 1752)',
     period: 'Danish Rule / Trade Monopoly',
-    type: 'other',
+    type: 'political',
     locationName: 'Reykjavík (Aðalstræti — the Innréttingar workshops)',
     coordinates: [64.1475, -21.9418],
     factions: [
@@ -1569,7 +1569,7 @@ export const events: ConflictEvent[] = [
     year: 1932,
     dateText: 'November 9, 1932',
     period: 'Kingdom of Iceland / Great Depression',
-    type: 'other',
+    type: 'political',
     locationName: 'Góðtemplarahúsið (Gúttó), by Tjörnin, Reykjavík',
     coordinates: [64.1462, -21.942],
     factions: ['Reykjavík workers and the unemployed', 'Reykjavík police'],
@@ -1645,7 +1645,7 @@ export const events: ConflictEvent[] = [
     year: 1949,
     dateText: 'March 30, 1949',
     period: 'Republic of Iceland / Cold War',
-    type: 'other',
+    type: 'political',
     locationName: 'Austurvöllur, in front of the Alþingi, Reykjavík',
     coordinates: [64.1466, -21.9408],
     factions: [

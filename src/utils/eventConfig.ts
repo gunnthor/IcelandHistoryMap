@@ -44,12 +44,33 @@ export const EVENT_CONFIG: Record<EventType, TypeConfig> = {
     bgColor: '#f4cccc',
     borderColor: '#8a1f1f',
   },
+  killing: {
+    label: 'Killing',
+    symbol: '🗡',
+    color: '#6e1423',
+    bgColor: '#f7d6dd',
+    borderColor: '#a4133c',
+  },
+  feud: {
+    label: 'Feud',
+    symbol: '🪓',
+    color: '#5d4037',
+    bgColor: '#efe5dc',
+    borderColor: '#8d6e63',
+  },
   execution: {
     label: 'Execution',
     symbol: '☩',
     color: '#4a1a7a',
     bgColor: '#e8daef',
     borderColor: '#8e44ad',
+  },
+  political: {
+    label: 'Political',
+    symbol: '⚖',
+    color: '#2c3e50',
+    bgColor: '#e2e8f0',
+    borderColor: '#546e7a',
   },
   occupation: {
     label: 'Occupation',
@@ -71,13 +92,6 @@ export const EVENT_CONFIG: Record<EventType, TypeConfig> = {
     color: '#4a5d23',
     bgColor: '#e7edd6',
     borderColor: '#6b8e23',
-  },
-  other: {
-    label: 'Other',
-    symbol: '?',
-    color: '#4a4a4a',
-    bgColor: '#eeeeee',
-    borderColor: '#7f8c8d',
   },
 };
 

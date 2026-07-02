@@ -39,9 +39,9 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
         </button>
 
         <h2 id="about-title" className="about-title">
-          ⚔ Battle Map of Iceland
+          ⚔ Sagas of Blood &amp; Fire
         </h2>
-        <p className="about-tagline">Sagas of blood, fire &amp; feud across the old North.</p>
+        <p className="about-tagline">An interactive map of Iceland&apos;s violent history.</p>
 
         <p className="about-body">
           An interactive map of Iceland&apos;s messiest historical conflicts — battles, raids,

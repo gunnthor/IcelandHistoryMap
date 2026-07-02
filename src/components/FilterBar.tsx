@@ -18,11 +18,13 @@ const EVENT_TYPES: EventType[] = [
   'raid',
   'burning',
   'massacre',
+  'killing',
+  'feud',
   'execution',
+  'political',
   'occupation',
   'eruption',
   'plague',
-  'other',
 ];
 const CONFIDENCES: Confidence[] = ['high', 'medium', 'low'];
 

@@ -1,4 +1,6 @@
-# Battle Map of Iceland
+# Sagas of Blood & Fire
+
+*(formerly Battle Map of Iceland)*
 
 An interactive map of Iceland's messiest historical conflicts — history for people with low patience for history.
 

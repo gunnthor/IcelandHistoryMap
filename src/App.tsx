@@ -189,9 +189,9 @@ export default function App() {
       {/* Header */}
       <header className="header">
         <div className="header-branding">
-          <div className="header-title">⚔ Battle Map of Iceland</div>
+          <div className="header-title">⚔ Sagas of Blood &amp; Fire</div>
           <div className="header-subtitle">
-            Sagas of blood, fire &amp; feud across the old North.
+            An interactive map of Iceland&apos;s violent history.
           </div>
         </div>
         <div className="header-controls">
