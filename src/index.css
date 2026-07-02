@@ -493,6 +493,21 @@ a:hover { color: var(--accent-hover); }
   line-height: 1;
 }
 .panel-close:hover { background: var(--chip-bg); color: var(--text); }
+.panel-share {
+  background: none;
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 3px 9px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.panel-share:hover { background: var(--chip-bg); color: var(--text); }
+.panel-share.copied { color: #1e6b40; border-color: #86c8a0; }
 .panel-event-name {
   font-size: 1.05rem;
   font-weight: 700;

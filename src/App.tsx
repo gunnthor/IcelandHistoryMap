@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { ConflictEvent, FilterState } from './types';
 import { events as allEvents } from './data/events';
 import { getYearBounds, ERAS, clampRange, Era } from './utils/eventConfig';
@@ -134,20 +134,35 @@ export default function App() {
     setSelectedEvent(tourEvents[prev]);
   };
 
-  // Deep-link: read an event id from the URL hash on first load.
+  // Deep-link: read /event/<id> (or a legacy #event= hash) on first load.
   useEffect(() => {
-    const match = window.location.hash.match(/event=([\w-]+)/);
-    if (match) {
-      const ev = allEvents.find((e) => e.id === match[1]);
+    const base = import.meta.env.BASE_URL;
+    const path = window.location.pathname.startsWith(base)
+      ? window.location.pathname.slice(base.length)
+      : window.location.pathname.replace(/^\//, '');
+    const id =
+      path.match(/^event\/([\w-]+)\/?$/)?.[1] ??
+      window.location.hash.match(/event=([\w-]+)/)?.[1];
+    if (id) {
+      const ev = allEvents.find((e) => e.id === id);
       if (ev) setSelectedEvent(ev);
     }
   }, []);
 
-  // Deep-link: keep the URL hash in sync with the selection (shareable links).
+  // Deep-link: keep the URL path + tab title in sync with the selection.
+  // Skipped on mount — the URL is already right, and the first run would
+  // briefly wipe a deep-linked path before the selection state lands.
+  const urlSyncReady = useRef(false);
   useEffect(() => {
-    const url = new URL(window.location.href);
-    url.hash = selectedEvent ? `event=${selectedEvent.id}` : '';
-    window.history.replaceState(null, '', url.toString());
+    if (!urlSyncReady.current) {
+      urlSyncReady.current = true;
+      return;
+    }
+    const base = import.meta.env.BASE_URL;
+    window.history.replaceState(null, '', selectedEvent ? `${base}event/${selectedEvent.id}` : base);
+    document.title = selectedEvent
+      ? `${selectedEvent.name} — Sagas of Blood & Fire`
+      : "Sagas of Blood & Fire — Iceland's violent history, mapped";
   }, [selectedEvent]);
 
   // Keyboard shortcuts: Esc closes / exits tour, arrows step through the tour.

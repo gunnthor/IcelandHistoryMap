@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ConflictEvent } from '../types';
 import { EVENT_CONFIG, CONFIDENCE_CONFIG, FLAG_CONFIG } from '../utils/eventConfig';
 
@@ -7,6 +8,8 @@ interface EventPanelProps {
 }
 
 function PanelContent({ event, onClose }: EventPanelProps) {
+  const [copied, setCopied] = useState(false);
+
   if (!event) {
     return (
       <div className="panel-placeholder">
@@ -20,11 +23,36 @@ function PanelContent({ event, onClose }: EventPanelProps) {
   const typeCfg = EVENT_CONFIG[event.type];
   const confCfg = CONFIDENCE_CONFIG[event.confidence];
 
+  // Every event has a shareable URL: /event/<id>. Native share sheet on
+  // mobile, clipboard + a brief "Copied" confirmation elsewhere.
+  const share = async () => {
+    const url = `${window.location.origin}${import.meta.env.BASE_URL}event/${event.id}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: event.name, url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      // user dismissed the share sheet / clipboard denied — nothing to do
+    }
+  };
+
   return (
     <div className="panel-inner">
       <div className="panel-header">
         <div className="panel-header-top">
           <h2 className="panel-event-name">{event.name}</h2>
+          <button
+            className={`panel-share${copied ? ' copied' : ''}`}
+            onClick={share}
+            title="Copy link to this event"
+            aria-label="Share this event"
+          >
+            {copied ? '✓ Copied' : '🔗 Share'}
+          </button>
           <button className="panel-close" onClick={onClose} title="Close" aria-label="Close panel">✕</button>
         </div>
         {event.icelandicName && (
