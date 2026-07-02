@@ -132,6 +132,46 @@ a:hover { color: var(--accent-hover); }
   z-index: 100;
 }
 .filter-bar::-webkit-scrollbar { display: none; }
+
+/* ── Type multi-select dropdown ── */
+.type-dropdown { flex-shrink: 0; }
+.type-dd-menu {
+  position: fixed; /* portaled to <body>: the filter bar clips and z-caps children */
+  z-index: 1500;
+  min-width: 190px;
+  max-height: min(340px, 60vh);
+  overflow-y: auto;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 4px;
+}
+.type-dd-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.type-dd-row:hover { background: var(--chip-bg); }
+.type-dd-row.checked { font-weight: 700; }
+.type-dd-all { color: var(--text-muted); }
+.type-dd-check {
+  width: 14px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+.type-dd-divider { height: 1px; background: var(--panel-border); margin: 4px 6px; }
 .filter-section {
   display: flex;
   align-items: center;

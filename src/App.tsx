@@ -17,7 +17,7 @@ import { Tour, resolveTourEvents } from './data/tours';
 const [MIN_YEAR, MAX_YEAR] = getYearBounds(allEvents);
 
 const INITIAL_FILTERS: FilterState = {
-  type: 'all',
+  types: [], // empty = all types
   confidence: 'all',
   yearRange: [MIN_YEAR, MAX_YEAR],
 };
@@ -55,7 +55,7 @@ export default function App() {
 
   const filteredEvents = useMemo(() => {
     return allEvents.filter((event) => {
-      if (filters.type !== 'all' && event.type !== filters.type) return false;
+      if (filters.types.length > 0 && !filters.types.includes(event.type)) return false;
       if (filters.confidence !== 'all' && event.confidence !== filters.confidence) return false;
       if (event.year < filters.yearRange[0] || event.year > filters.yearRange[1]) return false;
       if (searchQuery.trim()) {
@@ -178,7 +178,7 @@ export default function App() {
   }, [activeTour, selectedEvent]);
 
   const filtersActive =
-    filters.type !== 'all' ||
+    filters.types.length > 0 ||
     filters.confidence !== 'all' ||
     filters.yearRange[0] !== MIN_YEAR ||
     filters.yearRange[1] !== MAX_YEAR ||

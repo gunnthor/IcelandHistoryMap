@@ -60,7 +60,8 @@ export interface ConflictEvent {
 }
 
 export interface FilterState {
-  type: EventType | 'all';
+  /** Selected event types; empty array = all types. */
+  types: EventType[];
   confidence: Confidence | 'all';
   yearRange: [number, number];
 }
