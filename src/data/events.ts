@@ -55,6 +55,56 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'eldgja-939',
+    name: 'The Eldgjá Fires',
+    icelandicName: 'Eldgjárgos',
+    aliases: ['Eldgja eruption', 'lava flood'],
+    year: 939,
+    dateText: 'c. 937–940 (ice-core dated, main phase c. 939–940)',
+    period: 'Settlement Age / Landnám',
+    type: 'eruption',
+    locationName: 'Eldgjá canyon, between Mýrdalsjökull and Vatnajökull',
+    coordinates: [63.97, -18.61],
+    factions: ['Iceland\'s brand-new settlement against the largest lava flood in recorded history'],
+    keyPeople: [],
+    winner: 'The volcano — but the settlement survived',
+    casualtyEstimate: 'Unknown — no written records existed yet; the young colony clearly endured',
+    summary:
+      'Barely sixty years after settlement began, the Eldgjá fissure tore open and poured out the greatest lava flood of the last millennium — bigger than Laki. Ice cores across the northern hemisphere record its sulfur; Icelandic sagas record nothing directly, because no one on the island could yet write.',
+    eli12:
+      'Right after people moved to Iceland, the ground opened into a giant crack and flooded the south with more lava than any eruption on Earth for a thousand years. Nobody wrote it down — writing hadn\'t arrived yet — but ice in Greenland still remembers the smoke.',
+    whyItHappened:
+      'Eldgjá is part of the Katla volcanic system, and Iceland sits on the mid-Atlantic rift: fissure floods of this scale are how the island was built. The settlers had moved onto a live workshop without knowing it.',
+    whyItMatters:
+      'The first great catastrophe of Icelandic history — and possibly an influence on the country\'s conversion mood: some scholars read Vǫluspá\'s images of a burning, darkened world as a memory of Eldgjá, composed within living memory of the fires.',
+    before: {
+      text: 'Settlers had been claiming land for two generations, with no idea what the ground they farmed was capable of.',
+      eventId: 'ingolfur-vestmannaeyjar-thralls',
+    },
+    after: {
+      text: 'The next monster fissure eruption, 850 years later, would be documented in agonizing detail — and kill a fifth of the country.',
+      eventId: 'modunhardindin-laki-1783',
+    },
+    relatedIds: ['hekla-1104', 'oraefajokull-1362'],
+    humanDrama:
+      'A generation of pioneers crossed an ocean to an empty island — and within their children\'s lifetime the horizon caught fire. If the Vǫluspá theory holds, the memory of Eldgjá ended up inside the most famous poem of the Norse world: the sun turning black, flames playing against heaven itself.',
+    confidenceNote:
+      'High for the eruption itself — ice cores and tephra studies date it to c. 937–940 and size it precisely. What Icelanders experienced is inference: the written record starts two centuries later, and the Vǫluspá connection is an interpretation, not a fact.',
+    uncertaintyFlags: ['date_uncertain'],
+    confidence: 'high',
+    sources: [
+      { title: 'Wikipedia: Eldgjá', url: 'https://en.wikipedia.org/wiki/Eldgj%C3%A1' },
+      {
+        title: 'Oppenheimer et al.: The Eldgjá eruption — timing, impacts and the Christianisation of Iceland',
+        url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6560931/',
+      },
+      {
+        title: 'AGU: High-resolution ice-core analyses identify the Eldgjá eruption',
+        url: 'https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2023JD040142',
+      },
+    ],
+  },
+  {
     id: 'hrafnkell-einar-freyfaxi',
     name: 'Hrafnkell Kills Einar',
     icelandicName: 'Vígs Einars í Hrafnkels sögu',
@@ -161,6 +211,62 @@ export const events: ConflictEvent[] = [
       {
         title: 'Representative Vopnafjörður marker — exact saga locations need local verification',
         url: '',
+      },
+    ],
+  },
+  {
+    id: 'gunnar-hlidarendi-990',
+    name: 'Death of Gunnar of Hlíðarendi',
+    icelandicName: 'Víg Gunnars á Hlíðarenda',
+    year: 990,
+    dateText: 'Saga Age — c. 990, date traditional',
+    period: 'Saga Age / Icelandic Commonwealth',
+    type: 'killing',
+    locationName: 'Hlíðarendi, Fljótshlíð, South Iceland (coordinates approximate)',
+    coordinates: [63.74, -20.1],
+    factions: [
+      'Gunnar Hámundarson, alone in his house',
+      'A posse of his accumulated enemies, led by Gissur hvíti',
+    ],
+    keyPeople: ['Gunnar Hámundarson', 'Hallgerður langbrók', 'Gissur hvíti', 'Njáll Þorgeirsson'],
+    winner: 'The attackers — after a fight the saga makes them half-ashamed of',
+    casualtyEstimate: 'Gunnar killed; the saga credits him with two dead and many wounded attackers',
+    summary:
+      'Njáls saga\'s golden hero, sentenced to three years abroad, rode toward his ship — then looked back at his hillside and could not leave. Outlawed for staying, he was besieged at home and held off a posse alone with his bow until the string broke. His wife Hallgerður refused him two locks of her hair to restring it, repaying an old slap. They had to pull the roof off to finish him.',
+    eli12:
+      'Gunnar was the greatest fighter in Iceland, but a court said he had to leave the country for three years. He turned back because his home was too beautiful to leave. His enemies surrounded his house; his bowstring snapped; his wife refused to give him her hair to fix it — because he had slapped her once, years before. Then they killed him.',
+    whyItHappened:
+      'Years of feuds — many stoked by Hallgerður — piled up enemies and lawsuits until exile was the settlement. By refusing to go, Gunnar became an outlaw whom anyone could kill without legal consequence.',
+    whyItMatters:
+      'The most famous death scene in Icelandic literature, and the sagas\' sharpest image of the outlaw\'s bind: the law could only protect you if you obeyed it. "Fögur er hlíðin" — "fair is the hillside" — is still Icelandic shorthand for loving home more than life.',
+    before: {
+      text: 'Gunnar\'s friendship with the lawyer Njáll had kept his feuds survivable for years — but even Njáll couldn\'t lawyer away a defied exile sentence.',
+    },
+    after: {
+      text: 'The feud machinery that killed Gunnar kept grinding for two more decades, until it reached Njáll\'s own farm with fire.',
+      eventId: 'njalsbrenna-1011',
+    },
+    relatedIds: ['njalsbrenna-1011'],
+    humanDrama:
+      'Everything hinges on a slap. Years earlier, Gunnar had struck Hallgerður; at the door of death he asked her for two locks of hair to restring his bow. "Then I shall now remind you of the slap," she said, and refused. His reply — that everyone wins fame their own way — and then he went down fighting alone.',
+    modernTranslation:
+      'A local legend gets a plea deal: three years abroad and everyone moves on. He drives toward the airport, sees his valley in the rearview mirror, and turns the car around — knowing it voids every protection he has. His enemies arrive within the season, and his marriage picks that exact moment to present its final invoice.',
+    confidenceNote:
+      'Low. This is Njáls saga at its most literary, written some 250 years later — Gunnar existed in tradition and Hlíðarendi is a real farm, but the bowstring scene is storytelling, not documentation.',
+    uncertaintyFlags: ['saga_dramatized', 'location_uncertain', 'date_uncertain', 'legendary'],
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Icelandic Saga Database: Brennu-Njáls saga (ch. 76, Gunnar\'s slaying)',
+        url: 'https://sagadb.org/brennu-njals_saga.en',
+      },
+      {
+        title: 'Wikipedia: Gunnar Hámundarson',
+        url: 'https://en.wikipedia.org/wiki/Gunnar_H%C3%A1mundarson',
+      },
+      {
+        title: 'Hurstwic: Gunnar Hámundarson',
+        url: 'https://www.hurstwic.org/library/heroes/text/gunnar.htm',
       },
     ],
   },
@@ -301,6 +407,58 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'kjartan-bolli-1003',
+    name: 'Killing of Kjartan by Bolli',
+    icelandicName: 'Víg Kjartans Ólafssonar',
+    year: 1003,
+    dateText: 'Saga Age — c. 1003, date approximate',
+    period: 'Saga Age / West Iceland',
+    type: 'killing',
+    locationName: 'Hafragil in Svínadalur, Dalir, West Iceland (coordinates approximate — verify)',
+    coordinates: [65.23, -21.77],
+    factions: [
+      'Kjartan Ólafsson, riding through the valley with two companions',
+      'Bolli Þorleiksson and the sons of Ósvífur, lying in ambush',
+    ],
+    keyPeople: ['Kjartan Ólafsson', 'Bolli Þorleiksson', 'Guðrún Ósvífrsdóttir'],
+    winner: 'The ambushers — and the saga treats it as the moment everyone loses',
+    casualtyEstimate: 'Kjartan killed; Bolli killed in revenge a few years later',
+    summary:
+      'The climax of Laxdæla saga\'s love triangle. Kjartan and Bolli were foster-brothers and best friends; both loved Guðrún Ósvífrsdóttir. Guðrún, married to Bolli after Kjartan lingered in Norway, goaded her husband into the ambush at Hafragil — where Kjartan, recognizing his foster-brother, threw down his weapons rather than fight him. Bolli killed him, then sat and cradled his head as he died.',
+    eli12:
+      'Two best friends loved the same woman. She married one of them, half out of spite, and years of insults piled up until she pushed her husband to ambush his best friend. When the friend saw who\'d come to kill him, he refused to fight back. Bolli killed him anyway — and immediately, forever, regretted it.',
+    whyItHappened:
+      'Injured pride on all three sides, sharpened by gossip, gifts gone wrong, and a stolen sword and headdress — Laxdæla builds the ambush from a decade of small wounds none of the three would admit to.',
+    whyItMatters:
+      'The saga world\'s great tragedy of love and honor — proof that feud culture consumed even the people who saw it coming. Guðrún\'s deathbed line is the most famous sentence in the sagas: "Þeim var ég verst er ég unni mest" — "I was worst to the one I loved most."',
+    before: {
+      text: 'Feuds usually grew from insults and sheep. This one grew from a broken engagement — Kjartan stayed too long at the Norwegian court, and Guðrún did not wait.',
+    },
+    after: {
+      text: 'Kjartan\'s brothers hunted Bolli down within a few years, and Guðrún spent a long life outliving everyone the feud had taken.',
+      eventId: 'njalsbrenna-1011',
+    },
+    relatedIds: ['gunnar-hlidarendi-990', 'njalsbrenna-1011'],
+    humanDrama:
+      'Bolli begged to stay out of it until his wife questioned his manhood. Kjartan, winning the fight, threw his weapons away — "I would rather take death from you, kinsman, than give it to you." Bolli struck, caught his dying foster-brother in his arms, and the saga never lets him put that moment down.',
+    modernTranslation:
+      'Two inseparable best friends; one long-distance relationship that lapses; the other friend marries her. A decade of curated resentment later, she engineers a confrontation and makes staying out of it impossible. One friend refuses to raise a hand; the other has to live with what happens next.',
+    confidenceNote:
+      'Low. Laxdæla saga was written around 250 years later and is shaped like a novel — the people are probably historical, the choreography of the ambush is literature.',
+    uncertaintyFlags: ['saga_dramatized', 'location_uncertain', 'date_uncertain', 'legendary'],
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Icelandic Saga Database: Laxdæla saga (ch. 49, the death of Kjartan)',
+        url: 'https://sagadb.org/laxdaela_saga.en',
+      },
+      {
+        title: 'Wikipedia: Laxdæla saga',
+        url: 'https://en.wikipedia.org/wiki/Laxd%C3%A6la_saga',
+      },
+    ],
+  },
+  {
     id: 'njalsbrenna-1011',
     name: 'Njálsbrenna',
     icelandicName: 'Burning of Bergþórshvoll',
@@ -361,6 +519,201 @@ export const events: ConflictEvent[] = [
         title: 'Coordinates are approximate — Bergþórshvoll marker should be verified locally',
         url: '',
       },
+    ],
+  },
+  {
+    id: 'grettir-drangey-1031',
+    name: 'Grettir\'s Last Stand on Drangey',
+    icelandicName: 'Dráp Grettis í Drangey',
+    aliases: ['Grettir the Strong', 'Grettis saga'],
+    year: 1031,
+    dateText: 'c. 1030s — saga chronology',
+    period: 'Saga Age / Icelandic Commonwealth',
+    type: 'killing',
+    locationName: 'Drangey island, Skagafjörður',
+    coordinates: [65.956, -19.682],
+    factions: [
+      'Grettir Ásmundarson, his brother Illugi, and one slave, on top of a sheer island',
+      'Þorbjörn öngull and hired men, with a sorceress\'s help by saga account',
+    ],
+    keyPeople: ['Grettir Ásmundarson', 'Illugi Ásmundarson', 'Þorbjörn öngull'],
+    winner: 'Þorbjörn öngull — against a man already half-dead',
+    casualtyEstimate: 'Grettir and Illugi killed; Grettir\'s death by saga account required a cursed wound first',
+    summary:
+      'Iceland\'s most famous outlaw spent his last years on Drangey, a fortress of an island with cliffs on every side, climbing down only by rope ladder. After nearly twenty years of outlawry — the saga says no man bore it longer — his enemies could not take him by force. By the saga\'s telling they resorted to a witch\'s curse: a hexed log gave him an axe wound that festered, and Þorbjörn öngull\'s men scaled the island to kill a man already dying. His young brother Illugi refused to buy his life with silence and was executed beside him.',
+    eli12:
+      'Grettir was super strong but cursed with terrible luck, and he spent almost twenty years as an outlaw — meaning anyone could legally kill him. He hid on an island with cliffs so steep you needed a rope ladder. His enemies only got him after he was already dying from an infected wound the saga blames on witchcraft. His little brother chose to die with him rather than betray him.',
+    whyItHappened:
+      'Grettir was outlawed for a burning he may not have caused, and Icelandic law had no mercy switch: an outlaw stayed killable until the sentence ran out. His enemies wanted the bounty, and after nineteen years his sentence was nearly over — which made killing him urgent.',
+    whyItMatters:
+      'Grettis saga is the great Icelandic meditation on strength without luck, and Drangey made the perfect stage — you can still see the island from the whole fjord. The killing was so shabby (a dying man, a witch\'s help, a murdered teenager) that the saga has Grettir\'s brother win compensation for it at the Alþingi and revenge in Constantinople.',
+    before: {
+      text: 'Nearly two decades of outlawry had made Grettir a legend and a bounty — and left him nowhere on the mainland to sleep safely.',
+    },
+    after: {
+      text: 'His killer got contempt instead of glory: outlawed in turn, by the saga\'s account he was hunted all the way to Byzantium by Grettir\'s avenging brother.',
+    },
+    relatedIds: ['gunnar-hlidarendi-990', 'njalsbrenna-1011'],
+    humanDrama:
+      'Nineteen years an outlaw, afraid of the dark since a fight with a ghost — the strongest man in Iceland, undone by loneliness and a festering leg. When the killers finally reached him he was too weak to lift his sword; they had to pry it from his hand by cutting it off. And seventeen-year-old Illugi, offered his life for a promise not to avenge, answered that he would not, and died for saying so.',
+    confidenceNote:
+      'Low. Grettis saga was written some 300 years later and is openly fantastical (ghosts, curses, trolls). A famous outlaw named Grettir likely existed and Drangey is exactly as described — the rest is Iceland\'s best adventure novel.',
+    uncertaintyFlags: ['saga_dramatized', 'date_uncertain', 'legendary'],
+    confidence: 'low',
+    sources: [
+      {
+        title: 'Icelandic Saga Database: Grettis saga (ch. 82, the death of Grettir and Illugi)',
+        url: 'https://sagadb.org/grettis_saga.en2',
+      },
+      { title: 'Wikipedia: Grettis saga', url: 'https://en.wikipedia.org/wiki/Grettis_saga' },
+      { title: 'Wikipedia: Drangey', url: 'https://en.wikipedia.org/wiki/Drangey' },
+    ],
+  },
+  {
+    id: 'hekla-1104',
+    name: 'Hekla Buries Þjórsárdalur',
+    icelandicName: 'Heklugosið 1104',
+    aliases: ['Hekla eruption 1104', 'Stöng', 'Pompeii of Iceland'],
+    year: 1104,
+    dateText: '1104 (Hekla\'s first documented eruption)',
+    period: 'Icelandic Commonwealth',
+    type: 'eruption',
+    locationName: 'Hekla, with the tephra fall over Þjórsárdalur valley',
+    coordinates: [63.992, -19.666],
+    factions: ['The farms of Þjórsárdalur against Hekla\'s first recorded fury'],
+    keyPeople: [],
+    winner: 'Hekla — the valley\'s farming community never fully recovered',
+    casualtyEstimate: 'Unknown; the valley\'s farms, including Stöng, were buried in tephra',
+    summary:
+      'Hekla\'s first eruption in written history was a monster: a plinian blast that rained tephra over half the country and buried the prosperous inland valley of Þjórsárdalur. The excavated farm of Stöng — the "Pompeii of Iceland" — preserves a Commonwealth-era farmhouse under the ash. Archaeology suggests some activity in the valley continued after 1104, but its farming heyday ended here.',
+    eli12:
+      'Iceland\'s most famous volcano announced itself by burying an entire valley of farms in ash. One farm, Stöng, was dug out again 800 years later almost intact — like a Viking-age time capsule. Europeans were so impressed by Hekla they decided it was the gateway to Hell.',
+    whyItHappened:
+      'Hekla had been quiet through all of settlement — long enough for farmers to fill a fertile valley in its shadow. The 1104 eruption was exceptionally explosive, and Þjórsárdalur sat directly under the tephra fall.',
+    whyItMatters:
+      'It began Hekla\'s European career as the "Gateway to Hell" and left Iceland its best-preserved Commonwealth farm. Stöng\'s reconstruction (Þjóðveldisbærinn) is how we know what a saga-age longhouse actually looked like.',
+    before: {
+      text: 'Two centuries of quiet had let farmers settle deep into the volcanic interior — Þjórsárdalur was fertile precisely because of old ash.',
+      eventId: 'eldgja-939',
+    },
+    after: {
+      text: 'Hekla has erupted more than twenty times since, but Iceland\'s biggest single blast was still to come, further east.',
+      eventId: 'oraefajokull-1362',
+    },
+    relatedIds: ['eldgja-939', 'modunhardindin-laki-1783'],
+    confidenceNote:
+      'High. The eruption is dated by annals and tephra layers, and Stöng was excavated in 1939. The one nuance: how instantly and completely the valley was abandoned is debated — some activity continued after 1104.',
+    confidence: 'high',
+    sources: [
+      { title: 'Wikipedia: Hekla', url: 'https://en.wikipedia.org/wiki/Hekla' },
+      {
+        title: 'Wikipedia: Þjóðveldisbærinn Stöng',
+        url: 'https://en.wikipedia.org/wiki/%C3%9Ej%C3%B3%C3%B0veldisb%C3%A6rinn_St%C3%B6ng',
+      },
+      {
+        title: 'Uni. of Iceland: Abandoned farms, volcanic impacts — revisiting Þjórsárdalur',
+        url: 'https://iris.hi.is/en/publications/abandoned-farms-volcanic-impacts-and-woodland-management-revisiti/',
+      },
+    ],
+  },
+  {
+    id: 'thorgils-haflidi-1121',
+    name: 'Þorgils and Hafliði at the Alþingi',
+    icelandicName: 'Deilur Þorgils og Hafliða',
+    year: 1121,
+    dateText: '1117–1121, climax at the Alþingi 1121',
+    period: 'Icelandic Commonwealth / Pre-Sturlung Age',
+    type: 'feud',
+    locationName: 'Þingvellir (Alþingi), with the feud rooted in the northwest',
+    coordinates: [64.2565, -21.127],
+    factions: [
+      'Þorgils Oddason of Staðarhóll and his hundreds of followers',
+      'Hafliði Másson of Breiðabólstaður and his hundreds of followers',
+    ],
+    keyPeople: ['Þorgils Oddason', 'Hafliði Másson', 'Ketill Þorsteinsson'],
+    winner: 'The mediators — settled at the assembly without a battle',
+    casualtyEstimate: 'No battle; Hafliði lost a finger to an axe blow earlier in the feud',
+    summary:
+      'The Commonwealth\'s great near-miss. Two of Iceland\'s most powerful chieftains escalated a quarrel until both marched on the 1121 Alþingi with small armies — by the saga\'s count over a thousand men stood at the assembly ready to fight. Mediators, led by churchmen, talked them down; Þorgils accepted a settlement so large it became proverbial, and the Commonwealth\'s machinery held. Barely.',
+    eli12:
+      'Two chieftains hated each other so much they each brought a private army to Iceland\'s national assembly. For a few days the whole system nearly collapsed into war on its holiest ground. Peacemakers barely talked them out of it — and the loser was paid the biggest compensation anyone had heard of.',
+    whyItHappened:
+      'A chain of lawsuits, insults, and one chopped-off finger escalated between two men too powerful for normal courts to handle. When both could summon armies, the Alþingi itself became the battlefield-in-waiting.',
+    whyItMatters:
+      'It proved chieftains could mobilize armies — and this time chose not to use them. When Hafliði was asked what he\'d take for his maimed hand, the answer became proverbial: "dýr mundi Hafliði allur" — "expensive would be the whole of Hafliði, if every part costs this much." A century later, chieftains with the same armies stopped choosing peace.',
+    before: {
+      text: 'The conversion had given Iceland a century of relative calm — long enough for a few families to grow dangerously large.',
+      eventId: 'kristnitakan-1000',
+    },
+    after: {
+      text: 'The restraint of 1121 didn\'t survive the next century: the same escalation logic, with bigger armies and less patience, became the Sturlung Age.',
+      eventId: 'vidines-1208',
+    },
+    relatedIds: ['kristnitakan-1000', 'orlygsstadir-1238'],
+    modernTranslation:
+      'Two billionaires feud through lawsuits until both show up at the national convention with private security armies. The whole system holds its breath; elder statesmen broker a settlement with a record-breaking payout — and everyone pretends the near-miss didn\'t reveal that the state has no army of its own.',
+    confidenceNote:
+      'Medium. Þorgils saga ok Hafliða is part of the Sturlunga compilation, written within a few generations — unusually close for this era, though the troop counts and set-piece quotes carry saga polish.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized'],
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Þorgils saga ok Hafliða',
+        url: 'https://en.wikipedia.org/wiki/%C3%9Eorgils_saga_ok_Hafli%C3%B0a',
+      },
+      { title: 'Wikipedia: Sturlunga saga', url: 'https://en.wikipedia.org/wiki/Sturlunga_saga' },
+      {
+        title: 'Old Norse (oldnorse.org): Viking Age Iceland — Icelandic feud',
+        url: 'https://oldnorse.org/2022/02/17/viking-age-iceland-icelandic-feud/',
+      },
+    ],
+  },
+  {
+    id: 'onundarbrenna-1197',
+    name: 'The Burning of Önundur',
+    icelandicName: 'Önundarbrenna / Lönguhlíðarbrenna',
+    year: 1197,
+    dateText: 'May 7, 1197',
+    period: 'Pre-Sturlung Age / Northern feuds',
+    type: 'burning',
+    locationName: 'Lönguhlíð (Langahlíð) in Hörgárdalur, Eyjafjörður (coordinates approximate — verify)',
+    coordinates: [65.66, -18.31],
+    factions: [
+      'Guðmundur dýri and allied chieftains with a large raiding party',
+      'Önundur Þorkelsson and his household at Lönguhlíð',
+    ],
+    keyPeople: ['Guðmundur dýri', 'Önundur Þorkelsson', 'Kolbeinn Tumason'],
+    winner: 'Guðmundur dýri — at the price of a deed Iceland didn\'t forget',
+    casualtyEstimate: 'Önundur and several of his household burned or killed; counts vary by source',
+    summary:
+      'A generation before the Sturlung Age proper, the chieftain Guðmundur dýri surrounded his rival Önundur Þorkelsson\'s farm at Lönguhlíð by night and burned it with the household inside. It was northern Iceland\'s dress rehearsal for the century of fire to come — and Guðmundur himself later gave up his chieftaincy and died a monk.',
+    eli12:
+      'A chieftain settled a feud by setting his enemy\'s house on fire with the family inside. People were horrified — burning someone in their home was the line you didn\'t cross, even in a violent age. Years later the burner gave everything up and became a monk.',
+    whyItHappened:
+      'A northern power feud over authority, insults, and followers had escalated past the point where either law or mediation could reach it. Fire was the decisive weapon a chieftain could use against a rival too strong to duel.',
+    whyItMatters:
+      'The first great burning of Iceland\'s historical era — Njálsbrenna\'s tactic stepping out of literature and into the documented record. It set the precedent that the Sturlung Age would follow at Flugumýri half a century later.',
+    before: {
+      text: 'Northern Iceland\'s chieftain families had spent the 1190s testing how much force the post-conversion order could absorb.',
+      eventId: 'thorgils-haflidi-1121',
+    },
+    after: {
+      text: 'A decade later the north was at war over its bishop, and the age of restraint was formally over.',
+      eventId: 'vidines-1208',
+    },
+    relatedIds: ['njalsbrenna-1011', 'flugumyrarbrenna-1253'],
+    humanDrama:
+      'The saga tradition remembers Guðmundur dýri\'s end as the strangest part: the man who burned a household alive walked away from power, entered the monastery at Þingeyrar, and died a monk — medieval Iceland\'s version of a war criminal\'s late repentance. Whether it was guilt or politics, the sources don\'t say.',
+    confidenceNote:
+      'Medium. Recorded in Guðmundar saga dýra within the Sturlunga compilation, written close to the events; the date is traditionally given as May 7, 1197, though casualty details vary.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia (is): Önundarbrenna',
+        url: 'https://is.wikipedia.org/wiki/%C3%96nundarbrenna',
+      },
+      { title: 'Wikipedia: Sturlunga saga', url: 'https://en.wikipedia.org/wiki/Sturlunga_saga' },
     ],
   },
   {
@@ -1058,8 +1411,8 @@ export const events: ConflictEvent[] = [
       eventId: 'flugumyrarbrenna-1253',
     },
     after: {
-      text: 'Seven years later, an exhausted Iceland swore itself to the Norwegian crown (1262). The civil war was over; so was independence — for 682 years.',
-      eventId: 'grundarbardagi-1362',
+      text: 'Seven years later, an exhausted Iceland swore itself to the Norwegian crown. The civil war was over; so was independence — for 682 years.',
+      eventId: 'gamli-sattmali-1262',
     },
     humanDrama:
       'Eyjólfur ofsi — "the Violent" — was one of the men behind the Flugumýri burning two years earlier, where a family died in a fire days after a peace wedding. At Þverá the avengers caught up with him and killed him. In the Sturlung Age the arsonists rarely died of old age.',
@@ -1079,6 +1432,110 @@ export const events: ConflictEvent[] = [
       {
         title: 'Coordinates are approximate — verify Þveráreyrar in Eyjafjörður',
         url: '',
+      },
+    ],
+  },
+  {
+    id: 'gamli-sattmali-1262',
+    name: 'The Old Covenant — End of the Commonwealth',
+    icelandicName: 'Gamli sáttmáli / Gissurarsáttmáli',
+    aliases: ['Old Covenant', 'End of the Icelandic Commonwealth', 'union with Norway'],
+    year: 1262,
+    dateText: '1262–1264 (sworn region by region)',
+    period: 'End of the Commonwealth',
+    type: 'political',
+    locationName: 'The Alþingi at Þingvellir, then regional assemblies',
+    coordinates: [64.2568, -21.125],
+    factions: [
+      'King Hákon Hákonarson of Norway, via Gissur Þorvaldsson as his earl',
+      'Iceland\'s exhausted chieftains and farmers',
+    ],
+    keyPeople: ['Gissur Þorvaldsson', 'King Hákon Hákonarson', 'Sturla Þórðarson'],
+    winner: 'The Norwegian crown — Iceland kept its laws but gave up its independence',
+    casualtyEstimate: 'None — the deaths had already happened; this was the receipt',
+    summary:
+      'After four decades of civil war, Iceland\'s leaders swore allegiance and tax to the Norwegian king, region by region between 1262 and 1264, in exchange for peace, law, and guaranteed shipping. The broker was Gissur Þorvaldsson — Sturlung Age survivor, now the king\'s earl. The Commonwealth that had governed itself without a king for 332 years was over. Modern scholarship stresses it was less one dramatic treaty than the formal end of a takeover decades in the making.',
+    eli12:
+      'Iceland\'s big families had fought each other until nobody could win — except the King of Norway, who\'d been quietly backing different sides all along. Worn out, Icelanders agreed to make him their king if he kept the peace and sent ships with supplies. Iceland wouldn\'t rule itself again until 1944.',
+    whyItHappened:
+      'The Sturlung wars had broken the chieftain system, and the king had spent decades collecting Icelandic chieftaincies and loyalties — many leading Icelanders were already his sworn men. When peace finally had a price, only the king could pay it.',
+    whyItMatters:
+      'The pivot of all Icelandic history: everything before it is the Commonwealth story, everything after it is the long road back. For the independence movement six centuries later, Gamli sáttmáli was both the wound and the legal argument — proof Iceland had joined a king by contract, not conquest.',
+    before: {
+      text: 'The civil war\'s last convulsions had settled nothing except that Icelanders could no longer govern themselves without a referee.',
+      eventId: 'thverarfundur-1255',
+    },
+    after: {
+      text: 'Royal rule brought peace but also foreign officials — and Icelanders\' patience with those had limits.',
+      eventId: 'grundarbardagi-1362',
+    },
+    relatedIds: ['orlygsstadir-1238', 'kopavogur-1662'],
+    humanDrama:
+      'The man who delivered Iceland to the king was Gissur Þorvaldsson — the survivor of the Flugumýri fire, the killer of Snorri Sturluson, the oath-breaker of Apavatn. Every rival was dead, and the prize for winning the Sturlung Age turned out to be presiding over the end of the world that made him. He got an earldom; Iceland got 682 years of foreign rule.',
+    modernTranslation:
+      'A market ravaged by decades of corporate warfare finally consolidates: the exhausted players sell to the foreign giant that had been funding all sides. The buyer promises stability and logistics, keeps local management — and the acquisition is renegotiated on worse terms every generation after.',
+    confidenceNote:
+      'High. The submission of 1262–64 is firmly documented. The nuance: the surviving covenant texts are later copies, and historians treat the incorporation as a process spanning decades (c. 1220–1281) rather than a single signing — the dramatic single-moment version is partly later national memory.',
+    uncertaintyFlags: ['saga_dramatized'],
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Old Covenant (Iceland)',
+        url: 'https://en.wikipedia.org/wiki/Old_Covenant_(Iceland)',
+      },
+      {
+        title: 'Sverrir Jakobsson: All the King\'s men — the incorporation of Iceland into the Norwegian Realm',
+        url: 'https://iris.hi.is/en/publications/all-the-kings-men-the-incorporation-of-iceland-into-the-norwegian/',
+      },
+    ],
+  },
+  {
+    id: 'oraefajokull-1362',
+    name: 'Öræfajökull Destroys Litla-Hérað',
+    icelandicName: 'Öræfajökulsgosið 1362',
+    aliases: ['Knappafellsjokull eruption', 'Litla-Herad'],
+    year: 1362,
+    dateText: 'June 1362',
+    period: 'Norwegian Rule / Post-Commonwealth Iceland',
+    type: 'eruption',
+    locationName: 'Öræfajökull, southeast Iceland — the district Litla-Hérað below it',
+    coordinates: [64.005, -16.66],
+    factions: ['The farming district of Litla-Hérað against Iceland\'s biggest explosive eruption'],
+    keyPeople: [],
+    winner: 'The volcano — the district was erased and renamed Öræfi, "the wasteland"',
+    casualtyEstimate: 'Unknown; annals imply the district\'s farms were destroyed, with later tradition claiming few or no survivors in the path',
+    summary:
+      'The largest explosive eruption in Iceland since settlement (VEI 6). The volcano then called Knappafellsjökull blew apart in June 1362, burying the prosperous district of Litla-Hérað — "Little Herað," some two dozen farms — under tephra and glacial floods. The region was resettled only decades later under a new name that says everything: Öræfi, the wasteland.',
+    eli12:
+      'A giant volcano under a glacier exploded and wiped a whole farming district off the map — ash, floods, everything gone. When people finally moved back, they renamed the area "the wasteland." It\'s still called that: if you drive past Skaftafell today, you\'re in Öræfi.',
+    whyItHappened:
+      'Öræfajökull is a huge ice-capped stratovolcano that had slept through all of settlement. When it finally went, the combination of explosive tephra and meltwater floods gave the district below it no chance.',
+    whyItMatters:
+      'Iceland\'s Pompeii moment at district scale — the clearest case of a volcano permanently rewriting the country\'s map and its map\'s names. It also marks how thin the 14th-century record is: an eruption this size earned only a few annal lines, because the district that could have written more no longer existed.',
+    before: {
+      text: 'A century into Norwegian rule, Iceland\'s troubles had been political — officials, taxes, trade. Nature had been comparatively quiet since Hekla 1104.',
+      eventId: 'hekla-1104',
+    },
+    after: {
+      text: 'The 14th century wasn\'t done: forty years later the Black Death finally found its way to the island.',
+      eventId: 'svartidaudi-1402',
+    },
+    relatedIds: ['hekla-1104', 'eldgja-939', 'modunhardindin-laki-1783'],
+    confidenceNote:
+      'High. The 1362 eruption is dated by annals and confirmed as VEI 6 by tephra studies — the largest rhyolitic eruption in Iceland since settlement. Casualty details are the uncertain part: the annals are terse and the district left no records of its own.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Öræfajökull',
+        url: 'https://en.wikipedia.org/wiki/%C3%96r%C3%A6faj%C3%B6kull',
+      },
+      {
+        title: 'Sigurður Þórarinsson: The Öræfajökull eruption of 1362 (Acta Naturalia Islandica)',
+        url: 'https://utgafa.natt.is/Acta-Naturalia-Islandica/Acta-Naturalia-Islandica-II-2.pdf',
+      },
+      {
+        title: 'Frontiers in Earth Science: Tephra fallout from Öræfajökull volcano',
+        url: 'https://www.frontiersin.org/journals/earth-science/articles/10.3389/feart.2018.00196/full',
       },
     ],
   },
@@ -1109,7 +1566,7 @@ export const events: ConflictEvent[] = [
       'Grundarbardagi widens the map beyond the Sturlung Age. It shows that Norwegian rule changed the political frame, but Icelandic elites could still settle disputes with force.',
     before: {
       text: 'A century earlier, Iceland had traded its civil war for the Norwegian crown — and got foreign officials in the bargain.',
-      eventId: 'thverarfundur-1255',
+      eventId: 'gamli-sattmali-1262',
     },
     after: {
       text: 'The pattern — resented foreign officials, occasional violent pushback — ran for centuries.',
@@ -1131,6 +1588,112 @@ export const events: ConflictEvent[] = [
       {
         title: 'Coordinates are approximate — verify the Grund/Eyjafjörður marker',
         url: '',
+      },
+    ],
+  },
+  {
+    id: 'svartidaudi-1402',
+    name: 'The First Plague',
+    icelandicName: 'Svartidauði / Plágan mikla',
+    aliases: ['Black Death in Iceland', 'the Great Plague'],
+    year: 1402,
+    dateText: '1402–1404',
+    period: 'Norwegian-Danish Rule / Plague & Famine',
+    type: 'plague',
+    locationName: 'Arrived by ship at Hvalfjörður, 1402 — then nationwide (arrival point approximate)',
+    coordinates: [64.37, -21.45],
+    factions: ['The people of Iceland against the plague, half a century after it had burned through Europe'],
+    keyPeople: ['Einar Herjólfsson (whose ship, by tradition, carried the infection)'],
+    winner: 'No winner — often estimated at around a third of the population dead, possibly more',
+    casualtyEstimate: 'Often estimated at roughly a third of Icelanders; some estimates run higher — all figures are reconstructions',
+    summary:
+      'The Black Death missed Iceland in 1349 — the sea was that wide. It found the island in 1402, traditionally aboard Einar Herjólfsson\'s ship, and burned through every region until early 1404. Monasteries lost nearly everyone; farms stood empty for a generation; estimates of the dead commonly run around a third of the population. A second plague in 1494–95 finished the century the same way.',
+    eli12:
+      'The famous Black Death that hit Europe in 1349 took another 53 years to reach Iceland — that\'s how isolated the island was. When it finally arrived on a ship, it killed perhaps one out of every three people in two years. Whole farms and monasteries simply emptied.',
+    whyItHappened:
+      'Iceland\'s isolation delayed the plague but couldn\'t stop shipping forever — and a population that had never met the disease had no resistance at all once it landed.',
+    whyItMatters:
+      'A demographic catastrophe on the scale of a war Iceland never fought: it reshaped landholding, wages, and church wealth for a century, and stands beside Stórabóla as proof that Iceland\'s deadliest enemies always arrived by ship.',
+    before: {
+      text: 'Iceland had watched Europe\'s plague from across the ocean for fifty years — isolation as accidental quarantine.',
+      eventId: 'oraefajokull-1362',
+    },
+    after: {
+      text: 'Three centuries later the same script ran again with smallpox — another ship, another population without immunity.',
+      eventId: 'storabola-1707',
+    },
+    relatedIds: ['storabola-1707'],
+    humanDrama:
+      'Tradition pins the arrival on one ship and one man, Einar Herjólfsson — the medieval need to give a catastrophe a name and a face. The annals\' laconic entries hide the texture: chalices unattended because every priest was dead, farms inherited three times in a winter.',
+    confidenceNote:
+      'High that the epidemic happened and when — the annals date it firmly to 1402–04. Mortality is the soft part: often estimated around a third, sometimes higher, but medieval Iceland kept no census and every figure is a scholarly reconstruction.',
+    uncertaintyFlags: ['location_uncertain'],
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Saga (Sögufélag): Plágurnar miklu á Íslandi',
+        url: 'https://saga.sogufelag.is/saga-greinar/plagurnar-miklu-a-islandi/',
+      },
+      {
+        title: 'Callow & Evans: The mystery of plague in medieval Iceland',
+        url: 'https://pure-oai.bham.ac.uk/ws/files/27974086/Callow_Evans_Plague_iceland_Journal_Medieval_History_Accepted.pdf',
+      },
+      {
+        title: 'Wikipedia (is): Svartidauði',
+        url: 'https://is.wikipedia.org/wiki/Svartidau%C3%B0i',
+      },
+    ],
+  },
+  {
+    id: 'jon-gerreksson-1433',
+    name: 'Drowning of Bishop Jón Gerreksson',
+    icelandicName: 'Dráp Jóns Gerrekssonar',
+    year: 1433,
+    dateText: 'July 1433',
+    period: 'English Century',
+    type: 'killing',
+    locationName: 'Seized at Skálholt, drowned in the Brúará river (site approximate)',
+    coordinates: [64.16, -20.45],
+    factions: [
+      'Icelandic chieftains and armed farmers, led by men the bishop\'s retainers had wronged',
+      'Bishop Jón Gerreksson of Skálholt and his hired "sveinar"',
+    ],
+    keyPeople: ['Jón Gerreksson', 'Þorvarður Loftsson', 'Teitur Gunnlaugsson'],
+    winner: 'The Icelanders — and remarkably, almost nobody was punished',
+    casualtyEstimate: 'The bishop drowned; some of his retainers killed or driven off',
+    summary:
+      'Jón Gerreksson arrived as bishop of Skálholt with a past (he\'d already been removed from a Swedish archbishopric) and a private gang of retainers who robbed and burned across the south — including, by tradition, torching the farm at Kirkjuból after a suitor\'s rejection. In 1433 armed Icelanders dragged the bishop out of his own cathedral, stuffed him in a sack, and drowned him in the Brúará river. Rome and Copenhagen barely reacted.',
+    eli12:
+      'A corrupt foreign bishop showed up with a gang who robbed farms and burned down a house with people in it. Icelanders had enough: they pulled him out of church — during his own service — put him in a sack, and threw him in a river. Nobody was really punished, which tells you what everyone thought of him.',
+    whyItHappened:
+      'The bishop\'s retainers had made him the most hated man in the south, and the crown\'s authority was distant and distracted — the English Century was an era when whoever brought armed men decided what law meant.',
+    whyItMatters:
+      'The century\'s most spectacular proof that foreign authority in Iceland lived or died by local consent. It sits in a straight line of hated-official removals — from Smiður Andrésson at Grund to Lénharður at Hraun.',
+    before: {
+      text: 'Plague had emptied Iceland\'s farms and weakened every institution — into that vacuum sailed English merchants, ambitious clergy, and men like Jón Gerreksson.',
+      eventId: 'svartidaudi-1402',
+    },
+    after: {
+      text: 'Seventy years later the same treatment was applied to a hated royal bailiff — with the same lack of consequences.',
+      eventId: 'lenhardur-1502',
+    },
+    relatedIds: ['grundarbardagi-1362', 'lenhardur-1502'],
+    humanDrama:
+      'They took him during divine service, in vestments, from the altar of his own cathedral — medieval Iceland\'s most theatrical statement that no office protects a man everyone has decided to be rid of. The sack and the river added folk-tale finality: not an execution, a disposal.',
+    modernTranslation:
+      'A disgraced executive gets a fresh posting abroad and brings his private security team, which runs a protection racket on the locals. One day the community simply removes him — publicly, mid-meeting — and every authority that should investigate finds it has other priorities.',
+    confidenceNote:
+      'Medium. The drowning in 1433 is solidly recorded in annals; the buildup — especially the Kirkjuból burning and its love-rejection motive — mixes documentation with tradition, and historians still debate who exactly ordered what.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized', 'location_uncertain'],
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Vísindavefurinn: Af hverju var Jón Gerreksson biskup drepinn?',
+        url: 'https://www.visindavefur.is/svar.php?id=63596',
+      },
+      {
+        title: 'Wikipedia (is): Jón Gerreksson',
+        url: 'https://is.wikipedia.org/wiki/J%C3%B3n_Gerreksson',
       },
     ],
   },
@@ -1230,6 +1793,64 @@ export const events: ConflictEvent[] = [
       {
         title: 'Coordinates, winner, and casualty details need verification against Icelandic local histories',
         url: '',
+      },
+    ],
+  },
+  {
+    id: 'grindavikurstridid-1532',
+    name: 'The Grindavík War',
+    icelandicName: 'Grindavíkurstríðið',
+    aliases: ['Battle of Grindavík', 'English Century', 'John the Broad'],
+    year: 1532,
+    dateText: 'June 10–11, 1532',
+    period: 'English Century / Danish Rule',
+    type: 'battle',
+    locationName: 'Grindavík, Reykjanes peninsula (fortified English camp at Járngerðarstaðir)',
+    coordinates: [63.842, -22.434],
+    factions: [
+      'English merchants and fishermen under Jóhann breiði ("John the Broad"), dug in behind earthworks',
+      'Hanseatic German merchants, Danish royal officials, and armed Icelanders',
+    ],
+    keyPeople: ['Jóhann breiði (John the Broad)', 'Diðrik af Minden'],
+    winner: 'The German-Danish-Icelandic coalition; England\'s grip on Iceland effectively ended',
+    casualtyEstimate: 'Around 15 Englishmen killed, including Jóhann breiði; the rest captured or fled',
+    summary:
+      'The violent end of the English Century. English traders had dominated — and often bullied — Icelandic harbors for a hundred years. In 1532, after John the Broad\'s crew seized fish and fortified their camp at Grindavík, a coalition of Hanseatic Germans, the Danish governor\'s men, and Icelanders stormed the earthworks by night, killed around fifteen Englishmen, and confiscated everything. A 1533 settlement between the crowns confirmed the result: Denmark, not England, would run Iceland\'s trade.',
+    eli12:
+      'For a century, English fishing fleets treated Iceland like they owned it. In 1532 one English captain went too far — stealing fish and building a small fort. The Germans and Danes (with Icelandic help) attacked it at night and killed him and his men. England mostly stopped coming; Denmark took over — completely.',
+    whyItHappened:
+      'England, the Hanseatic cities, and the Danish crown had competed over Iceland\'s enormously valuable stockfish for decades, with the English increasingly acting as an armed power on shore. John the Broad\'s fortified camp turned a trade war literal.',
+    whyItMatters:
+      'A trade dispute in a tiny fishing village helped decide which crown controlled Iceland for the next four centuries — with consequences (Danish monopoly, Reformation from Copenhagen) far beyond anything the fish were worth. Iceland\'s harbors kept being the place where world politics landed.',
+    before: {
+      text: 'The English Century had run on the crown\'s weakness — the same weakness that had let a bishop be drowned in a river without consequences.',
+      eventId: 'jon-gerreksson-1433',
+    },
+    after: {
+      text: 'With the English gone, Copenhagen\'s hand was free — and within two decades it reached for Iceland\'s church.',
+      eventId: 'reformation-1550',
+    },
+    relatedIds: ['lenhardur-1502', 'spanverjavigin-1615', 'cod-wars'],
+    humanDrama:
+      'John the Broad reportedly died beside a chest of silver behind his earthworks — a fishing-post Alamo where the treasure was dried cod. The deeper irony: Icelanders helped evict the English on behalf of a Danish crown whose monopoly would starve their grandchildren, and fights over who may fish Icelandic waters would still be running in 1976.',
+    modernTranslation:
+      'A foreign corporation\'s local branch gets so used to impunity that it builds a literal compound. A rival multinational and the regulator jointly raid it, the CEO-on-site dies defending the inventory, and the market quietly consolidates under the regulator\'s favorite — for the next 400 years.',
+    confidenceNote:
+      'Medium. Well documented for its era in Danish, German, and English diplomatic records (the affair reached Henry VIII\'s court), though details of the assault itself come mostly from one side. The site at Járngerðarstaðir is traditional.',
+    uncertaintyFlags: ['event_likely', 'location_uncertain'],
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Ferlir: Grindavíkurstríðið 1532',
+        url: 'https://ferlir.is/grindavikurstridid-1532/',
+      },
+      {
+        title: 'Saga-Book (JSTOR): Henry VIII and Iceland',
+        url: 'https://www.jstor.org/stable/48612139',
+      },
+      {
+        title: 'World Archaeology: Iceland — archaeology of fishing and trading sites',
+        url: 'https://www.world-archaeology.com/features/iceland-archaeology-of-fishing-and-trading-sites/',
       },
     ],
   },

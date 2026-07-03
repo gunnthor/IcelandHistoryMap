@@ -47,9 +47,12 @@ export const TOURS: Tour[] = [
       'ingolfur-vestmannaeyjar-thralls',
       'hrafnkell-einar-freyfaxi',
       'vopnfirdinga-feud',
+      'gunnar-hlidarendi-990',
       'mahlidingavig',
       'droplaugarsona-feud',
+      'kjartan-bolli-1003',
       'njalsbrenna-1011',
+      'grettir-drangey-1031',
     ],
   },
   {
@@ -68,6 +71,7 @@ export const TOURS: Tour[] = [
       'haugsnes-1246',
       'flugumyrarbrenna-1253',
       'thverarfundur-1255',
+      'gamli-sattmali-1262',
     ],
   },
   {
@@ -75,8 +79,16 @@ export const TOURS: Tour[] = [
     emoji: '🌋',
     title: 'Pirates, Plague & Lava',
     tagline:
-      'The 150 years when Iceland nearly died: mass abduction, smallpox in a box, and a volcano that starved a nation.',
-    eventIds: ['tyrkjaranid-1627', 'storabola-1707', 'modunhardindin-laki-1783'],
+      'A thousand years of catastrophe: lava floods, a vanished district, plague ships, pirate fleets, and the eruption that starved a nation.',
+    eventIds: [
+      'eldgja-939',
+      'hekla-1104',
+      'oraefajokull-1362',
+      'svartidaudi-1402',
+      'tyrkjaranid-1627',
+      'storabola-1707',
+      'modunhardindin-laki-1783',
+    ],
   },
   {
     id: 'most-brutal',
