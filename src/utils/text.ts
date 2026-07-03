@@ -13,3 +13,12 @@ export function normalizeForSearch(s: string): string {
     .replace(/\u00fe/g, 'th') // thorn
     .replace(/\u00e6/g, 'ae'); // ae ligature
 }
+
+// Generate a kebab-case event id from a name: "Battle of \u00d6rlygssta\u00f0ir" \u2192
+// "battle-of-orlygsstadir". Used by the validator to suggest ids and to keep
+// new-event slugs consistent with the existing ones.
+export function slugify(s: string): string {
+  return normalizeForSearch(s)
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}

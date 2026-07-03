@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "validate-events": "tsx scripts/validate-events.ts",
+    "build": "npm run validate-events && tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -19,7 +20,9 @@
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
     "@vitejs/plugin-react": "^5.2.0",
+    "tsx": "^4.22.5",
     "typescript": "^5.4.5",
-    "vite": "^8.1.0"
+    "vite": "^8.1.0",
+    "zod": "^4.4.3"
   }
 }
