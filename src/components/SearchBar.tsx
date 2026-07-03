@@ -10,7 +10,7 @@ export function SearchBar({ value, onChange }: SearchBarProps) {
       <input
         type="text"
         className="search-input"
-        placeholder="Search events, people…"
+        placeholder="Search events, people, places…"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         aria-label="Search events"

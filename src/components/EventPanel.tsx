@@ -1,13 +1,48 @@
 import { useState } from 'react';
-import { ConflictEvent } from '../types';
+import { ConflictEvent, StoryLink } from '../types';
 import { EVENT_CONFIG, CONFIDENCE_CONFIG, FLAG_CONFIG } from '../utils/eventConfig';
+import { events as allEvents } from '../data/events';
 
 interface EventPanelProps {
   event: ConflictEvent | null;
   onClose: () => void;
+  /** Jump to another event (used by the story-context links). */
+  onSelectEvent: (event: ConflictEvent) => void;
 }
 
-function PanelContent({ event, onClose }: EventPanelProps) {
+const eventById = (id?: string) => (id ? allEvents.find((e) => e.id === id) : undefined);
+
+// One "Before this / After this" line, with a jump chip when the narrative
+// points at an event that exists on the map.
+function ContextRow({
+  label,
+  link,
+  onSelectEvent,
+}: {
+  label: string;
+  link: StoryLink;
+  onSelectEvent: (event: ConflictEvent) => void;
+}) {
+  const target = eventById(link.eventId);
+  return (
+    <div className="context-row">
+      <span className="context-dir">{label}</span>
+      <p>
+        {link.text}
+        {target && (
+          <>
+            {' '}
+            <button className="context-link" onClick={() => onSelectEvent(target)}>
+              {target.name} · {target.year} →
+            </button>
+          </>
+        )}
+      </p>
+    </div>
+  );
+}
+
+function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
   const [copied, setCopied] = useState(false);
 
   if (!event) {
@@ -179,6 +214,39 @@ function PanelContent({ event, onClose }: EventPanelProps) {
           <p>{event.whyItMatters}</p>
         </div>
 
+        {/* Story context: what came before / after, plus related jumps */}
+        {(event.before || event.after || (event.relatedIds?.length ?? 0) > 0) && (
+          <div className="context-box">
+            <div className="context-label">📖 The story around it</div>
+            {event.before && (
+              <ContextRow label="Before this" link={event.before} onSelectEvent={onSelectEvent} />
+            )}
+            {event.after && (
+              <ContextRow label="After this" link={event.after} onSelectEvent={onSelectEvent} />
+            )}
+            {(event.relatedIds?.length ?? 0) > 0 && (
+              <div className="context-related">
+                <span className="context-dir">Related</span>
+                <div className="context-related-chips">
+                  {event.relatedIds!.map((id) => {
+                    const target = eventById(id);
+                    if (!target) return null;
+                    return (
+                      <button
+                        key={id}
+                        className="context-link"
+                        onClick={() => onSelectEvent(target)}
+                      >
+                        {target.name} · {target.year}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Confidence note */}
         {event.confidenceNote && (
           <div className="confidence-note-box">
@@ -223,16 +291,16 @@ function PanelContent({ event, onClose }: EventPanelProps) {
 }
 
 // Desktop sidebar
-export function EventPanel({ event, onClose }: EventPanelProps) {
+export function EventPanel({ event, onClose, onSelectEvent }: EventPanelProps) {
   return (
     <div className={`event-panel${!event ? ' collapsed' : ''}`}>
-      <PanelContent event={event} onClose={onClose} />
+      <PanelContent event={event} onClose={onClose} onSelectEvent={onSelectEvent} />
     </div>
   );
 }
 
 // Mobile bottom drawer
-export function MobileDrawer({ event, onClose }: EventPanelProps) {
+export function MobileDrawer({ event, onClose, onSelectEvent }: EventPanelProps) {
   return (
     <>
       <div
@@ -241,7 +309,7 @@ export function MobileDrawer({ event, onClose }: EventPanelProps) {
       />
       <div className={`mobile-drawer${event ? ' open' : ''}`}>
         <div className="drawer-handle" />
-        <PanelContent event={event} onClose={onClose} />
+        <PanelContent event={event} onClose={onClose} onSelectEvent={onSelectEvent} />
       </div>
     </>
   );

@@ -14,6 +14,13 @@ export type EventType =
 
 export type Confidence = 'high' | 'medium' | 'low';
 
+/** A narrative bridge to surrounding history: one line of context, and
+ *  optionally the event on this map that the line points at. */
+export interface StoryLink {
+  text: string;
+  eventId?: string;
+}
+
 // Structured source-quality flags: what exactly is (un)certain about an event.
 // Orthogonal to the overall confidence rating — a medium-confidence saga event
 // can be "event likely happened" AND "location uncertain" at the same time.
@@ -33,6 +40,8 @@ export interface ConflictEvent {
   id: string;
   name: string;
   icelandicName?: string;
+  /** Alternate names/spellings for search: anglicizations, nicknames, older names. */
+  aliases?: string[];
   year: number;
   dateText?: string;
   period: string;
@@ -47,6 +56,12 @@ export interface ConflictEvent {
   eli12: string;
   whyItHappened: string;
   whyItMatters: string;
+  /** "Before this:" — what was brewing when this event happened. */
+  before?: StoryLink;
+  /** "After this:" — what this event led to. */
+  after?: StoryLink;
+  /** Other events worth jumping to from this one. */
+  relatedIds?: string[];
   /** The betrayal / greed / stupidity / revenge angle — the human hook. */
   humanDrama?: string;
   /** "What this would be like today" — a modern-day analogy. */

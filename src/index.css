@@ -608,6 +608,56 @@ a:hover { color: var(--accent-hover); }
 .flag-event_likely { color: #1e6b40; border-color: #86c8a0; }
 .flag-legendary { color: #7a4a1a; border-color: #d4a96a; }
 
+/* ── Story context box ("The story around it") ── */
+.context-box {
+  background: #f6f3ec;
+  border: 1.5px solid #d8cdb4;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.context-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6d5b34;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.context-row p { font-size: 0.82rem; line-height: 1.5; color: #4a3f28; margin-top: 2px; }
+.context-dir {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #8a774d;
+}
+.context-link {
+  display: inline-flex;
+  align-items: center;
+  background: #fffdf7;
+  border: 1px solid #d8cdb4;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #6d5b34;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.context-link:hover { border-color: var(--accent); color: var(--accent); }
+.context-related-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 3px;
+}
+
 /* ── "For dummies" flavor boxes ── */
 .drama-box {
   background: #fdf2f8;

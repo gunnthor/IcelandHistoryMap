@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { ConflictEvent, FilterState } from './types';
 import { events as allEvents } from './data/events';
 import { getYearBounds, ERAS, clampRange, Era } from './utils/eventConfig';
+import { normalizeForSearch } from './utils/text';
 import { BattleMap } from './components/BattleMap';
 import { EventPanel, MobileDrawer } from './components/EventPanel';
 import { FilterBar } from './components/FilterBar';
@@ -59,17 +60,19 @@ export default function App() {
       if (filters.confidence !== 'all' && event.confidence !== filters.confidence) return false;
       if (event.year < filters.yearRange[0] || event.year > filters.yearRange[1]) return false;
       if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        const haystack = [
-          event.name,
-          event.icelandicName ?? '',
-          event.locationName,
-          event.period,
-          ...event.keyPeople,
-          ...event.factions,
-        ]
-          .join(' ')
-          .toLowerCase();
+        // Both sides normalized: accent- and Icelandic-letter-insensitive.
+        const q = normalizeForSearch(searchQuery.trim());
+        const haystack = normalizeForSearch(
+          [
+            event.name,
+            event.icelandicName ?? '',
+            ...(event.aliases ?? []),
+            event.locationName,
+            event.period,
+            ...event.keyPeople,
+            ...event.factions,
+          ].join(' '),
+        );
         if (!haystack.includes(q)) return false;
       }
       return true;
@@ -265,7 +268,11 @@ export default function App() {
           showClans={showClans}
           onShowClansChange={setShowClans}
         />
-        <EventPanel event={selectedEvent} onClose={handleCloseEvent} />
+        <EventPanel
+          event={selectedEvent}
+          onClose={handleCloseEvent}
+          onSelectEvent={handleSelectEvent}
+        />
       </div>
 
       {/* Timeline */}
@@ -280,7 +287,11 @@ export default function App() {
       />
 
       {/* Mobile bottom drawer */}
-      <MobileDrawer event={selectedEvent} onClose={handleCloseEvent} />
+      <MobileDrawer
+        event={selectedEvent}
+        onClose={handleCloseEvent}
+        onSelectEvent={handleSelectEvent}
+      />
     </div>
   );
 }
