@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { ConflictEvent, StoryLink } from '../types';
 import { EVENT_CONFIG, CONFIDENCE_CONFIG, FLAG_CONFIG } from '../utils/eventConfig';
 import { events as allEvents } from '../data/events';
@@ -299,15 +299,58 @@ export function EventPanel({ event, onClose, onSelectEvent }: EventPanelProps) {
   );
 }
 
-// Mobile bottom drawer
+// Mobile bottom drawer. Supports the pull-down-to-close gesture: a downward
+// drag that starts while the card is scrolled to the top follows the finger,
+// and releasing past the threshold dismisses the drawer.
 export function MobileDrawer({ event, onClose, onSelectEvent }: EventPanelProps) {
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const drag = useRef({ startY: 0, delta: 0, fromTop: false, tracking: false });
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    const inner = drawerRef.current?.querySelector('.panel-inner');
+    drag.current = {
+      startY: e.touches[0].clientY,
+      delta: 0,
+      // Only turn the gesture into a drag if the card isn't mid-scroll —
+      // otherwise a downward swipe should scroll the content up.
+      fromTop: !inner || inner.scrollTop <= 0,
+      tracking: true,
+    };
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    const el = drawerRef.current;
+    if (!el || !drag.current.tracking || !drag.current.fromTop) return;
+    const dy = e.touches[0].clientY - drag.current.startY;
+    if (dy > 0) {
+      drag.current.delta = dy;
+      el.style.transition = 'none';
+      el.style.transform = `translateY(${dy}px)`;
+    }
+  };
+
+  const onTouchEnd = () => {
+    const el = drawerRef.current;
+    if (!el) return;
+    el.style.transition = '';
+    el.style.transform = '';
+    if (drag.current.delta > 90) onClose();
+    drag.current = { startY: 0, delta: 0, fromTop: false, tracking: false };
+  };
+
   return (
     <>
       <div
         className={`mobile-overlay${!event ? ' hidden' : ''}`}
         onClick={onClose}
       />
-      <div className={`mobile-drawer${event ? ' open' : ''}`}>
+      <div
+        className={`mobile-drawer${event ? ' open' : ''}`}
+        ref={drawerRef}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <div className="drawer-handle" />
         <PanelContent event={event} onClose={onClose} onSelectEvent={onSelectEvent} />
       </div>

@@ -43,7 +43,14 @@ a:hover { color: var(--accent-hover); }
   display: flex;
   flex-direction: column;
   height: 100%;
+  height: 100dvh; /* track the real visible height under mobile browser chrome */
   overflow: hidden;
+}
+
+/* Kill the 300ms double-tap-zoom delay and the grey tap flash on touch. */
+button, .chip, a {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ── Header ── */
@@ -997,6 +1004,8 @@ a:hover { color: var(--accent-hover); }
 }
 .mobile-drawer .panel-inner {
   width: 100%;
+  /* Keep the pull-down-to-close drag from rubber-banding the page behind. */
+  overscroll-behavior: contain;
 }
 .mobile-overlay {
   display: none;
@@ -1171,21 +1180,50 @@ a:hover { color: var(--accent-hover); }
   .filter-bar { padding: 6px 10px; }
   .filter-divider { display: none; }
 
-  /* Timeline on mobile */
-  .timeline-wrap { height: var(--timeline-height); }
+  /* Timeline on mobile: extra height so the home indicator doesn't sit on it */
+  .timeline-wrap {
+    height: calc(var(--timeline-height) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
   .timeline-dot-year { display: none; }
-  .timeline-dot-marker { width: 24px; height: 24px; font-size: 10px; }
+  .timeline-dot-marker { width: 28px; height: 28px; font-size: 11px; }
 
   /* header */
   .header { padding: 0 12px; gap: 10px; }
   .header-title { font-size: 1rem; }
-  .btn { padding: 5px 10px; font-size: 0.78rem; }
+  .btn { padding: 8px 12px; font-size: 0.78rem; }
+
+  /* iOS zooms the page when a focused input's font is under 16px. */
+  .search-input { font-size: 16px; }
+
+  /* Thumb-sized tap targets (~44px effective) for the couch crowd. */
+  .chip { padding: 8px 13px; font-size: 0.78rem; }
+  .type-dd-row { padding: 11px 12px; font-size: 0.88rem; }
+  .tour-btn { padding: 8px 14px; }
+  .tour-btn-exit { padding: 8px 12px; }
+  .panel-close { padding: 8px 12px; }
+  .panel-share { padding: 7px 12px; }
+  .context-link { padding: 4px 10px; }
+  .search-clear { padding: 6px 8px; }
+
+  /* Drawer: room for the home-indicator, and a fatter grab handle. */
+  .mobile-drawer {
+    max-height: 78dvh;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .drawer-handle { width: 44px; height: 5px; margin: 10px auto 6px; }
+
+  /* Modals shouldn't hug the screen edges. */
+  .about-backdrop { padding: 12px; }
+  .route-picker, .about-modal { padding: 20px 16px 16px; }
 }
 
 @media (max-width: 480px) {
   .header-title { font-size: 0.9rem; }
   .search-input { width: 110px; }
-  .search-input:focus { width: 140px; }
+  .search-input:focus { width: 150px; }
+  /* Icon-mostly header buttons: "🧭 Routes" and "ⓘ" */
+  .btn-word-optional { display: none; }
 }
 
 /* ── Empty state (no filter matches) ── */

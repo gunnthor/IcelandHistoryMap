@@ -50,7 +50,8 @@ function TypeDropdown({
 
   const openMenu = useCallback(() => {
     const rect = btnRef.current?.getBoundingClientRect();
-    if (rect) setPos({ top: rect.bottom + 4, left: rect.left });
+    // Clamp to the viewport so the menu never spills off a narrow screen.
+    if (rect) setPos({ top: rect.bottom + 4, left: Math.max(8, Math.min(rect.left, window.innerWidth - 208)) });
     setOpen(true);
   }, []);
 

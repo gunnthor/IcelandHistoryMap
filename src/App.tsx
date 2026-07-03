@@ -216,15 +216,16 @@ export default function App() {
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
           {!activeTour && (
             <button className="btn btn-primary" onClick={() => setPickerOpen(true)}>
-              🧭 Story Routes
+              🧭 <span className="btn-word-optional">Story </span>Routes
             </button>
           )}
           <button
             className="btn btn-secondary"
             onClick={() => setAboutOpen(true)}
             title="About this site"
+            aria-label="About this site"
           >
-            ⓘ About
+            ⓘ<span className="btn-word-optional"> About</span>
           </button>
         </div>
       </header>
