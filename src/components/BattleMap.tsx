@@ -8,7 +8,6 @@ import { powerCenters } from '../data/powerCenters';
 import { events as allEvents } from '../data/events';
 import { CLAN_BATTLES } from '../data/clanBattles';
 import { glaciers } from '../data/glaciers';
-import { HistoricFlags } from './HistoricFlags';
 import { createSpiderfier, OMSInstance } from '../utils/oms';
 
 // Tag we stash on each Leaflet marker so the shared OMS click handler can map
@@ -361,9 +360,6 @@ export function BattleMap({
 
       {/* Ornate map frame — fantasy-chart border flourish */}
       <div className="map-frame" aria-hidden="true" />
-
-      {/* Historic banners of Iceland (decorative cartouche, top-left) */}
-      <HistoricFlags />
 
       {/* Clan power-centers layer: toggle + interactive colour legend */}
       <div className="clan-control">

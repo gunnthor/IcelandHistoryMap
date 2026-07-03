@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { HistoricFlags } from './HistoricFlags';
 
 interface AboutModalProps {
   open: boolean;
@@ -50,6 +51,10 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           a confidence rating and its sources. Use the era presets and timeline to travel
           through the centuries, or pick a <strong>Story Route</strong> for a guided tour.
         </p>
+
+        <div className="about-divider" />
+
+        <HistoricFlags />
 
         <div className="about-divider" />
 

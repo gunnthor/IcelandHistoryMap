@@ -1338,31 +1338,25 @@ a:hover { color: var(--accent-hover); }
 /* Zoom control lives top-right now; nudge it below the compass rose. */
 .map-wrap .leaflet-top.leaflet-right { top: 116px; }
 
-/* ── Historic banners cartouche (top-left) ── */
-.map-flags {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 900;
-  background: linear-gradient(180deg, rgba(243,233,211,0.96), rgba(224,209,175,0.96));
-  border: 1px solid var(--gold-soft);
-  border-radius: 6px;
-  padding: 5px 7px 6px;
-  box-shadow: var(--shadow);
+/* ── Historic banners cartouche (About modal) ── */
+.about-flags {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
-.map-flags-title {
+.about-flags-title {
   font-family: 'IM Fell English', Georgia, serif;
-  font-size: 0.62rem;
+  font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.4px;
   text-align: center;
   color: var(--text-muted);
-  margin-bottom: 4px;
   text-transform: uppercase;
 }
-.map-flags-row { display: flex; gap: 5px; }
-.map-flag { width: 30px; height: 22px; display: block; cursor: help; }
-.map-flag svg {
+.about-flags-row { display: flex; gap: 8px; }
+.about-flag { width: 38px; height: 28px; display: block; cursor: help; }
+.about-flag svg {
   width: 100%;
   height: 100%;
   display: block;
@@ -1371,7 +1365,7 @@ a:hover { color: var(--accent-hover); }
   box-shadow: 0 1px 2px rgba(0,0,0,0.3);
   transition: transform 0.12s;
 }
-.map-flag:hover svg { transform: scale(1.18); }
+.about-flag:hover svg { transform: scale(1.18); }
 
 /* ── Ornate fantasy frame around the chart ── */
 .map-frame {

@@ -1,6 +1,6 @@
-// A small heraldic cartouche of Iceland's historic banners, shown in the
-// top-left of the map like the coats-of-arms on an old chart. Decorative; each
-// flag has a tooltip naming it and its era.
+// A small heraldic cartouche of Iceland's historic banners, shown as a
+// decorative strip in the About modal. Each flag has a tooltip naming it and
+// its era. (Formerly lived on the map itself, but earned no map real estate.)
 interface FlagDef {
   id: string;
   name: string;
@@ -76,11 +76,11 @@ const FLAGS: FlagDef[] = [
 
 export function HistoricFlags() {
   return (
-    <div className="map-flags" aria-label="Historic banners of Iceland">
-      <div className="map-flags-title">Fánar Íslands</div>
-      <div className="map-flags-row">
+    <div className="about-flags" aria-label="Historic banners of Iceland">
+      <div className="about-flags-title">Fánar Íslands</div>
+      <div className="about-flags-row">
         {FLAGS.map((f) => (
-          <span className="map-flag" key={f.id} title={`${f.name} · ${f.years}`}>
+          <span className="about-flag" key={f.id} title={`${f.name} · ${f.years}`}>
             <svg viewBox="0 0 25 18" role="img" aria-label={`${f.name}, ${f.years}`}>
               {f.svg}
             </svg>
