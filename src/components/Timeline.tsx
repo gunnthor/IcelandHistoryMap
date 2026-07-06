@@ -9,6 +9,10 @@ interface TimelineProps {
   maxYear: number;
   onSelectEvent: (e: ConflictEvent) => void;
   onYearRangeChange: (range: [number, number]) => void;
+  // Autoplay: lean-back pass through the visible events, oldest first.
+  playing: boolean;
+  onTogglePlay: () => void;
+  playLabel: string | null;
 }
 
 export function Timeline({
@@ -19,6 +23,9 @@ export function Timeline({
   maxYear,
   onSelectEvent,
   onYearRangeChange,
+  playing,
+  onTogglePlay,
+  playLabel,
 }: TimelineProps) {
   // Sorted chronologically for left-to-right ordering.
   const sorted = [...events].sort((a, b) => a.year - b.year);
@@ -32,7 +39,21 @@ export function Timeline({
   return (
     <div className="timeline-wrap">
       <div className="timeline-inner">
-        <div className="timeline-label">Timeline — click an event to jump to it</div>
+        <div className="timeline-head">
+          <button
+            type="button"
+            className={`timeline-play${playing ? ' playing' : ''}`}
+            onClick={onTogglePlay}
+            aria-pressed={playing}
+            aria-label={playing ? 'Pause the history autoplay' : 'Play through every event in order'}
+            title={playing ? 'Pause' : 'Play through every event, oldest to newest'}
+          >
+            {playing ? '⏸︎' : '▶︎'}
+          </button>
+          <div className="timeline-label">
+            {playLabel ?? 'Timeline — click an event to jump to it, or press play'}
+          </div>
+        </div>
 
         <div className="timeline-track-wrap">
           <div className="timeline-track" />

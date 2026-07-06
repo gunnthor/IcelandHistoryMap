@@ -303,7 +303,7 @@ button, .chip, a {
 /* Toggle + legend, anchored top-left under the Leaflet zoom control */
 .clan-control {
   position: absolute;
-  top: 96px;
+  top: 10px; /* the flags cartouche that used to sit above is gone */
   left: 10px;
   z-index: 900;
   display: flex;
@@ -808,6 +808,42 @@ button, .chip, a {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: #6b6b8a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Play button + label share the timeline's header row. */
+.timeline-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 22px;
+}
+.timeline-play {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid var(--gold-soft);
+  background: rgba(201, 164, 76, 0.12);
+  color: var(--gold);
+  font-size: 10px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+.timeline-play:hover {
+  background: rgba(201, 164, 76, 0.3);
+  transform: scale(1.08);
+}
+.timeline-play.playing {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #17120c;
 }
 .timeline-track-wrap {
   position: relative;
@@ -1324,15 +1360,82 @@ button, .chip, a {
   letter-spacing: 0.2px;
 }
 
-/* ── Map: aged parchment treatment ── */
-.map-wrap .leaflet-container {
+/* ── Map: per-style tile treatments ── */
+/* Parchment: the aged fantasy chart. Sepia-tint only the map tiles, so
+   markers keep their vivid colours. */
+.map-style-parchment .leaflet-container {
   background: #d8c6a0; /* parchment shows through while tiles load */
 }
-/* Sepia-tint only the map tiles, so markers keep their vivid colours.
-   Warmed slightly toward aged-gold parchment for the LOTR feel. */
-.map-wrap .leaflet-tile-pane {
+.map-style-parchment .leaflet-tile-pane {
   filter: sepia(0.62) saturate(0.85) brightness(1.03) contrast(1.05) hue-rotate(-8deg);
 }
+
+/* Summer: late-July Iceland. The physical-map base gives green lowlands and
+   brown highlands; the relief layer multiplies terrain shading on top. The
+   filter pushes the tan-yellows toward living grass-green and lifts
+   saturation the way Iceland's July light does — deliberately exaggerated:
+   vivid greens, deep browns, punchy contrast. */
+.map-style-summer .leaflet-container {
+  background: #bcd7c9; /* soft green-sea tone while tiles load */
+}
+.map-style-summer .leaflet-tile-pane {
+  filter: hue-rotate(24deg) saturate(1.9) brightness(1.02) contrast(1.18);
+}
+.map-style-summer .relief-multiply {
+  mix-blend-mode: multiply;
+  opacity: 0.62; /* heavier relief = richer browns in the highlands */
+}
+
+/* Satellite: the literal view. Light saturation lift only. */
+.map-style-satellite .leaflet-container {
+  background: #16324a;
+}
+.map-style-satellite .leaflet-tile-pane {
+  filter: saturate(1.25) brightness(1.05);
+}
+/* Paper grain over a photo looks like dirt — parchment/summer keep it. */
+.map-style-satellite.map-wrap::before { display: none; }
+/* Real glaciers are visible in imagery; let them show through our shapes. */
+.map-style-satellite .glacier-shape { fill-opacity: 0.35 !important; }
+
+/* 1590 — Ortelius' "Islandia" engraving as the whole world. No tiles: just
+   the chart over an engraved-sea backdrop, with the real markers floating
+   over 16th-century geography. Blur when zoomed deep is part of the charm. */
+.map-style-ortelius .leaflet-container {
+  background: #96a1ab; /* the engraving's grey-blue sea, past the sheet edges */
+}
+/* The chart draws its own glaciers — our snowy polygons would double them
+   (and land in the wrong place besides). */
+.map-style-ortelius .glacier-shape,
+.map-style-ortelius .glacier-label { display: none; }
+
+/* ── Map style switcher ── */
+.style-switch {
+  position: absolute;
+  right: 8px;
+  bottom: 26px;
+  z-index: 900;
+  display: flex;
+  gap: 0;
+  background: rgba(28,20,13,0.82);
+  border: 1px solid var(--gold-soft);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.style-switch-btn {
+  background: transparent;
+  border: none;
+  color: #cdbb95;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.style-switch-btn + .style-switch-btn { border-left: 1px solid rgba(201,164,76,0.3); }
+.style-switch-btn:hover { color: #f0e6cf; }
+.style-switch-btn.active { background: var(--gold-soft); color: #241a0e; }
 /* Subtle paper grain over the map. */
 .map-wrap::before {
   content: '';

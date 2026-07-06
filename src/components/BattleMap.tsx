@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { MapContainer, TileLayer, useMap, ZoomControl } from 'react-leaflet';
+import { ImageOverlay, MapContainer, TileLayer, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import { ConflictEvent, PowerCenter, ClanId } from '../types';
 import { EVENT_CONFIG } from '../utils/eventConfig';
@@ -32,14 +32,51 @@ const ICELAND_BOUNDS: L.LatLngBoundsExpression = [
   [67.2, -12.2],
 ];
 
-// Fly to the selected event whenever it changes.
-function MapController({ event }: { event: ConflictEvent | null }) {
+// ── Map styles ──
+// "parchment" is the original fantasy chart. "summer" layers Esri's physical
+// map (hypsometric color: green lowlands, brown highlands) under the shaded
+// relief with multiply blending, tuned toward Iceland's vivid late-July
+// palette — historically apt, since at settlement birchwoods covered 25–40%
+// of the island. "satellite" is the literal July view, and the default.
+// "ortelius" swaps the world for Abraham Ortelius' hand-coloured Islandia
+// engraving (c. 1590) — sea monsters included. Atmosphere, not navigation.
+export type MapStyle = 'parchment' | 'summer' | 'satellite' | 'ortelius';
+
+const MAP_STYLE_META: Record<MapStyle, { label: string; hint: string }> = {
+  parchment: { label: 'Parchment', hint: 'The aged fantasy chart' },
+  summer: { label: 'Summer', hint: 'Late-July Iceland: green lowlands, brown highlands' },
+  satellite: { label: 'Satellite', hint: 'The real thing, from orbit' },
+  ortelius: { label: '1590', hint: 'Ortelius’ Islandia engraving — sea monsters included' },
+};
+
+const MAP_STYLE_KEY = 'battlemap-style';
+
+function loadMapStyle(): MapStyle {
+  const v = localStorage.getItem(MAP_STYLE_KEY);
+  return v === 'summer' || v === 'parchment' || v === 'ortelius' ? v : 'satellite';
+}
+
+// Bounds for the Ortelius engraving overlay: a least-squares fit of 23
+// identifiable features on the chart (Hekla, Skálholt, Hólar, Papey,
+// Kirkjubæjarklaustur…) against their real coordinates, with latitude fitted
+// in Mercator-Y because Leaflet stretches image overlays linearly in
+// projected space. The engraving's own distortion still leaves markers up to
+// ~1° from their drawn features — that's the 16th century's problem, not a
+// bug to fix here.
+const ORTELIUS_BOUNDS: L.LatLngBoundsExpression = [
+  [62.063, -27.303],
+  [66.764, -13.695],
+];
+
+// Fly to the selected event whenever it changes. On the 1590 engraving we
+// stay wider — it's a single ~2300px image, and past z8 it's all blur.
+function MapController({ event, mapStyle }: { event: ConflictEvent | null; mapStyle: MapStyle }) {
   const map = useMap();
   useEffect(() => {
     if (event) {
-      map.flyTo(event.coordinates, 10, { duration: 1.2 });
+      map.flyTo(event.coordinates, mapStyle === 'ortelius' ? 8 : 10, { duration: 1.2 });
     }
-  }, [event, map]);
+  }, [event, map, mapStyle]);
   return null;
 }
 
@@ -317,6 +354,12 @@ export function BattleMap({
   onShowClansChange,
 }: BattleMapProps) {
   const [highlightClan, setHighlightClan] = useState<ClanId | null>(null);
+  const [mapStyle, setMapStyle] = useState<MapStyle>(loadMapStyle);
+
+  const pickStyle = (s: MapStyle) => {
+    setMapStyle(s);
+    localStorage.setItem(MAP_STYLE_KEY, s);
+  };
 
   // Whenever the layer goes away (manual toggle or leaving the Sturlung era),
   // drop any clan highlight so we don't draw lines for a hidden layer.
@@ -327,7 +370,7 @@ export function BattleMap({
   const toggleClanLayer = () => onShowClansChange(!showClans);
 
   return (
-    <div className="map-wrap">
+    <div className={`map-wrap map-style-${mapStyle}`}>
       <MapContainer
         center={[64.96, -18.9]}
         zoom={6}
@@ -341,13 +384,54 @@ export function BattleMap({
         zoomControl={false}
       >
         <ZoomControl position="topright" />
-        <TileLayer
-          attribution='Tiles &copy; <a href="https://www.esri.com">Esri</a> — Source: Esri, USGS, NOAA'
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
-          maxNativeZoom={13}
-          maxZoom={14}
-        />
-        <MapController event={selectedEvent} />
+        {mapStyle === 'parchment' && (
+          <TileLayer
+            key="parchment"
+            attribution='Tiles &copy; <a href="https://www.esri.com">Esri</a> — Source: Esri, USGS, NOAA'
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
+            maxNativeZoom={13}
+            maxZoom={14}
+          />
+        )}
+        {mapStyle === 'summer' && (
+          <>
+            {/* Hypsometric color base: green lowlands, brown highlands. Low
+                native zoom — past z8 it becomes a soft color wash while the
+                relief overlay below keeps the terrain detail crisp. */}
+            <TileLayer
+              key="summer-color"
+              attribution='Tiles &copy; <a href="https://www.esri.com">Esri</a> — Source: Esri, USGS, NOAA'
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}"
+              maxNativeZoom={8}
+              maxZoom={14}
+            />
+            <TileLayer
+              key="summer-relief"
+              className="relief-multiply"
+              url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}"
+              maxNativeZoom={13}
+              maxZoom={14}
+            />
+          </>
+        )}
+        {mapStyle === 'satellite' && (
+          <TileLayer
+            key="satellite"
+            attribution='Imagery &copy; <a href="https://www.esri.com">Esri</a> — Source: Esri, Maxar, Earthstar Geographics'
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            maxNativeZoom={14}
+            maxZoom={14}
+          />
+        )}
+        {mapStyle === 'ortelius' && (
+          <ImageOverlay
+            key="ortelius"
+            url={`${import.meta.env.BASE_URL}ortelius-islandia.jpg`}
+            bounds={ORTELIUS_BOUNDS}
+            attribution='&ldquo;Islandia&rdquo;, Abraham Ortelius (c. 1590) — public domain, via Wikimedia Commons'
+          />
+        )}
+        <MapController event={selectedEvent} mapStyle={mapStyle} />
         <GlacierLayer />
         <EventMarkers
           events={events}
@@ -430,6 +514,21 @@ export function BattleMap({
       <div className="map-disclaimer">
         ⚠️ Some saga-era locations and casualty numbers are approximate.
         This app shows confidence levels and sources for each event.
+      </div>
+
+      {/* Map style switcher */}
+      <div className="style-switch" role="group" aria-label="Map style">
+        {(Object.keys(MAP_STYLE_META) as MapStyle[]).map((s) => (
+          <button
+            key={s}
+            className={`style-switch-btn${mapStyle === s ? ' active' : ''}`}
+            onClick={() => pickStyle(s)}
+            aria-pressed={mapStyle === s}
+            title={MAP_STYLE_META[s].hint}
+          >
+            {MAP_STYLE_META[s].label}
+          </button>
+        ))}
       </div>
     </div>
   );

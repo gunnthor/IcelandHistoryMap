@@ -23,6 +23,10 @@ const INITIAL_FILTERS: FilterState = {
   yearRange: [MIN_YEAR, MAX_YEAR],
 };
 
+// Autoplay dwell per event: long enough to read the panel's opening lines,
+// short enough that the full 52-stop run stays under ~8 minutes.
+const PLAY_DWELL_MS = 9000;
+
 export default function App() {
   const [selectedEvent, setSelectedEvent] = useState<ConflictEvent | null>(null);
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS);
@@ -32,6 +36,7 @@ export default function App() {
   const [tourStep, setTourStep] = useState(0);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
   // The active route's stops, in route order.
   const tourEvents = useMemo(
@@ -83,6 +88,60 @@ export default function App() {
     setSelectedEvent(event);
   }, []);
 
+  // ── Autoplay: a lean-back pass through the filtered events, oldest first ──
+  const playlist = useMemo(
+    () => [...filteredEvents].sort((a, b) => a.year - b.year),
+    [filteredEvents],
+  );
+
+  // The playhead derives from whatever is selected, read through a ref so the
+  // interval never holds a stale selection — clicking around while playing
+  // simply moves the needle and the tour continues from there.
+  const selectedRef = useRef<ConflictEvent | null>(null);
+  useEffect(() => {
+    selectedRef.current = selectedEvent;
+  }, [selectedEvent]);
+
+  useEffect(() => {
+    if (!playing) return;
+    if (playlist.length === 0) {
+      setPlaying(false);
+      return;
+    }
+    // First stop: resume from the selection if it's on the playlist,
+    // otherwise from the next event by year (or the very beginning).
+    const cur = selectedRef.current;
+    if (!cur || !playlist.some((e) => e.id === cur.id)) {
+      const next = cur ? playlist.find((e) => e.year > cur.year) ?? playlist[0] : playlist[0];
+      setSelectedEvent(next);
+    }
+    const timer = setInterval(() => {
+      const now = selectedRef.current;
+      const idx = now ? playlist.findIndex((e) => e.id === now.id) : -1;
+      if (idx >= 0 && idx < playlist.length - 1) {
+        setSelectedEvent(playlist[idx + 1]);
+      } else if (idx === playlist.length - 1) {
+        setPlaying(false); // reached the present — stop, keep the last event open
+      } else {
+        const next = now ? playlist.find((e) => e.year > now.year) ?? playlist[0] : playlist[0];
+        setSelectedEvent(next);
+      }
+    }, PLAY_DWELL_MS);
+    return () => clearInterval(timer);
+  }, [playing, playlist]);
+
+  const togglePlay = useCallback(() => {
+    if (!playing && activeTour) setActiveTour(null); // play takes over from a route
+    setPlaying(!playing);
+  }, [playing, activeTour]);
+
+  const playLabel = useMemo(() => {
+    if (!playing || !selectedEvent) return null;
+    const i = playlist.findIndex((e) => e.id === selectedEvent.id);
+    const pos = i >= 0 ? ` (${i + 1} of ${playlist.length})` : '';
+    return `Playing — ${selectedEvent.year}: ${selectedEvent.name}${pos}`;
+  }, [playing, selectedEvent, playlist]);
+
   const handleCloseEvent = useCallback(() => {
     setSelectedEvent(null);
   }, []);
@@ -110,6 +169,7 @@ export default function App() {
   const startTour = (tour: Tour) => {
     const stops = resolveTourEvents(tour);
     if (!stops.length) return;
+    setPlaying(false); // a guided route replaces the autoplay
     setPickerOpen(false);
     setActiveTour(tour);
     setTourStep(0);
@@ -174,7 +234,8 @@ export default function App() {
       const target = e.target as HTMLElement | null;
       const typing = !!target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA');
       if (e.key === 'Escape') {
-        if (activeTour) exitTour();
+        if (playing) setPlaying(false);
+        else if (activeTour) exitTour();
         else if (selectedEvent) handleCloseEvent();
         return;
       }
@@ -193,7 +254,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey);
     // selectedEvent in deps means fresh closures on every tour step.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTour, selectedEvent]);
+  }, [activeTour, selectedEvent, playing]);
 
   const filtersActive =
     filters.types.length > 0 ||
@@ -285,6 +346,9 @@ export default function App() {
         maxYear={MAX_YEAR}
         onSelectEvent={handleSelectEvent}
         onYearRangeChange={(range) => setFilters((f) => ({ ...f, yearRange: range }))}
+        playing={playing}
+        onTogglePlay={togglePlay}
+        playLabel={playLabel}
       />
 
       {/* Mobile bottom drawer */}
