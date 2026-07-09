@@ -56,7 +56,8 @@
       "PowerShell(npx playwright install chromium 2>&1)",
       "PowerShell(npm run preview)",
       "PowerShell($env:OUT_DIR = \"C:\\\\Users\\\\GG\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-GG-Projects-Personal-IcelandHistoryMap\\\\0b0e09b2-e9d1-461d-b46b-6b0a0de07c91\\\\scratchpad\"; node \"$env:OUT_DIR\\\\probe.mjs\")",
-      "Edit(/.claude/skills/verify/**)"
+      "Edit(/.claude/skills/verify/**)",
+      "PowerShell(npm run build 2>&1 | Select-Object -Last 3; \"build exit code: $LASTEXITCODE\")"
     ]
   }
 }

@@ -155,6 +155,11 @@ export default function App() {
     setSelectedEvent(null);
   }, []);
 
+  // Stable identities so the dialogs' Escape listeners don't re-subscribe
+  // (and drop an in-flight keydown) every time App re-renders.
+  const closePicker = useCallback(() => setPickerOpen(false), []);
+  const closeAbout = useCallback(() => setAboutOpen(false), []);
+
   const resetFilters = useCallback(() => {
     setFilters(INITIAL_FILTERS);
     setSearchQuery('');
@@ -318,10 +323,10 @@ export default function App() {
         </div>
       </header>
 
-      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
+      <AboutModal open={aboutOpen} onClose={closeAbout} />
 
       {/* Story-route picker */}
-      <TourPicker open={pickerOpen} onClose={() => setPickerOpen(false)} onSelect={startTour} />
+      <TourPicker open={pickerOpen} onClose={closePicker} onSelect={startTour} />
 
       {/* Tour banner */}
       {activeTour && (

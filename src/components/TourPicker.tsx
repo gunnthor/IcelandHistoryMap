@@ -11,14 +11,20 @@ interface TourPickerProps {
 export function TourPicker({ open, onClose, onSelect }: TourPickerProps) {
   const { t } = useI18n();
 
-  // Close on Esc while the dialog is open.
+  // Close on Esc while the dialog is open. Capture phase + stopPropagation:
+  // the open dialog owns Escape, so App's handler doesn't also close the
+  // event panel underneath — and can't win a listener re-subscription race
+  // when its own state update re-renders us mid-dispatch.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        onClose();
+      }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
   }, [open, onClose]);
 
   if (!open) return null;

@@ -17,14 +17,18 @@ const ISSUES_NEW_URL = `${REPO_URL}/issues/new?title=${encodeURIComponent(
 export function AboutModal({ open, onClose }: AboutModalProps) {
   const { t } = useI18n();
 
-  // Close on Esc while the dialog is open.
+  // Close on Esc while the dialog is open. Capture phase + stopPropagation:
+  // the open dialog owns Escape (see TourPicker for the full story).
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        onClose();
+      }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('keydown', onKey, true);
+    return () => window.removeEventListener('keydown', onKey, true);
   }, [open, onClose]);
 
   if (!open) return null;
