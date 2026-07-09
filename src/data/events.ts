@@ -2436,6 +2436,68 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'thristapar-1830',
+    name: 'The Last Execution in Iceland',
+    icelandicName: 'Síðasta aftakan á Íslandi',
+    aliases: ['Agnes Magnúsdóttir', 'Agnes and Friðrik', 'Þrístapar', 'Burial Rites', 'Illugastaðir murders', 'Natan Ketilsson'],
+    year: 1830,
+    dateText: 'January 12, 1830',
+    period: 'Danish Rule / End of Capital Punishment',
+    type: 'execution',
+    locationName: 'Þrístapar in Vatnsdalshólar, Húnavatnssýsla (by the Ring Road)',
+    coordinates: [65.5016, -20.3989],
+    factions: [
+      'The Danish-Icelandic judicial state, with local farmers ordered to attend',
+      'Agnes Magnúsdóttir and Friðrik Sigurðsson, convicted of the Illugastaðir murders',
+    ],
+    keyPeople: [
+      'Agnes Magnúsdóttir',
+      'Friðrik Sigurðsson',
+      'Natan Ketilsson',
+      'Guðmundur Ketilsson (executioner, Natan\'s brother)',
+      'Sigríður Guðmundsdóttir',
+    ],
+    casualtyEstimate:
+      'Agnes and Friðrik beheaded; two murdered at Illugastaðir in 1828 (Natan Ketilsson and Pétur Jónsson)',
+    summary:
+      'On a January morning in 1830, Agnes Magnúsdóttir and Friðrik Sigurðsson were beheaded at Þrístapar, three hillocks by the road through Vatnsdalshólar — the last execution ever carried out in Iceland. They had been convicted of murdering Natan Ketilsson and Pétur Jónsson at Illugastaðir on Vatnsnes in 1828: stabbed in their sleep, the farm burned over them. Farmers of the district were ordered to attend as witnesses, and the severed heads were set on stakes facing the road.',
+    eli12:
+      'Two people killed a farmer and his guest, then set the house on fire to hide it. Two years later they were beheaded in front of a crowd that was ordered to come and watch — and nobody was ever executed in Iceland again. The woman, Agnes, became so famous that books and films are still being made about her.',
+    whyItHappened:
+      'Natan Ketilsson — healer, poet, and by most accounts a tyrant inside his own household — was killed by his farmhand and his servant woman after months of abuse and tangled relationships. The murders horrified the region, and the authorities wanted the harshest possible example made.',
+    whyItMatters:
+      'The state never executed anyone in Iceland again: the death penalty fell out of use and was formally abolished in 1928. Agnes herself became the most retold woman in Icelandic history — novels, films, and the enduring question of whether she was the mastermind, an accomplice, or a victim.',
+    before: {
+      text: 'Stóridómur-era executions had wound down through the 1700s — the drownings ended at Þingvellir in 1749 — but the axe remained in law.',
+      eventId: 'drekkingarhylur-storidomur',
+    },
+    after: {
+      text: 'The death penalty was never used again and was formally abolished in 1928; in 1934 the two were reburied in consecrated ground at Tjörn on Vatnsnes.',
+    },
+    relatedIds: ['drekkingarhylur-storidomur'],
+    humanDrama:
+      'The axe was swung by Guðmundur Ketilsson — the murdered man\'s own brother, appointed to the task by the authorities. Agnes spent her last winter lodged with an ordinary farm family, because Iceland had no prison to hold her; the household is said to have wept when she was taken away. Whether she was the plot\'s architect or Natan\'s abused servant depends on which century is telling the story.',
+    modernTranslation:
+      'A double murder becomes the crime of the century; the state stages the execution as public theater and orders the neighbors to attend. Two hundred years later, novelists and filmmakers have retried the case so many times that the convicted woman is now a more sympathetic figure than the victim.',
+    confidenceNote:
+      'High. Court records, parish registers and contemporary accounts document the murders, the trial and the execution in detail — date, place and participants are certain. What remains contested is interpretation: Agnes\'s role and motives, not the facts.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Wikipedia: Agnes Magnúsdóttir',
+        url: 'https://en.wikipedia.org/wiki/Agnes_Magn%C3%BAsd%C3%B3ttir',
+      },
+      {
+        title: 'Visit North Iceland: Þrístapar — site of Iceland\'s last execution',
+        url: 'https://www.northiceland.is/en/place/thristapar',
+      },
+      {
+        title: 'Wikipedia (is): Agnes Magnúsdóttir',
+        url: 'https://is.wikipedia.org/wiki/Agnes_Magn%C3%BAsd%C3%B3ttir',
+      },
+    ],
+  },
+  {
     id: 'dyrafjordur-royalist-1899',
     name: 'Hannes Hafstein vs. the Trawler Royalist',
     icelandicName: 'Dýrafjarðarslysið / Royalist-málið',

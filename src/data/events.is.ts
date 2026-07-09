@@ -1868,6 +1868,57 @@ export const eventTranslations: Record<string, EventTranslation> = {
       },
     ],
   },
+  'thristapar-1830': {
+    name: 'Síðasta aftakan á Íslandi',
+    dateText: '12. janúar 1830',
+    period: 'Dönsk yfirráð / endalok dauðarefsinga',
+    locationName: 'Þrístapar í Vatnsdalshólum, Húnavatnssýslu (við þjóðveg 1)',
+    factions: [
+      'Dansk-íslenska dómsvaldið, með bændur héraðsins skikkaða til að horfa á',
+      'Agnes Magnúsdóttir og Friðrik Sigurðsson, dæmd fyrir Illugastaðamorðin',
+    ],
+    keyPeople: [
+      'Agnes Magnúsdóttir',
+      'Friðrik Sigurðsson',
+      'Natan Ketilsson',
+      'Guðmundur Ketilsson (böðull, bróðir Natans)',
+      'Sigríður Guðmundsdóttir',
+    ],
+    casualtyEstimate:
+      'Agnes og Friðrik hálshöggvin; tvö myrt á Illugastöðum 1828 (Natan Ketilsson og Pétur Jónsson)',
+    summary:
+      'Janúarmorgun 1830 voru Agnes Magnúsdóttir og Friðrik Sigurðsson hálshöggvin á Þrístöpum, þremur hólum við veginn gegnum Vatnsdalshóla — síðasta aftaka sem framkvæmd hefur verið á Íslandi. Þau höfðu verið dæmd fyrir morðin á Natani Ketilssyni og Pétri Jónssyni á Illugastöðum á Vatnsnesi 1828: stungnir sofandi og bærinn brenndur ofan af þeim. Bændum héraðsins var skipað að mæta sem vitni, og höfuðin voru sett á stangir við veginn.',
+    eli12:
+      'Tvö myrtu bónda og gest hans og kveiktu svo í bænum til að fela verkið. Tveimur árum síðar voru þau hálshöggvin fyrir framan fólk sem var skikkað til að mæta og horfa á — og enginn hefur verið tekinn af lífi á Íslandi síðan. Konan, Agnes, varð svo fræg að enn eru skrifaðar bækur og gerðar bíómyndir um hana.',
+    whyItHappened:
+      'Natan Ketilsson — grasalæknir, skáld og að flestra sögn harðstjóri innan eigin veggja — var veginn af vinnumanni sínum og vinnukonu eftir mánuði af harðræði og flóknum ástarmálum. Morðin skelfdu héraðið og yfirvöld vildu láta sem harðast víti til varnaðar.',
+    whyItMatters:
+      'Ríkið tók aldrei aftur mann af lífi á Íslandi: dauðarefsingin féll úr notkun og var formlega afnumin 1928. Agnes sjálf varð margendursagðasta kona Íslandssögunnar — skáldsögur, kvikmyndir og spurningin sem aldrei sleppir: var hún forsprakkinn, vitorðsmaður eða fórnarlamb?',
+    before:
+      'Aftökum Stóradómsaldar hafði fækkað gegnum 18. öldina — drekkingunum lauk á Þingvöllum 1749 — en öxin stóð áfram í lögum.',
+    after:
+      'Dauðarefsingunni var aldrei beitt aftur og hún var formlega afnumin 1928; árið 1934 voru jarðneskar leifar þeirra tveggja fluttar í vígða mold að Tjörn á Vatnsnesi.',
+    humanDrama:
+      'Öxinni sveiflaði Guðmundur Ketilsson — bróðir hins myrta, skipaður til verksins af yfirvöldum. Agnes sat síðasta veturinn í varðhaldi á venjulegum sveitabæ, því landið átti ekkert fangelsi; heimilisfólkið á að hafa grátið þegar hún var sótt. Hvort hún var arkitekt ráðabruggsins eða misnotuð vinnukona Natans fer eftir því hvaða öld segir söguna.',
+    modernTranslation:
+      'Tvöfalt morð verður glæpur aldarinnar; ríkið sviðsetur aftökuna sem opinbert leikhús og skikkar nágrannana á sýninguna. Tvö hundruð árum síðar hafa skáld og kvikmyndagerðarfólk endurupptekið málið svo oft að hin dæmda er orðin samúðarfyllri persóna en fórnarlambið.',
+    confidenceNote:
+      'Mikill áreiðanleiki. Dómskjöl, kirkjubækur og samtímafrásagnir skjalfesta morðin, réttarhöldin og aftökuna í smáatriðum — dagsetning, staður og þátttakendur eru vís. Það sem enn er deilt um er túlkunin: hlutur Agnesar og hvatir hennar, ekki staðreyndirnar.',
+    sources: [
+      {
+        title: 'Wikipedia: Agnes Magnúsdóttir',
+        url: 'https://is.wikipedia.org/wiki/Agnes_Magn%C3%BAsd%C3%B3ttir',
+      },
+      {
+        title: 'Upplifðu Norðurland: Þrístapar — vettvangur síðustu aftökunnar',
+        url: 'https://www.northiceland.is/is/stadur/thristapar',
+      },
+      {
+        title: 'Húnabyggð: Þrístapar',
+        url: 'https://www.hunabyggd.is/is/mannlif/ahugaverdir-stadir/thristapar',
+      },
+    ],
+  },
   'dyrafjordur-royalist-1899': {
     name: 'Hannes Hafstein og togarinn Royalist',
     dateText: '10. október 1899',
