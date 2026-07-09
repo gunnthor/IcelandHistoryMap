@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { HistoricFlags } from './HistoricFlags';
+import { useI18n } from '../i18n';
 
 interface AboutModalProps {
   open: boolean;
@@ -14,6 +15,8 @@ const ISSUES_NEW_URL = `${REPO_URL}/issues/new?title=${encodeURIComponent(
 )}`;
 
 export function AboutModal({ open, onClose }: AboutModalProps) {
+  const { t } = useI18n();
+
   // Close on Esc while the dialog is open.
   useEffect(() => {
     if (!open) return;
@@ -35,21 +38,19 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
         aria-labelledby="about-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="about-close" onClick={onClose} aria-label="Close">
+        <button className="about-close" onClick={onClose} aria-label={t.panel.close}>
           ✕
         </button>
 
         <h2 id="about-title" className="about-title">
-          ⚔ Sagas of Blood &amp; Fire
+          {t.about.title}
         </h2>
-        <p className="about-tagline">An interactive map of Iceland&apos;s violent history.</p>
+        <p className="about-tagline">{t.about.tagline}</p>
 
         <p className="about-body">
-          An interactive map of Iceland&apos;s messiest historical conflicts — battles, raids,
-          burnings and feuds from the Saga Age through the Sturlung civil war and into modern
-          times. Each marker carries a plain-language summary, why it happened, why it matters,
-          a confidence rating and its sources. Use the era presets and timeline to travel
-          through the centuries, or pick a <strong>Story Route</strong> for a guided tour.
+          {t.about.bodyStart}
+          <strong>{t.about.bodyRoute}</strong>
+          {t.about.bodyEnd}
         </p>
 
         <div className="about-divider" />
@@ -59,16 +60,11 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
         <div className="about-divider" />
 
         <dl className="about-meta">
-          <dt>Author</dt>
+          <dt>{t.about.authorLabel}</dt>
           <dd>{AUTHOR}</dd>
         </dl>
 
-        <p className="about-body about-note">
-          History is messy and the sources often disagree — some saga-era locations and
-          casualty numbers are approximate, which is why every event shows a confidence level
-          and links to its sources. Spotted a mistake or have an event to suggest? I&apos;d love
-          to hear it.
-        </p>
+        <p className="about-body about-note">{t.about.note}</p>
 
         <div className="about-actions">
           <a
@@ -77,10 +73,10 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            ✎ Report correction / suggest source
+            {t.about.reportBtn}
           </a>
           <a className="btn btn-ghost" href={REPO_URL} target="_blank" rel="noopener noreferrer">
-            ⌥ Source on GitHub
+            {t.about.sourceBtn}
           </a>
         </div>
       </div>

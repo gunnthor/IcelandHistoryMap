@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { ConflictEvent, FilterState } from './types';
-import { events as allEvents } from './data/events';
+import { events as baseEvents } from './data/events';
 import { getYearBounds, ERAS, clampRange, Era } from './utils/eventConfig';
+import { useI18n } from './i18n';
 import { normalizeForSearch } from './utils/text';
 import { BattleMap } from './components/BattleMap';
 import { EventPanel, MobileDrawer } from './components/EventPanel';
@@ -15,7 +16,8 @@ import { Tour, resolveTourEvents } from './data/tours';
 
 // Year bounds are derived from the data so adding events outside 1238–1627
 // (e.g. the Cod Wars) automatically extends the timeline and slider range.
-const [MIN_YEAR, MAX_YEAR] = getYearBounds(allEvents);
+// Years are language-independent, so the English base is fine here.
+const [MIN_YEAR, MAX_YEAR] = getYearBounds(baseEvents);
 
 const INITIAL_FILTERS: FilterState = {
   types: [], // empty = all types
@@ -28,6 +30,8 @@ const INITIAL_FILTERS: FilterState = {
 const PLAY_DWELL_MS = 9000;
 
 export default function App() {
+  // The event dataset in the active language; everything downstream renders it.
+  const { t, lang, setLang, events: allEvents } = useI18n();
   const [selectedEvent, setSelectedEvent] = useState<ConflictEvent | null>(null);
   const [filters, setFilters] = useState<FilterState>(INITIAL_FILTERS);
   const [searchQuery, setSearchQuery] = useState('');
@@ -38,10 +42,10 @@ export default function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
 
-  // The active route's stops, in route order.
+  // The active route's stops, in route order (localized).
   const tourEvents = useMemo(
-    () => (activeTour ? resolveTourEvents(activeTour) : []),
-    [activeTour],
+    () => (activeTour ? resolveTourEvents(activeTour, allEvents) : []),
+    [activeTour, allEvents],
   );
 
   // Era presets, with ranges clamped to the years we actually have data for.
@@ -82,11 +86,17 @@ export default function App() {
       }
       return true;
     });
-  }, [filters, searchQuery]);
+  }, [allEvents, filters, searchQuery]);
 
   const handleSelectEvent = useCallback((event: ConflictEvent) => {
     setSelectedEvent(event);
   }, []);
+
+  // On language switch, re-resolve the selection into the new dataset so the
+  // open panel changes language too (same id, different object).
+  useEffect(() => {
+    setSelectedEvent((prev) => (prev ? allEvents.find((e) => e.id === prev.id) ?? null : prev));
+  }, [allEvents]);
 
   // ── Autoplay: a lean-back pass through the filtered events, oldest first ──
   const playlist = useMemo(
@@ -138,9 +148,8 @@ export default function App() {
   const playLabel = useMemo(() => {
     if (!playing || !selectedEvent) return null;
     const i = playlist.findIndex((e) => e.id === selectedEvent.id);
-    const pos = i >= 0 ? ` (${i + 1} of ${playlist.length})` : '';
-    return `Playing — ${selectedEvent.year}: ${selectedEvent.name}${pos}`;
-  }, [playing, selectedEvent, playlist]);
+    return t.timeline.playing(selectedEvent.year, selectedEvent.name, i + 1, playlist.length);
+  }, [playing, selectedEvent, playlist, t]);
 
   const handleCloseEvent = useCallback(() => {
     setSelectedEvent(null);
@@ -167,7 +176,7 @@ export default function App() {
   );
 
   const startTour = (tour: Tour) => {
-    const stops = resolveTourEvents(tour);
+    const stops = resolveTourEvents(tour, allEvents);
     if (!stops.length) return;
     setPlaying(false); // a guided route replaces the autoplay
     setPickerOpen(false);
@@ -210,6 +219,8 @@ export default function App() {
       const ev = allEvents.find((e) => e.id === id);
       if (ev) setSelectedEvent(ev);
     }
+    // Mount-only: the language-switch effect re-resolves the selection later.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Deep-link: keep the URL path + tab title in sync with the selection.
@@ -223,10 +234,8 @@ export default function App() {
     }
     const base = import.meta.env.BASE_URL;
     window.history.replaceState(null, '', selectedEvent ? `${base}event/${selectedEvent.id}` : base);
-    document.title = selectedEvent
-      ? `${selectedEvent.name} — Sagas of Blood & Fire`
-      : "Sagas of Blood & Fire — Iceland's violent history, mapped";
-  }, [selectedEvent]);
+    document.title = selectedEvent ? t.doc.eventTitle(selectedEvent.name) : t.doc.siteTitle;
+  }, [selectedEvent, t]);
 
   // Keyboard shortcuts: Esc closes / exits tour, arrows step through the tour.
   useEffect(() => {
@@ -268,26 +277,44 @@ export default function App() {
       {/* Header */}
       <header className="header">
         <div className="header-branding">
-          <div className="header-title">⚔ Sagas of Blood &amp; Fire</div>
-          <div className="header-subtitle">
-            An interactive map of Iceland&apos;s violent history.
-          </div>
+          <div className="header-title">{t.header.title}</div>
+          <div className="header-subtitle">{t.header.subtitle}</div>
         </div>
         <div className="header-controls">
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
           {!activeTour && (
             <button className="btn btn-primary" onClick={() => setPickerOpen(true)}>
-              🧭 <span className="btn-word-optional">Story </span>Routes
+              🧭 <span className="btn-word-optional">{t.header.routesOptional}</span>
+              {t.header.routesRest}
             </button>
           )}
           <button
             className="btn btn-secondary"
             onClick={() => setAboutOpen(true)}
-            title="About this site"
-            aria-label="About this site"
+            title={t.header.aboutTitle}
+            aria-label={t.header.aboutTitle}
           >
-            ⓘ<span className="btn-word-optional"> About</span>
+            ⓘ<span className="btn-word-optional">{t.header.aboutWord}</span>
           </button>
+          {/* Language switcher — the manual choice persists across visits */}
+          <div className="lang-switch" role="group" aria-label={t.lang.groupAria}>
+            <button
+              className={`lang-btn${lang === 'en' ? ' active' : ''}`}
+              onClick={() => setLang('en')}
+              aria-pressed={lang === 'en'}
+              title={t.lang.enTitle}
+            >
+              EN
+            </button>
+            <button
+              className={`lang-btn${lang === 'is' ? ' active' : ''}`}
+              onClick={() => setLang('is')}
+              aria-pressed={lang === 'is'}
+              title={t.lang.isTitle}
+            >
+              ÍS
+            </button>
+          </div>
         </div>
       </header>
 

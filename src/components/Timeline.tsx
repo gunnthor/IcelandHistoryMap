@@ -1,5 +1,6 @@
 import { ConflictEvent } from '../types';
 import { EVENT_CONFIG } from '../utils/eventConfig';
+import { useI18n } from '../i18n';
 
 interface TimelineProps {
   events: ConflictEvent[];
@@ -27,6 +28,7 @@ export function Timeline({
   onTogglePlay,
   playLabel,
 }: TimelineProps) {
+  const { t } = useI18n();
   // Sorted chronologically for left-to-right ordering.
   const sorted = [...events].sort((a, b) => a.year - b.year);
   const n = sorted.length;
@@ -45,13 +47,13 @@ export function Timeline({
             className={`timeline-play${playing ? ' playing' : ''}`}
             onClick={onTogglePlay}
             aria-pressed={playing}
-            aria-label={playing ? 'Pause the history autoplay' : 'Play through every event in order'}
-            title={playing ? 'Pause' : 'Play through every event, oldest to newest'}
+            aria-label={playing ? t.timeline.pauseAria : t.timeline.playAria}
+            title={playing ? t.timeline.pauseTitle : t.timeline.playTitle}
           >
             {playing ? '⏸︎' : '▶︎'}
           </button>
           <div className="timeline-label">
-            {playLabel ?? 'Timeline — click an event to jump to it, or press play'}
+            {playLabel ?? t.timeline.idle}
           </div>
         </div>
 
@@ -105,8 +107,8 @@ export function Timeline({
               const v = Number(e.target.value);
               if (v < maxY) onYearRangeChange([v, maxY]);
             }}
-            aria-label="Start year"
-            title="Start year"
+            aria-label={t.timeline.startYear}
+            title={t.timeline.startYear}
           />
           <span className="timeline-year-label">{minY} – {maxY}</span>
           <input
@@ -118,8 +120,8 @@ export function Timeline({
               const v = Number(e.target.value);
               if (v > minY) onYearRangeChange([minY, v]);
             }}
-            aria-label="End year"
-            title="End year"
+            aria-label={t.timeline.endYear}
+            title={t.timeline.endYear}
           />
           <span>{maxYear}</span>
         </div>

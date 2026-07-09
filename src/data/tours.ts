@@ -135,9 +135,11 @@ export const TOURS: Tour[] = [
 ];
 
 // Resolve a tour's event ids to actual events, preserving order and
-// silently dropping ids that no longer exist in the dataset.
-export function resolveTourEvents(tour: Tour): ConflictEvent[] {
+// silently dropping ids that no longer exist in the dataset. Pass the
+// language-localized event list so tour stops carry translated names;
+// defaults to the English base (fine for counting stops).
+export function resolveTourEvents(tour: Tour, pool: ConflictEvent[] = events): ConflictEvent[] {
   return tour.eventIds
-    .map((id) => events.find((e) => e.id === id))
+    .map((id) => pool.find((e) => e.id === id))
     .filter((e): e is ConflictEvent => !!e);
 }

@@ -1,22 +1,19 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { ImageOverlay, MapContainer, TileLayer, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import { ConflictEvent, PowerCenter, ClanId } from '../types';
 import { EVENT_CONFIG } from '../utils/eventConfig';
 import { CLAN_CONFIG, CLAN_ORDER } from '../utils/clanConfig';
 import { powerCenters } from '../data/powerCenters';
-import { events as allEvents } from '../data/events';
+import { powerCenterTranslations } from '../data/powerCenters.is';
 import { CLAN_BATTLES } from '../data/clanBattles';
 import { glaciers } from '../data/glaciers';
 import { createSpiderfier, OMSInstance } from '../utils/oms';
+import { useI18n } from '../i18n';
 
 // Tag we stash on each Leaflet marker so the shared OMS click handler can map
 // a clicked marker back to its event.
 type TaggedMarker = L.Marker & { _event?: ConflictEvent };
-
-// Lookup of every event by id (for the clan→battle connection lines, which
-// must reach events regardless of the current year/type filters).
-const EVENTS_BY_ID = new Map(allEvents.map((e) => [e.id, e]));
 
 // Squared lat/lng distance — fine for "which seat is nearest" at Iceland scale.
 function dist2(a: [number, number], b: [number, number]): number {
@@ -70,12 +67,17 @@ const ORTELIUS_BOUNDS: L.LatLngBoundsExpression = [
 
 // Fly to the selected event whenever it changes. On the 1590 engraving we
 // stay wider — it's a single ~2300px image, and past z8 it's all blur.
+// Keyed by event id (not object identity): a language switch swaps the whole
+// event array, and re-flying to the same spot on a dictionary change is noise.
 function MapController({ event, mapStyle }: { event: ConflictEvent | null; mapStyle: MapStyle }) {
   const map = useMap();
+  const lastFlown = useRef<string | null>(null);
   useEffect(() => {
-    if (event) {
+    const key = event ? `${event.id}:${mapStyle}` : null;
+    if (event && key !== lastFlown.current) {
       map.flyTo(event.coordinates, mapStyle === 'ortelius' ? 8 : 10, { duration: 1.2 });
     }
+    lastFlown.current = key;
   }, [event, map, mapStyle]);
   return null;
 }
@@ -138,6 +140,7 @@ function EventMarkers({
   onSelect: (e: ConflictEvent) => void;
 }) {
   const map = useMap();
+  const { t } = useI18n();
   const omsRef = useRef<OMSInstance | null>(null);
   const omsInitRef = useRef(false);
   // Keep the latest onSelect in a ref so the single OMS click listener (added
@@ -168,7 +171,7 @@ function EventMarkers({
     events.forEach((event) => {
       const cfg = EVENT_CONFIG[event.type];
       const isSelected = event.id === selectedId;
-      const ariaLabel = `${event.name}, ${cfg.label}, ${event.year}`;
+      const ariaLabel = `${event.name}, ${t.types[event.type] ?? cfg.label}, ${event.year}`;
 
       const icon = L.divIcon({
         html: `<div class="marker-icon marker-${event.type} confidence-${event.confidence}${isSelected ? ' selected' : ''}" role="button" tabindex="0" aria-label="${ariaLabel}">${cfg.symbol}</div>`,
@@ -219,7 +222,7 @@ function EventMarkers({
       if (oms) oms.clearMarkers();
       markers.forEach((m) => m.remove());
     };
-  }, [events, selectedId, map]);
+  }, [events, selectedId, map, t]);
 
   return null;
 }
@@ -229,15 +232,20 @@ function EventMarkers({
 // from the event-selection flow so they don't hijack the EventPanel.
 function ClanMarkers() {
   const map = useMap();
+  const { t, lang } = useI18n();
 
   useEffect(() => {
     const markers: L.Marker[] = [];
 
     powerCenters.forEach((pc: PowerCenter) => {
       const cfg = CLAN_CONFIG[pc.clan];
+      // role/description come from the Icelandic overlay when active.
+      const l10n = lang === 'is' ? powerCenterTranslations[pc.id] : undefined;
+      const role = l10n?.role ?? pc.role;
+      const description = l10n?.description ?? pc.description;
 
       const icon = L.divIcon({
-        html: `<div class="clan-marker" style="background:${cfg.color}" aria-label="${pc.name}, ${cfg.label} seat"><span class="clan-marker-crest">${cfg.crest}</span></div>`,
+        html: `<div class="clan-marker" style="background:${cfg.color}" aria-label="${pc.name}, ${cfg.label}"><span class="clan-marker-crest">${cfg.crest}</span></div>`,
         className: '',
         iconSize: [26, 26],
         iconAnchor: [13, 13],
@@ -257,11 +265,11 @@ function ClanMarkers() {
             <span class="clan-popup-crest" style="background:${cfg.color}">${cfg.crest}</span>
             <div>
               <strong>${pc.name}</strong>
-              <div class="clan-popup-clan" style="color:${cfg.color}">${cfg.label} · ${pc.role}</div>
+              <div class="clan-popup-clan" style="color:${cfg.color}">${cfg.label} · ${role}</div>
             </div>
           </div>
-          <p class="clan-popup-desc">${pc.description}</p>
-          ${pc.approximate ? '<p class="clan-popup-approx">⚠ Location approximate</p>' : ''}
+          <p class="clan-popup-desc">${description}</p>
+          ${pc.approximate ? `<p class="clan-popup-approx">${t.map.approx}</p>` : ''}
           ${sourcesHtml ? `<div class="clan-popup-sources">${sourcesHtml}</div>` : ''}
         </div>`;
 
@@ -283,7 +291,7 @@ function ClanMarkers() {
     return () => {
       markers.forEach((m) => m.remove());
     };
-  }, [map]);
+  }, [map, t, lang]);
 
   return null;
 }
@@ -293,6 +301,10 @@ function ClanMarkers() {
 // sensible geography (e.g. the northern wars hang off the Eyjafjörður seat).
 function ConnectionLines({ clan }: { clan: ClanId }) {
   const map = useMap();
+  // Localized lookup of every event by id (the lines must reach events
+  // regardless of the current year/type filters, hence not the events prop).
+  const { events: allEvents } = useI18n();
+  const eventsById = useMemo(() => new Map(allEvents.map((e) => [e.id, e])), [allEvents]);
 
   useEffect(() => {
     const seats = powerCenters.filter((pc) => pc.clan === clan);
@@ -302,7 +314,7 @@ function ConnectionLines({ clan }: { clan: ClanId }) {
     const lines: L.Polyline[] = [];
 
     (CLAN_BATTLES[clan] ?? []).forEach((eventId) => {
-      const ev = EVENTS_BY_ID.get(eventId);
+      const ev = eventsById.get(eventId);
       if (!ev) return; // skip unknown ids defensively
 
       // pick this clan's seat nearest to the battle
@@ -330,7 +342,7 @@ function ConnectionLines({ clan }: { clan: ClanId }) {
     return () => {
       lines.forEach((l) => l.remove());
     };
-  }, [map, clan]);
+  }, [map, clan, eventsById]);
 
   return null;
 }
@@ -353,6 +365,7 @@ export function BattleMap({
   showClans,
   onShowClansChange,
 }: BattleMapProps) {
+  const { t } = useI18n();
   const [highlightClan, setHighlightClan] = useState<ClanId | null>(null);
   const [mapStyle, setMapStyle] = useState<MapStyle>(loadMapStyle);
 
@@ -451,13 +464,13 @@ export function BattleMap({
           className={`clan-toggle${showClans ? ' active' : ''}`}
           onClick={toggleClanLayer}
           aria-pressed={showClans}
-          title="Show the seats of the great chieftain families"
+          title={t.map.clanToggleTitle}
         >
-          ⚑ Clan seats
+          {t.map.clanToggle}
         </button>
         {showClans && (
           <div className="clan-legend">
-            <div className="clan-legend-hint">Click a family to trace its wars</div>
+            <div className="clan-legend-hint">{t.map.legendHint}</div>
             {CLAN_ORDER.map((id) => {
               const c = CLAN_CONFIG[id];
               const count = (CLAN_BATTLES[id] ?? []).length;
@@ -469,7 +482,7 @@ export function BattleMap({
                   className={`clan-legend-row${active ? ' active' : ''}`}
                   disabled={count === 0}
                   aria-pressed={active}
-                  title={count === 0 ? `${c.label}: no battles in this dataset` : `Trace ${c.label} conflicts`}
+                  title={count === 0 ? t.map.noBattles(c.label) : t.map.trace(c.label)}
                   onClick={() => setHighlightClan((cur) => (cur === id ? null : id))}
                 >
                   <span className="clan-legend-swatch" style={{ background: c.color }}>
@@ -503,32 +516,32 @@ export function BattleMap({
       {events.length === 0 && (
         <div className="map-empty-state">
           <div className="map-empty-icon">🔍</div>
-          <h3>No events match your filters</h3>
-          <p>Try widening the year range or clearing the filters.</p>
+          <h3>{t.map.emptyTitle}</h3>
+          <p>{t.map.emptyBody}</p>
           <button className="btn btn-primary" onClick={onResetFilters}>
-            Reset filters
+            {t.map.resetBtn}
           </button>
         </div>
       )}
 
-      <div className="map-disclaimer">
-        ⚠️ Some saga-era locations and casualty numbers are approximate.
-        This app shows confidence levels and sources for each event.
-      </div>
+      <div className="map-disclaimer">{t.map.disclaimer}</div>
 
       {/* Map style switcher */}
-      <div className="style-switch" role="group" aria-label="Map style">
-        {(Object.keys(MAP_STYLE_META) as MapStyle[]).map((s) => (
-          <button
-            key={s}
-            className={`style-switch-btn${mapStyle === s ? ' active' : ''}`}
-            onClick={() => pickStyle(s)}
-            aria-pressed={mapStyle === s}
-            title={MAP_STYLE_META[s].hint}
-          >
-            {MAP_STYLE_META[s].label}
-          </button>
-        ))}
+      <div className="style-switch" role="group" aria-label={t.map.styleAria}>
+        {(Object.keys(MAP_STYLE_META) as MapStyle[]).map((s) => {
+          const meta = t.map.styles[s] ?? MAP_STYLE_META[s];
+          return (
+            <button
+              key={s}
+              className={`style-switch-btn${mapStyle === s ? ' active' : ''}`}
+              onClick={() => pickStyle(s)}
+              aria-pressed={mapStyle === s}
+              title={meta.hint}
+            >
+              {meta.label}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { ConflictEvent, StoryLink } from '../types';
 import { EVENT_CONFIG, CONFIDENCE_CONFIG, FLAG_CONFIG } from '../utils/eventConfig';
-import { events as allEvents } from '../data/events';
+import { useI18n } from '../i18n';
 
 interface EventPanelProps {
   event: ConflictEvent | null;
@@ -9,8 +9,6 @@ interface EventPanelProps {
   /** Jump to another event (used by the story-context links). */
   onSelectEvent: (event: ConflictEvent) => void;
 }
-
-const eventById = (id?: string) => (id ? allEvents.find((e) => e.id === id) : undefined);
 
 // One "Before this / After this" line, with a jump chip when the narrative
 // points at an event that exists on the map.
@@ -23,7 +21,8 @@ function ContextRow({
   link: StoryLink;
   onSelectEvent: (event: ConflictEvent) => void;
 }) {
-  const target = eventById(link.eventId);
+  const { events } = useI18n();
+  const target = link.eventId ? events.find((e) => e.id === link.eventId) : undefined;
   return (
     <div className="context-row">
       <span className="context-dir">{label}</span>
@@ -43,17 +42,20 @@ function ContextRow({
 }
 
 function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
+  const { t, events } = useI18n();
   const [copied, setCopied] = useState(false);
 
   if (!event) {
     return (
       <div className="panel-placeholder">
         <div className="panel-placeholder-icon">🗺️</div>
-        <h3>Select an event</h3>
-        <p>Click any marker on the map to read about a battle, raid, or other conflict.</p>
+        <h3>{t.panel.placeholderTitle}</h3>
+        <p>{t.panel.placeholderBody}</p>
       </div>
     );
   }
+
+  const eventById = (id?: string) => (id ? events.find((e) => e.id === id) : undefined);
 
   const typeCfg = EVENT_CONFIG[event.type];
   const confCfg = CONFIDENCE_CONFIG[event.confidence];
@@ -83,12 +85,12 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
           <button
             className={`panel-share${copied ? ' copied' : ''}`}
             onClick={share}
-            title="Copy link to this event"
-            aria-label="Share this event"
+            title={t.panel.shareTitle}
+            aria-label={t.panel.shareAria}
           >
-            {copied ? '✓ Copied' : '🔗 Share'}
+            {copied ? t.panel.copied : t.panel.share}
           </button>
-          <button className="panel-close" onClick={onClose} title="Close" aria-label="Close panel">✕</button>
+          <button className="panel-close" onClick={onClose} title={t.panel.close} aria-label={t.panel.closeAria}>✕</button>
         </div>
         {event.icelandicName && (
           <div className="panel-icelandic-name">{event.icelandicName}</div>
@@ -99,14 +101,15 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
             style={{ background: typeCfg.bgColor, color: typeCfg.color }}
           >
             <span>{typeCfg.symbol}</span>
-            {typeCfg.label}
+            {t.types[event.type] ?? typeCfg.label}
           </span>
           <span
             className="badge"
             style={{ background: confCfg.bgColor, color: confCfg.color }}
-            title={confCfg.description}
+            title={t.confidence[event.confidence]?.description ?? confCfg.description}
           >
-            {event.confidence === 'high' ? '✓' : event.confidence === 'medium' ? '~' : '?'} {confCfg.label} confidence
+            {event.confidence === 'high' ? '✓' : event.confidence === 'medium' ? '~' : '?'}{' '}
+            {t.confidence[event.confidence]?.badge ?? `${confCfg.label} confidence`}
           </span>
         </div>
         {/* Source-quality flags: what exactly is (un)certain about this event */}
@@ -114,10 +117,11 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
           <div className="flag-row">
             {event.uncertaintyFlags.map((flag) => {
               const cfg = FLAG_CONFIG[flag];
+              const fl = t.flags[flag] ?? { label: cfg.label, description: cfg.description };
               return (
-                <span key={flag} className={`flag-chip flag-${flag}`} title={cfg.description}>
+                <span key={flag} className={`flag-chip flag-${flag}`} title={fl.description}>
                   <span>{cfg.symbol}</span>
-                  {cfg.label}
+                  {fl.label}
                 </span>
               );
             })}
@@ -129,46 +133,46 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
         {/* Meta */}
         <div className="panel-meta">
           <div className="meta-item">
-            <span className="meta-label">Year</span>
+            <span className="meta-label">{t.panel.year}</span>
             <span className="meta-value">{event.dateText ?? event.year}</span>
           </div>
           <div className="meta-item">
-            <span className="meta-label">Period</span>
+            <span className="meta-label">{t.panel.period}</span>
             <span className="meta-value">{event.period}</span>
           </div>
           <div className="meta-item full">
-            <span className="meta-label">Location</span>
+            <span className="meta-label">{t.panel.location}</span>
             <span className="meta-value">📍 {event.locationName}</span>
           </div>
         </div>
 
         {/* Summary */}
         <div className="panel-section">
-          <div className="panel-section-title">What happened</div>
+          <div className="panel-section-title">{t.panel.whatHappened}</div>
           <p>{event.summary}</p>
         </div>
 
         {/* ELI12 */}
         <div className="eli12-box">
-          <div className="eli12-label">🧒 Explain like I'm 12</div>
+          <div className="eli12-label">{t.panel.eli12}</div>
           <p>{event.eli12}</p>
         </div>
 
         {/* Human drama */}
         {event.humanDrama && (
           <div className="drama-box">
-            <div className="drama-label">🎭 The drama</div>
+            <div className="drama-label">{t.panel.drama}</div>
             <p>{event.humanDrama}</p>
           </div>
         )}
 
         {/* Factions */}
         <div className="panel-section">
-          <div className="panel-section-title">Who fought who</div>
+          <div className="panel-section-title">{t.panel.whoFought}</div>
           <div className="factions-list">
             {event.factions.map((f, i) => (
               <div key={i}>
-                {i > 0 && <div className="faction-vs">vs</div>}
+                {i > 0 && <div className="faction-vs">{t.panel.vs}</div>}
                 <div className="faction-item">
                   <span>⚔</span>
                   <span>{f}</span>
@@ -180,14 +184,14 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
 
         {/* Why */}
         <div className="panel-section">
-          <div className="panel-section-title">Why it happened</div>
+          <div className="panel-section-title">{t.panel.whyHappened}</div>
           <p>{event.whyItHappened}</p>
         </div>
 
         {/* Modern translation */}
         {event.modernTranslation && (
           <div className="modern-box">
-            <div className="modern-label">📱 If this happened today</div>
+            <div className="modern-label">{t.panel.modern}</div>
             <p>{event.modernTranslation}</p>
           </div>
         )}
@@ -196,7 +200,7 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
         {event.winner && (
           <div className="winner-box">
             <span>🏆</span>
-            <span><strong>Winner:</strong> {event.winner}</span>
+            <span><strong>{t.panel.winner}</strong> {event.winner}</span>
           </div>
         )}
 
@@ -204,29 +208,29 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
         {event.casualtyEstimate && (
           <div className="casualty-box">
             <span>☠</span>
-            <span><strong>Casualties:</strong> {event.casualtyEstimate}</span>
+            <span><strong>{t.panel.casualties}</strong> {event.casualtyEstimate}</span>
           </div>
         )}
 
         {/* Why it matters */}
         <div className="panel-section">
-          <div className="panel-section-title">Why it matters</div>
+          <div className="panel-section-title">{t.panel.whyMatters}</div>
           <p>{event.whyItMatters}</p>
         </div>
 
         {/* Story context: what came before / after, plus related jumps */}
         {(event.before || event.after || (event.relatedIds?.length ?? 0) > 0) && (
           <div className="context-box">
-            <div className="context-label">📖 The story around it</div>
+            <div className="context-label">{t.panel.context}</div>
             {event.before && (
-              <ContextRow label="Before this" link={event.before} onSelectEvent={onSelectEvent} />
+              <ContextRow label={t.panel.before} link={event.before} onSelectEvent={onSelectEvent} />
             )}
             {event.after && (
-              <ContextRow label="After this" link={event.after} onSelectEvent={onSelectEvent} />
+              <ContextRow label={t.panel.after} link={event.after} onSelectEvent={onSelectEvent} />
             )}
             {(event.relatedIds?.length ?? 0) > 0 && (
               <div className="context-related">
-                <span className="context-dir">Related</span>
+                <span className="context-dir">{t.panel.related}</span>
                 <div className="context-related-chips">
                   {event.relatedIds!.map((id) => {
                     const target = eventById(id);
@@ -250,7 +254,7 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
         {/* Confidence note */}
         {event.confidenceNote && (
           <div className="confidence-note-box">
-            <div className="confidence-note-label">🎯 How sure are we?</div>
+            <div className="confidence-note-label">{t.panel.confNote}</div>
             <p>{event.confidenceNote}</p>
           </div>
         )}
@@ -258,7 +262,7 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
         {/* Key people */}
         {event.keyPeople.length > 0 && (
           <div className="panel-section">
-            <div className="panel-section-title">Key people</div>
+            <div className="panel-section-title">{t.panel.keyPeople}</div>
             <div className="key-people">
               {event.keyPeople.map((p) => (
                 <span key={p} className="person-chip">👤 {p}</span>
@@ -270,7 +274,7 @@ function PanelContent({ event, onClose, onSelectEvent }: EventPanelProps) {
         {/* Sources */}
         {event.sources.length > 0 && (
           <div className="panel-section">
-            <div className="panel-section-title">Sources</div>
+            <div className="panel-section-title">{t.panel.sources}</div>
             <div className="sources-list">
               {event.sources.map((s, i) => (
                 <div key={i} className="source-link">

@@ -939,44 +939,42 @@ export const events: ConflictEvent[] = [
     locationName: 'Sauðafell in Dalir, West Iceland',
     coordinates: [65.0122, -21.6353],
     factions: [
-      'Sturla Sighvatsson and Sturlungar supporters',
-      'Snorri Sturluson and his household network',
+      'Vatnsfirðingar — Þórður and Snorri Þorvaldsson, avenging their father',
+      'Sturla Sighvatsson\'s household at Sauðafell (Sturla himself was away)',
     ],
-    keyPeople: ['Sturla Sighvatsson', 'Snorri Sturluson', 'Sighvatur Sturluson'],
-    winner: 'Sturla Sighvatsson / Sturlungar pressure campaign',
-    casualtyEstimate: 'Unclear; remembered more as intimidation and humiliation than a mass killing',
+    keyPeople: ['Sturla Sighvatsson', 'Þórður Þorvaldsson', 'Snorri Þorvaldsson', 'Solveig Sæmundardóttir'],
+    winner: 'The raiders got away; the shame of the raid stuck to them',
+    casualtyEstimate: 'Several of the household killed or wounded; Sturla\'s wife Solveig left untouched',
     summary:
-      'A Sturlung pressure raid against Snorri Sturluson\'s world in the west. Sturla Sighvatsson used force and fear to bend rivals toward his family\'s expanding power.',
+      'The most infamous revenge raid of the Sturlung Age. The sons of Þorvaldur of Vatnsfjörður — whom Sturla Sighvatsson had had burned to death the year before — descended on Sturla\'s farm at Sauðafell by night while he was away, killing and wounding servants and household folk. Even allies were appalled: attacking a sleeping household crossed a line the violent age itself claimed to respect.',
     eli12:
-      'This was not a clean battlefield moment. It was more like powerful relatives showing up with armed men to scare, punish, and squeeze another powerful relative.',
+      'Two brothers wanted revenge on Sturla for their father\'s death. They raided his farm at night — but he wasn\'t home, so they attacked his household instead. Even people on their own side were ashamed of it.',
     whyItHappened:
-      'The Sturlungar were trying to turn family prestige into real control across Iceland. Snorri had wealth, followers, and influence, so Sturla pushed into his sphere with violence and intimidation.',
+      'Sturla had had Þorvaldur Vatnsfirðingur burned to death in 1228. Þorvaldur\'s sons couldn\'t reach Sturla himself, so they struck what they could reach: his home.',
     whyItMatters:
-      'Sauðafellsför helps explain why the Sturlung Age feels so messy. The war was not just famous battles; it was raids, threats, humiliation, and constant pressure between ambitious kin groups.',
+      'Sauðafellsför became the Sturlung Age\'s byword for a shameful deed — violence against a household instead of the enemy himself. It shows the era\'s feuds overrunning the rules of its own honor culture.',
     before: {
-      text: 'The chieftain families had spent the 1220s converting feuds and marriages into power blocs — the Sturlungar fastest of all.',
+      text: 'The chieftain families had spent the 1220s converting feuds and marriages into power blocs — and making mortal enemies doing it.',
       eventId: 'grimseyjarfor-1222',
     },
     after: {
-      text: 'Intimidation escalated to open battle within the family itself.',
+      text: 'Sturla hunted the raiders down, and the revenge wheel kept turning toward open war.',
       eventId: 'baejarbardagi-1237',
     },
+    humanDrama:
+      'The raiders cut down everyone they found — servants, women, an old man — but left Sturla\'s wife Solveig untouched. The detail Iceland remembered: Sturla wasn\'t even home. Revenge that misses its target still always hits someone.',
     confidenceNote:
-      'Low. The raid is part of the Sturlunga tradition, but which faction did what to whom at Sauðafell needs verification against the saga text — details here are marked for checking.',
-    uncertaintyFlags: ['event_likely', 'saga_dramatized', 'location_uncertain'],
-    confidence: 'low',
+      'Medium. The raid is described in detail in Íslendinga saga within the Sturlunga compilation, written close to the events by people connected to the family — well-informed, never neutral.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized'],
+    confidence: 'medium',
     sources: [
       {
-        title: 'Wikipedia: Snorri Sturluson',
-        url: 'https://en.wikipedia.org/wiki/Snorri_Sturluson',
+        title: 'Wikipedia (is): Sauðafellsför',
+        url: 'https://is.wikipedia.org/wiki/Sau%C3%B0afellsf%C3%B6r',
       },
       {
         title: 'Wikipedia: Sturla Sighvatsson',
         url: 'https://en.wikipedia.org/wiki/Sturla_Sighvatsson',
-      },
-      {
-        title: 'Marker at Sauðafell farm; event details need verification against Sturlunga saga',
-        url: '',
       },
     ],
   },

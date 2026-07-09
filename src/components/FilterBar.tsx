@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { EventType, Confidence, FilterState } from '../types';
 import { EVENT_CONFIG, CONFIDENCE_CONFIG, Era } from '../utils/eventConfig';
+import { useI18n } from '../i18n';
 
 interface FilterBarProps {
   filters: FilterState;
@@ -42,6 +43,7 @@ function TypeDropdown({
   onToggle: (t: EventType) => void;
   onClear: () => void;
 }) {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ top: 0, left: 0 });
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -60,9 +62,9 @@ function TypeDropdown({
   useEffect(() => {
     if (!open) return;
     const onDown = (e: MouseEvent) => {
-      const t = e.target as Node;
+      const tgt = e.target as Node;
       // The menu lives in a portal, so check both the trigger and the menu.
-      if (wrapRef.current?.contains(t) || menuRef.current?.contains(t)) return;
+      if (wrapRef.current?.contains(tgt) || menuRef.current?.contains(tgt)) return;
       setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
@@ -95,7 +97,7 @@ function TypeDropdown({
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        Type{selected.length > 0 ? ` (${selected.length})` : ''} ▾
+        {t.filters.type}{selected.length > 0 ? ` (${selected.length})` : ''} ▾
       </button>
       {open &&
         createPortal(
@@ -112,7 +114,7 @@ function TypeDropdown({
               aria-selected={selected.length === 0}
             >
               <span className="type-dd-check">{selected.length === 0 ? '✓' : ''}</span>
-              All types
+              {t.filters.allTypes}
             </button>
             <div className="type-dd-divider" />
             {EVENT_TYPES.map((type) => {
@@ -128,7 +130,7 @@ function TypeDropdown({
                 >
                   <span className="type-dd-check">{checked ? '✓' : ''}</span>
                   <span className="chip-symbol">{cfg.symbol}</span>
-                  {cfg.label}
+                  {t.types[type] ?? cfg.label}
                 </button>
               );
             })}
@@ -149,6 +151,7 @@ export function FilterBar({
   activeEraId,
   onSelectEra,
 }: FilterBarProps) {
+  const { t } = useI18n();
   const toggleType = (type: EventType) =>
     onChange({
       ...filters,
@@ -163,19 +166,22 @@ export function FilterBar({
     <div className="filter-bar">
       {/* Era presets: snap the timeline to a period (Sturlung Age also reveals
           the clan-seats layer). */}
-      <span className="filter-label">Era</span>
-      {eras.map((era) => (
-        <button
-          key={era.id}
-          className={`chip${activeEraId === era.id ? ' active' : ''}`}
-          onClick={() => onSelectEra(era)}
-          aria-pressed={activeEraId === era.id}
-          title={era.hint}
-        >
-          {era.showClans && <span className="chip-symbol">⚑</span>}
-          {era.label}
-        </button>
-      ))}
+      <span className="filter-label">{t.filters.era}</span>
+      {eras.map((era) => {
+        const et = t.eras[era.id] ?? { label: era.label, hint: era.hint };
+        return (
+          <button
+            key={era.id}
+            className={`chip${activeEraId === era.id ? ' active' : ''}`}
+            onClick={() => onSelectEra(era)}
+            aria-pressed={activeEraId === era.id}
+            title={et.hint}
+          >
+            {era.showClans && <span className="chip-symbol">⚑</span>}
+            {et.label}
+          </button>
+        );
+      })}
 
       <div className="filter-divider" />
 
@@ -185,12 +191,12 @@ export function FilterBar({
       <div className="filter-divider" />
 
       {/* Confidence filters */}
-      <span className="filter-label">Confidence</span>
+      <span className="filter-label">{t.filters.confidence}</span>
       <button
         className={`chip${filters.confidence === 'all' ? ' active' : ''}`}
         onClick={() => setConf('all')}
       >
-        All
+        {t.filters.all}
       </button>
       {CONFIDENCES.map((conf) => {
         const cfg = CONFIDENCE_CONFIG[conf];
@@ -200,18 +206,18 @@ export function FilterBar({
             className={`chip${filters.confidence === conf ? ' active' : ''}`}
             onClick={() => setConf(conf)}
           >
-            {conf === 'high' ? '✓' : conf === 'medium' ? '~' : '?'} {cfg.label}
+            {conf === 'high' ? '✓' : conf === 'medium' ? '~' : '?'} {t.confidence[conf]?.label ?? cfg.label}
           </button>
         );
       })}
 
       <span className="filter-label" style={{ marginLeft: 'auto', whiteSpace: 'nowrap' }}>
-        {resultCount} event{resultCount !== 1 ? 's' : ''}
+        {t.filters.events(resultCount)}
       </span>
 
       {active && (
-        <button className="chip chip-reset" onClick={onReset} title="Clear all filters">
-          ↺ Reset
+        <button className="chip chip-reset" onClick={onReset} title={t.filters.resetTitle}>
+          {t.filters.reset}
         </button>
       )}
     </div>

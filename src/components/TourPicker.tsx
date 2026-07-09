@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Tour, TOURS, resolveTourEvents } from '../data/tours';
+import { useI18n } from '../i18n';
 
 interface TourPickerProps {
   open: boolean;
@@ -8,6 +9,8 @@ interface TourPickerProps {
 }
 
 export function TourPicker({ open, onClose, onSelect }: TourPickerProps) {
+  const { t } = useI18n();
+
   // Close on Esc while the dialog is open.
   useEffect(() => {
     if (!open) return;
@@ -29,28 +32,27 @@ export function TourPicker({ open, onClose, onSelect }: TourPickerProps) {
         aria-labelledby="route-picker-title"
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="about-close" onClick={onClose} aria-label="Close">
+        <button className="about-close" onClick={onClose} aria-label={t.panel.close}>
           ✕
         </button>
 
         <h2 id="route-picker-title" className="about-title">
-          🧭 Story Routes
+          {t.tours.pickerTitle}
         </h2>
-        <p className="about-tagline">
-          Don&apos;t browse — be led. Pick a route and we&apos;ll walk you through it, stop by stop.
-        </p>
+        <p className="about-tagline">{t.tours.pickerTagline}</p>
 
         <div className="route-list">
           {TOURS.map((tour) => {
             const stops = resolveTourEvents(tour).length;
+            const content = t.tours.content[tour.id] ?? { title: tour.title, tagline: tour.tagline };
             return (
               <button key={tour.id} className="route-card" onClick={() => onSelect(tour)}>
                 <span className="route-emoji">{tour.emoji}</span>
                 <span className="route-info">
-                  <span className="route-title">{tour.title}</span>
-                  <span className="route-tagline">{tour.tagline}</span>
+                  <span className="route-title">{content.title}</span>
+                  <span className="route-tagline">{content.tagline}</span>
                 </span>
-                <span className="route-stops">{stops} stops</span>
+                <span className="route-stops">{t.tours.stops(stops)}</span>
               </button>
             );
           })}

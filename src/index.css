@@ -125,6 +125,32 @@ button, .chip, a {
   font-size: 1rem;
 }
 
+/* ── Language switcher (EN / ÍS segmented control in the header) ── */
+.lang-switch {
+  display: inline-flex;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.lang-btn {
+  padding: 7px 10px;
+  border: none;
+  background: rgba(255,255,255,0.08);
+  color: var(--header-text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.lang-btn + .lang-btn { border-left: 1px solid rgba(255,255,255,0.2); }
+.lang-btn:hover { background: rgba(255,255,255,0.18); }
+.lang-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
 /* ── Filter Bar ── */
 .filter-bar {
   flex-shrink: 0;
