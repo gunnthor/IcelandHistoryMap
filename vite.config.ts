@@ -27,7 +27,32 @@ function eventPages(): Plugin {
     apply: 'build',
     closeBundle() {
       const dist = resolve(ROOT, 'dist');
-      const template = readFileSync(resolve(dist, 'index.html'), 'utf8');
+      const indexPath = resolve(dist, 'index.html');
+      const raw = readFileSync(indexPath, 'utf8');
+
+      // The share card (public/og-image.png). Crawlers need an absolute URL,
+      // so it's injected here rather than written into index.html.
+      const ogImage = `${SITE_URL}/og-image.png`;
+      const imageTags = [
+        `<meta property="og:image" content="${ogImage}" />`,
+        `<meta property="og:image:width" content="1200" />`,
+        `<meta property="og:image:height" content="630" />`,
+        `<meta name="twitter:card" content="summary_large_image" />`,
+        `<meta name="twitter:image" content="${ogImage}" />`,
+      ];
+      const socialTag = /\s*<meta (?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*>/g;
+
+      // Homepage: keep its domain-free tags, swap the small card for the image.
+      writeFileSync(
+        indexPath,
+        raw
+          .replace(/\s*<meta name="twitter:card"[^>]*>/, '')
+          .replace('</head>', `    ${imageTags.join('\n    ')}\n  </head>`),
+      );
+
+      // Event pages start without the homepage's social tags, so each page
+      // carries exactly one og:title / og:description — its own.
+      const template = raw.replace(socialTag, '');
 
       for (const ev of events) {
         const title = `${ev.name} (${ev.year}) — Sagas of Blood & Fire`;
@@ -39,7 +64,7 @@ function eventPages(): Plugin {
           `<meta property="og:title" content="${esc(title)}" />`,
           `<meta property="og:description" content="${esc(desc)}" />`,
           `<meta property="og:url" content="${url}" />`,
-          `<meta name="twitter:card" content="summary" />`,
+          ...imageTags,
         ].join('\n    ');
         const html = template
           .replace(/<title>.*?<\/title>/s, `<title>${esc(title)}</title>`)

@@ -10,9 +10,10 @@ import {
 } from 'react';
 import { ConflictEvent } from '../types';
 import { UI, UIStrings } from './ui';
-import { Lang, localizeEvents } from './localize';
+import { Lang, localizeEvents, loadIcelandic } from './localize';
 
 export type { Lang } from './localize';
+export { loadIcelandic } from './localize';
 
 const LANG_KEY = 'iceland-map-lang';
 
@@ -56,6 +57,11 @@ async function fetchCountry(signal: AbortSignal): Promise<string | null> {
   return null;
 }
 
+/** The language to start in, strongest signal first (geo-IP comes later). */
+export function initialLang(): Lang {
+  return storedLang() ?? (browserPrefersIcelandic() ? 'is' : 'en');
+}
+
 interface I18nValue {
   lang: Lang;
   /** Manual choice from the switcher — persisted for return visits. */
@@ -71,9 +77,8 @@ const I18nContext = createContext<I18nValue | null>(null);
 //   1. a stored manual choice   2. Icelandic in the browser's language list
 //   3. an Icelandic IP address  4. English
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(
-    () => storedLang() ?? (browserPrefersIcelandic() ? 'is' : 'en'),
-  );
+  // main.tsx has already loaded the Icelandic overlay if this resolves to 'is'.
+  const [lang, setLangState] = useState<Lang>(initialLang);
   const userChose = useRef(storedLang() !== null);
 
   useEffect(() => {
@@ -83,7 +88,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     const timer = setTimeout(() => ctrl.abort(), 4000);
     fetchCountry(ctrl.signal)
       .then((code) => {
-        if (code === 'IS' && !userChose.current) setLangState('is');
+        if (code === 'IS' && !userChose.current)
+          loadIcelandic().then(() => {
+            if (!userChose.current) setLangState('is');
+          });
       })
       .finally(() => clearTimeout(timer));
     return () => {
@@ -99,7 +107,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     } catch {
       // private-mode storage failures just mean the choice lasts one session
     }
-    setLangState(l);
+    // Icelandic content is a lazy chunk: switch once it's in, so the map
+    // never flashes half-translated.
+    if (l === 'is') loadIcelandic().then(() => setLangState('is'));
+    else setLangState(l);
   }, []);
 
   // Keep the document language honest for screen readers and search engines.

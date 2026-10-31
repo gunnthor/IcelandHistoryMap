@@ -1,0 +1,18 @@
+/* ── Shell ──
+   The map fills the viewport; every other region floats over it and owns
+   its own placement in its area stylesheet. This file only holds what is
+   genuinely shared between regions. */
+.app {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.skip-links {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-toast);
+}

@@ -1,0 +1,1070 @@
+/* ════════════════════════════════════════════════════════════════
+   Map stage — the vitrine. Basemap treatments, event seals, count
+   badges, clan shields, route + trace lines, glaciers, controls,
+   credits and the map's cards. Tokens only; alpha variants are mixed
+   from tokens so the palette stays in one place.
+   ════════════════════════════════════════════════════════════════ */
+
+.map-stage {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-map);
+  isolation: isolate;
+  background: var(--basalt-950);
+  --halo: color-mix(in srgb, var(--basalt-950) 58%, transparent);
+  --halo-strong: color-mix(in srgb, var(--basalt-950) 82%, transparent);
+  --drop: 0 2px 5px color-mix(in srgb, var(--basalt-950) 45%, transparent);
+}
+
+/* Leaflet's panes run 200–700; keep them inside one stacking context so
+   the map UI (z-map-ui) always sits above them. */
+.map-stage .map-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  isolation: isolate;
+  font-family: var(--font-ui);
+  background: var(--map-ground, var(--basalt-950));
+}
+.map-stage .leaflet-container:focus-visible {
+  outline: 2px solid var(--focus-dark);
+  outline-offset: -4px;
+  box-shadow: inset 0 0 0 6px var(--focus-halo);
+}
+
+/* Fractional zoom (zoomSnap .25) scales tiles to sub-pixel sizes, and
+   Chromium then draws hairline seams along some tile edges — on satellite
+   they read as a thin box around Iceland. A transparent outline makes the
+   compositor rasterise each tile with its edge padded; measured seam-free at
+   z5.5–7.25. */
+.map-stage .leaflet-tile {
+  outline: 1px solid transparent;
+}
+
+/* ── Basemaps ── */
+.map-stage[data-style='satellite'] {
+  --map-ground: color-mix(in srgb, var(--type-sea_battle) 22%, var(--basalt-950));
+}
+.map-stage[data-style='satellite'] .leaflet-tile-pane {
+  filter: brightness(0.92) saturate(1.05);
+}
+
+.map-stage[data-style='summer'] {
+  --map-ground: color-mix(in srgb, var(--type-sea_battle) 28%, var(--vellum-100));
+}
+.map-stage[data-style='summer'] .leaflet-tile-pane {
+  filter: saturate(1.15) contrast(1.05);
+}
+
+.map-stage[data-style='parchment'] {
+  --map-ground: var(--vellum-200);
+}
+/* Sea a shade darker than land, so the island reads at a glance. */
+.map-stage[data-style='parchment'] .leaflet-tile-pane {
+  filter: sepia(0.72) saturate(0.7) contrast(1.14) brightness(0.97);
+}
+
+/* Relief styles: Esri's physical map supplies the colour (green lowlands,
+   brown highlands) and World Hillshade the terrain, multiplied on top. The
+   hillshade is neutral grey, so it's warmed to the old relief's brown. The
+   colour layer has little real detail past z7 — upscaled, its own baked-in
+   shading turns to blocks — so it softens as you zoom in (--colour-blur is
+   set per zoom in markers.ts) while the hillshade keeps every ridge crisp. */
+.map-stage .map-tiles-relief {
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+  filter: sepia(0.8) saturate(1.8) hue-rotate(-8deg);
+}
+.map-stage .map-tiles-colour {
+  filter: blur(var(--colour-blur, 0px));
+}
+.map-stage[data-style='summer'] .map-tiles-colour {
+  filter: saturate(1.45) brightness(0.97) blur(var(--colour-blur, 0px));
+}
+
+/* 1590: the engraving as a plate lit on the basalt wall. */
+.map-stage[data-style='ortelius'] {
+  --map-ground: var(--basalt-950);
+}
+.map-stage .map-plate {
+  box-shadow: var(--e3);
+}
+.map-stage[data-style='ortelius'] .leaflet-glaciers-pane,
+.map-stage[data-style='ortelius'] .leaflet-glacierLabels-pane {
+  display: none;
+}
+
+
+/* ── Glaciers ── */
+.map-stage .map-glacier {
+  fill: color-mix(in srgb, var(--vellum-50) 90%, var(--type-sea_battle));
+  fill-opacity: 0.8;
+  stroke: color-mix(in srgb, var(--vellum-50) 62%, var(--type-sea_battle));
+  stroke-opacity: 0.9;
+}
+.map-stage[data-style='satellite'] .map-glacier {
+  fill-opacity: 0.18;
+  stroke-opacity: 0.45;
+}
+.map-glacier-label > span {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--ink-700);
+  text-shadow: 0 0 2px var(--vellum-50), 0 0 5px var(--vellum-50);
+}
+.map-stage[data-style='satellite'] .map-glacier-label > span {
+  color: var(--vellum-50);
+  text-shadow: 0 0 2px var(--basalt-950), 0 0 6px var(--basalt-950);
+}
+.map-glacier-label.is-hidden {
+  visibility: hidden;
+}
+
+/* ── Place names: regions in spaced caps, towns with a dot ──
+   Quiet by design — orientation, not a road map. Ink with a vellum halo on
+   the relief styles; vellum with a basalt halo on satellite. */
+.map-place > span {
+  position: absolute;
+  white-space: nowrap;
+  font-family: var(--font-ui);
+  color: var(--ink-700);
+  text-shadow: 0 0 2px var(--vellum-50), 0 0 5px var(--vellum-50), 0 0 9px var(--vellum-50);
+  pointer-events: none;
+}
+.map-place--region > span {
+  /* --dx/--dy: the nudge the dodge picked to clear the event seals. */
+  transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px)));
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.86;
+}
+.map-place--town > span {
+  transform: translate(-4px, -50%);
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.map-place--town > span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 1.5px var(--vellum-50);
+}
+.map-stage[data-style='satellite'] .map-place > span {
+  color: var(--vellum-50);
+  text-shadow: 0 0 2px var(--basalt-950), 0 0 6px var(--basalt-950), 0 0 10px var(--basalt-950);
+}
+.map-stage[data-style='satellite'] .map-place--town > span::before {
+  box-shadow: 0 0 0 1.5px var(--basalt-950);
+}
+.map-place.is-hidden,
+.map-stage[data-style='ortelius'] .map-place {
+  visibility: hidden;
+}
+
+/* ── Hover labels (events, badges, seats) ── */
+.map-label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  display: none;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  background: var(--basalt-850);
+  box-shadow: var(--e2);
+  color: var(--bone-100);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.map-label b {
+  font-weight: 600;
+}
+.map-label__year {
+  margin-left: 6px;
+  color: var(--bone-400);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.map-label__row {
+  display: block;
+}
+.map-label__more {
+  display: block;
+  color: var(--bone-400);
+}
+
+/* ── Event seals ── */
+.ev-marker,
+.cl-marker,
+.seat-marker {
+  border-radius: 50%;
+  cursor: pointer;
+}
+.ev-marker.is-hidden,
+.cl-marker.is-hidden {
+  display: none !important;
+}
+.ev-marker:focus-visible,
+.ev-marker.is-linked,
+.cl-marker:focus-visible,
+.cl-marker.is-linked,
+.seat-marker:focus-visible {
+  z-index: 999999 !important;
+}
+@media (hover: hover) {
+  .ev-marker:hover,
+  .cl-marker:hover,
+  .seat-marker:hover {
+    z-index: 999999 !important;
+  }
+}
+.ev-marker:focus-visible .map-label,
+.ev-marker.is-linked .map-label,
+.cl-marker:focus-visible .map-label,
+.seat-marker:focus-visible .map-label {
+  display: block;
+}
+@media (hover: hover) {
+  .ev-marker:hover .map-label,
+  .cl-marker:hover .map-label,
+  .seat-marker:hover .map-label {
+    display: block;
+  }
+}
+.leaflet-marker-icon[aria-expanded='true'] .map-label {
+  display: none !important;
+}
+/* Touch has no hover; a tap selects. Labels still follow linked hovers. */
+@media (hover: none) {
+  .ev-marker:hover:not(.is-linked) .map-label,
+  .cl-marker:hover .map-label,
+  .seat-marker:hover .map-label {
+    display: none;
+  }
+}
+/* 44px hit area on coarse pointers, the seal stays 28px. */
+@media (pointer: coarse) {
+  .ev-marker::before,
+  .cl-marker::before,
+  .seat-marker::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+  }
+}
+
+.ev-seal {
+  position: absolute;
+  inset: 0;
+  transform: scale(var(--seal-scale, 1));
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--pig);
+  color: var(--vellum-50);
+  box-shadow: 0 0 0 3.5px var(--halo), var(--drop);
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out),
+    opacity var(--dur-base) var(--ease-out), filter var(--dur-base) var(--ease-out);
+}
+.ev-seal > svg:not(.ev-rim) {
+  position: relative;
+}
+.ev-rim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: rotate(-90deg);
+}
+.ev-rim circle {
+  fill: none;
+  stroke: var(--vellum-50);
+  stroke-width: 2;
+}
+/* Confidence = solidity: solid / four long segments / a fine dotted line.
+   Narrow gaps and small dots read as a broken line, not a gaming chip. */
+.ev--medium .ev-rim circle {
+  stroke-dasharray: 22 3;
+  stroke-dashoffset: -1.5;
+}
+.ev--low .ev-rim circle {
+  stroke-dasharray: 0 5;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.ev--battle { --pig: var(--type-battle); }
+.ev--sea_battle { --pig: var(--type-sea_battle); }
+.ev--raid { --pig: var(--type-raid); }
+.ev--burning { --pig: var(--type-burning); }
+.ev--massacre { --pig: var(--type-massacre); }
+.ev--killing { --pig: var(--type-killing); }
+.ev--feud { --pig: var(--type-feud); }
+.ev--execution { --pig: var(--type-execution); }
+.ev--political { --pig: var(--type-political); }
+.ev--occupation { --pig: var(--type-occupation); }
+.ev--eruption { --pig: var(--type-eruption); }
+.ev--plague { --pig: var(--type-plague); }
+.ev--disaster { --pig: var(--type-disaster); }
+
+.ev-marker.is-linked .ev-seal {
+  transform: scale(calc(var(--seal-scale, 1) * 1.12));
+}
+@media (hover: hover) {
+  .ev-marker:hover .ev-seal {
+    transform: scale(calc(var(--seal-scale, 1) * 1.12));
+  }
+}
+.ev-marker.is-linked .ev-seal {
+  box-shadow: 0 0 0 3px var(--halo), 0 0 0 6px color-mix(in srgb, var(--brass-400) 60%, transparent), var(--drop);
+}
+
+/* Selected: larger, brass ring, one ember ripple. */
+.ev-marker.is-selected .ev-seal {
+  transform: scale(max(1, calc(var(--seal-scale, 1) * 1.25)));
+  box-shadow: 0 0 0 2px var(--brass-400), 0 0 0 4px var(--halo-strong), 0 4px 10px var(--halo);
+}
+.ev-seal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--ember-400);
+  opacity: 0;
+  pointer-events: none;
+}
+.ev-marker.is-rippling .ev-seal::after {
+  animation: ev-ripple 700ms var(--ease-out) 1;
+}
+@keyframes ev-ripple {
+  from {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  to {
+    transform: scale(2.3);
+    opacity: 0;
+  }
+}
+.ev-marker.is-selected .map-label {
+  bottom: calc(100% + 14px);
+}
+
+/* Off-route (or off-trace): stepped back, never gone. */
+.ev-marker.is-dim .ev-seal {
+  opacity: 0.35;
+  filter: saturate(0.3);
+}
+.ev-marker.is-dim:focus-visible .ev-seal {
+  opacity: 0.85;
+  filter: none;
+}
+@media (hover: hover) {
+  .ev-marker.is-dim:hover .ev-seal {
+    opacity: 0.85;
+    filter: none;
+  }
+}
+
+/* Focus: dark inner line, brass ring, dark halo — legible on any basemap. */
+.ev-marker:focus-visible,
+.cl-marker:focus-visible,
+.seat-marker:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.ev-marker:focus-visible .ev-seal {
+  transform: scale(calc(var(--seal-scale, 1) * 1.12));
+  box-shadow: 0 0 0 2px var(--basalt-950), 0 0 0 4px var(--focus-dark), 0 0 0 7px var(--focus-halo);
+}
+.ev-marker.is-selected:focus-visible .ev-seal {
+  transform: scale(max(1, calc(var(--seal-scale, 1) * 1.25)));
+}
+
+/* Route stop numbers. */
+.ev-num {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  display: none;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: var(--r-round);
+  background: var(--basalt-950);
+  border: 1.5px solid var(--brass-400);
+  color: var(--brass-300);
+  font-size: 11px;
+  line-height: 15px;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums lining-nums;
+  pointer-events: none;
+}
+.ev-marker.is-stop .ev-num {
+  display: block;
+}
+.ev-marker.is-current .ev-num {
+  background: var(--brass-400);
+  color: var(--basalt-950);
+}
+
+/* Fanned-out pinned markers keep a hairline to their true spot. */
+.ev-leader {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ev-leader svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+.ev-leader line {
+  stroke: var(--vellum-50);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 1px var(--basalt-950));
+}
+.ev-leader circle {
+  fill: var(--vellum-50);
+  stroke: var(--basalt-950);
+  stroke-width: 1.25;
+}
+
+/* ── Count badges ── */
+/* Badges shrink with the seals at overview zooms, but never so far that the
+   count stops being legible (mirrors badgeScale in cluster.ts). */
+.cl-disc {
+  position: absolute;
+  inset: 0;
+  transform: scale(max(0.78, var(--seal-scale, 1)));
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ring);
+  box-shadow: 0 0 0 1.5px var(--vellum-50), 0 0 0 4px var(--halo), var(--drop);
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out),
+    opacity var(--dur-base) var(--ease-out);
+}
+.cl-disc::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--basalt-900);
+}
+.cl-count {
+  position: relative;
+  color: var(--bone-100);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+@media (hover: hover) {
+  .cl-marker:hover .cl-disc {
+    transform: scale(calc(max(0.78, var(--seal-scale, 1)) * 1.08));
+  }
+}
+.cl-marker.is-linked .cl-disc {
+  box-shadow: 0 0 0 1.5px var(--vellum-50), 0 0 0 4px var(--halo), 0 0 0 7px color-mix(in srgb, var(--brass-400) 60%, transparent);
+}
+.cl-marker:focus-visible .cl-disc {
+  box-shadow: 0 0 0 2px var(--basalt-950), 0 0 0 4px var(--focus-dark), 0 0 0 7px var(--focus-halo);
+}
+.cl-marker.is-dim .cl-disc,
+.cl-marker.is-dim .cl-pill {
+  opacity: 0.4;
+}
+
+/* "+n" on a pinned seal. */
+.cl-pill {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-round);
+  background: var(--basalt-900);
+  color: var(--bone-100);
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  box-shadow: 0 0 0 1.5px var(--vellum-50), 0 0 0 3px var(--halo);
+}
+.cl-marker--pill {
+  border-radius: var(--r-round);
+}
+.cl-marker--pill.is-on-selected .cl-pill {
+  box-shadow: 0 0 0 1.5px var(--brass-400), 0 0 0 3px var(--halo);
+}
+@media (hover: hover) {
+  .cl-marker--pill:hover .cl-pill {
+    background: var(--basalt-800);
+  }
+}
+.cl-marker--pill:focus-visible .cl-pill {
+  box-shadow: 0 0 0 2px var(--basalt-950), 0 0 0 4px var(--focus-dark), 0 0 0 7px var(--focus-halo);
+}
+
+/* ── Clan seats ── */
+.seat-marker {
+  border-radius: var(--r-xs);
+}
+.seat-shield {
+  display: block;
+  overflow: visible;
+  transform-origin: 50% 92%;
+  filter: drop-shadow(0 0 1.5px var(--basalt-950)) drop-shadow(0 2px 3px var(--halo));
+  transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+}
+.seat-shield path {
+  stroke: var(--vellum-50);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+.seat-shield text {
+  fill: var(--vellum-50);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+}
+.seat-shield text.is-pair {
+  font-size: 10.5px;
+}
+@media (hover: hover) {
+  .seat-marker:hover .seat-shield {
+    transform: scale(1.12);
+  }
+}
+.seat-marker:focus-visible .seat-shield {
+  transform: scale(1.12);
+  outline: 2px solid var(--focus-dark);
+  outline-offset: 3px;
+}
+.seat-marker.is-dim .seat-shield {
+  opacity: 0.35;
+}
+/* Nudged off an event seal: a hairline from the tip back to the spot. */
+.seat-leader {
+  display: none;
+  position: absolute;
+  left: -8px;
+  top: 36px;
+  width: 22px;
+  height: 1.5px;
+  background: var(--vellum-50);
+  box-shadow: 0 0 1px var(--basalt-950);
+  transform-origin: 0 50%;
+  transform: rotate(-26.6deg);
+  pointer-events: none;
+}
+.seat-marker.is-nudged .seat-leader {
+  display: block;
+}
+
+/* ── Route line ── */
+.map-stage .map-route-casing {
+  stroke: var(--basalt-950);
+  stroke-opacity: 0.55;
+}
+.map-stage .map-route-casing--ahead {
+  stroke-opacity: 0.35;
+}
+.map-stage .map-route {
+  stroke: var(--brass-400);
+  stroke-opacity: 1;
+}
+.map-stage .map-route--ahead {
+  stroke: var(--brass-300);
+  stroke-opacity: 0.9;
+}
+
+/* ── Clan trace ── */
+.map-stage .map-trace-casing {
+  stroke: var(--vellum-50);
+  stroke-opacity: 0.85;
+  animation: map-fade-in var(--dur-slow) var(--ease-out);
+}
+.map-stage .map-trace {
+  animation: map-fade-in var(--dur-slow) var(--ease-out);
+}
+.map-stage .map-trace-end {
+  fill: var(--vellum-50);
+  fill-opacity: 1;
+  cursor: pointer;
+}
+@keyframes map-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.leaflet-tooltip.map-tip {
+  padding: 4px 8px;
+  border: none;
+  border-radius: var(--r-sm);
+  background: var(--basalt-850);
+  box-shadow: var(--e2);
+  color: var(--bone-100);
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 500;
+}
+.leaflet-tooltip-top.map-tip::before {
+  border-top-color: var(--basalt-850);
+}
+
+/* ── Controls: right edge of the visible map, centred between panels ── */
+.map-controls {
+  position: absolute;
+  top: var(--inset-top);
+  bottom: var(--inset-bottom);
+  right: calc(var(--inset-right) + var(--sp-4));
+  z-index: var(--z-map-ui);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--sp-2);
+  pointer-events: none;
+  transition: right var(--dur-slow) var(--ease-out), top var(--dur-slow) var(--ease-out),
+    bottom var(--dur-slow) var(--ease-out), opacity var(--dur-base) var(--ease-out),
+    visibility var(--dur-base);
+}
+.map-controls > * {
+  pointer-events: auto;
+}
+.map-controls[data-hidden] {
+  opacity: 0;
+  visibility: hidden;
+}
+.map-controls__zoom {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-sm);
+  box-shadow: var(--e2);
+}
+.map-controls__zoom .ui-icon-btn--float {
+  box-shadow: none;
+}
+.map-controls__zoom > :first-child {
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  box-shadow: inset 0 -1px 0 var(--line-dark);
+}
+.map-controls__zoom > :last-child {
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+}
+.map-controls .ui-icon-btn[aria-disabled='true'] {
+  color: var(--bone-500);
+  background: var(--glass);
+}
+
+/* "Tracing Sturlungar ✕" */
+.map-tracing {
+  position: absolute;
+  top: calc(var(--inset-top) + var(--sp-3));
+  right: calc(var(--inset-right) + var(--sp-4));
+  z-index: var(--z-map-ui);
+  box-shadow: var(--e2);
+  transition: right var(--dur-slow) var(--ease-out), top var(--dur-slow) var(--ease-out);
+}
+.map-tracing__shield,
+.map-legend__shield,
+.map-card__shield {
+  display: grid;
+  place-items: center;
+}
+
+/* ── Credits ── */
+.map-credits {
+  position: absolute;
+  right: calc(var(--inset-right) + var(--sp-2));
+  bottom: calc(var(--inset-bottom) + var(--sp-2));
+  z-index: var(--z-map-ui);
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-1);
+  max-width: calc(100vw - var(--inset-right) - var(--inset-left) - var(--sp-8));
+  transition: right var(--dur-slow) var(--ease-out), bottom var(--dur-slow) var(--ease-out),
+    opacity var(--dur-base) var(--ease-out), visibility var(--dur-base);
+}
+.map-credits[data-hidden] {
+  opacity: 0;
+  visibility: hidden;
+}
+.map-credits__line {
+  padding: 2px var(--sp-2);
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--basalt-950) 70%, transparent);
+  color: var(--bone-300);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+}
+.map-credits a {
+  color: var(--bone-100);
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .map-credits a:hover {
+    text-decoration: underline;
+  }
+}
+.map-credits__toggle {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--basalt-950) 70%, transparent);
+  color: var(--bone-300);
+}
+.map-credits__toggle[aria-expanded='true'] {
+  color: var(--brass-300);
+}
+@media (pointer: coarse) {
+  .map-credits__toggle {
+    position: relative;
+  }
+  .map-credits__toggle::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+  }
+}
+
+/* ── Empty state ── */
+.map-empty {
+  position: absolute;
+  top: var(--inset-top);
+  right: var(--inset-right);
+  bottom: var(--inset-bottom);
+  left: var(--inset-left);
+  z-index: var(--z-map-ui);
+  display: grid;
+  place-items: center;
+  padding: var(--sp-4);
+  pointer-events: none;
+}
+.map-empty__card {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-2);
+  max-width: 300px;
+  padding: var(--sp-5) var(--sp-6);
+  border-radius: var(--r-md);
+  box-shadow: var(--e3);
+  text-align: center;
+  pointer-events: auto;
+}
+.map-empty__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-heading);
+  line-height: var(--lh-heading);
+}
+.map-empty__body {
+  margin-bottom: var(--sp-2);
+  color: var(--ink-700);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+
+/* ── Layers popover ── */
+.map-layers-anchor {
+  position: absolute;
+  top: calc(var(--inset-top) + var(--sp-3));
+  right: calc(var(--inset-right) + var(--sp-4) + var(--control));
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.map-layers {
+  padding: 0;
+  overflow: hidden;
+}
+.map-layers__body {
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--sp-3);
+}
+.map-layers__title {
+  padding: 0 var(--sp-1) var(--sp-2);
+  color: var(--bone-400);
+}
+.map-layers__styles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+}
+.map-style-card {
+  display: grid;
+  gap: 6px;
+  padding: 4px;
+  border-radius: var(--r-md);
+  color: var(--bone-300);
+  text-align: left;
+  box-shadow: inset 0 0 0 1px var(--line-dark);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .map-style-card:hover {
+    background: var(--basalt-800);
+    color: var(--bone-100);
+  }
+}
+.map-style-card[aria-checked='true'] {
+  box-shadow: inset 0 0 0 2px var(--brass-400);
+  color: var(--brass-300);
+}
+.map-style-card__thumb {
+  display: block;
+  height: 62px;
+  border-radius: var(--r-sm);
+  background-color: var(--basalt-800);
+  background-size: 150%;
+  background-position: 30% 45%;
+}
+.map-style-card__thumb--satellite {
+  filter: brightness(0.92) saturate(1.05);
+}
+/* Multiply blends with the background colour too, so give it white paper. */
+.map-style-card__thumb--summer,
+.map-style-card__thumb--parchment {
+  background-color: var(--vellum-50);
+}
+.map-style-card__thumb--summer {
+  background-blend-mode: multiply;
+  filter: saturate(1.15) contrast(1.05);
+}
+.map-style-card__thumb--parchment {
+  background-blend-mode: multiply;
+  filter: sepia(0.72) saturate(0.7) contrast(1.14) brightness(0.97);
+}
+.map-style-card__thumb--ortelius {
+  background-size: 135%;
+  background-position: 52% 50%;
+}
+.map-style-card__label {
+  padding: 0 4px 2px;
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 500;
+}
+.map-layers__sep {
+  height: 1px;
+  margin: var(--sp-3) 0 var(--sp-2);
+  background: var(--line-dark);
+}
+.map-layers__switch {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-2);
+  border-radius: var(--r-sm);
+  text-align: left;
+}
+@media (hover: hover) {
+  .map-layers__switch:hover {
+    background: var(--basalt-800);
+  }
+}
+.map-layers__switch-text {
+  flex: 1;
+  display: grid;
+  gap: 2px;
+}
+.map-layers__switch-label {
+  color: var(--bone-100);
+  font-weight: 500;
+}
+.map-layers__hint {
+  color: var(--bone-400);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+}
+.map-legend__hint {
+  padding: var(--sp-2) var(--sp-2) var(--sp-1);
+}
+.map-legend ul {
+  display: grid;
+  gap: 2px;
+}
+.map-legend__row {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  min-height: 34px;
+  padding: 4px var(--sp-2);
+  border-radius: var(--r-sm);
+  color: var(--bone-100);
+  text-align: left;
+}
+@media (hover: hover) {
+  .map-legend__row:hover {
+    background: var(--basalt-800);
+  }
+}
+.map-legend__row[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--brass-400) 14%, transparent);
+  box-shadow: inset 0 0 0 1px var(--brass-400);
+}
+.map-legend__row[aria-disabled='true'] {
+  color: var(--bone-500);
+}
+@media (hover: hover) {
+  .map-legend__row[aria-disabled='true']:hover {
+    background: none;
+  }
+}
+.map-legend__row[aria-disabled='true'] .map-legend__shield {
+  opacity: 0.45;
+}
+.map-legend__name {
+  font-weight: 500;
+}
+.map-legend__count {
+  color: var(--bone-400);
+  font-size: var(--fs-caption);
+}
+@media (pointer: coarse) {
+  .map-legend__row,
+  .map-layers__switch {
+    min-height: var(--touch);
+  }
+}
+
+/* ── Cards (place card, seat card) ── */
+.map-card {
+  padding: var(--sp-3);
+}
+.map-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-1) var(--sp-1) var(--sp-2);
+}
+.map-card__head--place {
+  display: grid;
+  gap: 2px;
+}
+.map-card__eyebrow {
+  color: var(--bone-400);
+}
+.map-card__title {
+  color: var(--bone-100);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-heading);
+  line-height: var(--lh-heading);
+}
+.map-card__list {
+  display: grid;
+  gap: 2px;
+}
+.map-card__row {
+  display: grid;
+  grid-template-columns: 24px 44px 1fr;
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+  min-height: 40px;
+  padding: 6px var(--sp-2);
+  border-radius: var(--r-sm);
+  color: var(--bone-100);
+  text-align: left;
+}
+@media (hover: hover) {
+  .map-card__row:hover {
+    background: var(--basalt-800);
+  }
+}
+.map-card__row[aria-current='true'] {
+  box-shadow: inset 0 0 0 1px var(--brass-400);
+}
+.map-card__year {
+  color: var(--brass-300);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-subtitle);
+  line-height: 1;
+}
+.map-card__name {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+}
+@media (pointer: coarse) {
+  .map-card__row {
+    min-height: var(--touch);
+  }
+}
+.map-card__body {
+  padding: 0 var(--sp-1);
+  color: var(--bone-300);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+}
+.map-card__note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--sp-2) var(--sp-1) 0;
+  color: var(--bone-400);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+}
+.map-card__sources {
+  display: grid;
+  gap: 4px;
+  padding: var(--sp-3) var(--sp-1) 0;
+}
+.map-card__sources a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--brass-300);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  text-decoration: none;
+}
+@media (hover: hover) {
+  .map-card__sources a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Landscape phones: the control column reaches the bottom of the short map,
+   so the credits ⓘ moves to the opposite corner. */
+.app[data-short] .map-credits[data-compact] {
+  right: auto;
+  left: calc(var(--inset-left) + var(--sp-2));
+}
+
+/* On a route, the numbered stops carry the story; the "+n" pills for
+   stepped-back events beneath them are hidden. */
+.map-canvas[data-route] .cl-marker[data-key^='s:'] {
+  display: none;
+}

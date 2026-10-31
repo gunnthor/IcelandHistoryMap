@@ -1,0 +1,431 @@
+/* ════════════════════════════════════════════════════════════════
+   UI primitives. Every area builds from these; area CSS adds layout,
+   never new button or chip styles. Classes are prefixed ui- so they never
+   collide with area classes. Dark (basalt) is the default context;
+   .on-vellum flips colours for the reading surfaces.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Glass: the floating chrome surface ── */
+.ui-glass {
+  background: var(--basalt-850);
+  border-radius: var(--r-md);
+  box-shadow: var(--e2);
+  color: var(--bone-100);
+}
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .ui-glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+}
+
+/* ── Vellum: the reading surface ── */
+.on-vellum {
+  background: var(--vellum-50);
+  color: var(--ink-900);
+}
+
+/* ── Buttons ── */
+.ui-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: var(--control);
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.ui-btn .icon {
+  flex-shrink: 0;
+}
+
+/* primary = "act" (ember) */
+.ui-btn--primary {
+  background: var(--ember-500);
+  color: var(--bone-100);
+}
+@media (hover: hover) {
+  .ui-btn--primary:hover {
+    background: var(--ember-600);
+  }
+}
+
+/* secondary = quiet surface with a hairline */
+.ui-btn--secondary {
+  background: var(--basalt-800);
+  border-color: var(--line-dark-strong);
+  color: var(--bone-100);
+}
+@media (hover: hover) {
+  .ui-btn--secondary:hover {
+    background: var(--basalt-700);
+  }
+}
+
+/* ghost = text-only until hovered */
+.ui-btn--ghost {
+  color: var(--bone-300);
+}
+@media (hover: hover) {
+  .ui-btn--ghost:hover {
+    color: var(--bone-100);
+    background: var(--basalt-800);
+  }
+}
+
+/* on vellum */
+.on-vellum .ui-btn--secondary {
+  background: var(--vellum-100);
+  border-color: var(--line-vellum-input);
+  color: var(--ink-900);
+}
+@media (hover: hover) {
+  .on-vellum .ui-btn--secondary:hover {
+    background: var(--vellum-200);
+  }
+}
+.on-vellum .ui-btn--ghost {
+  color: var(--ink-700);
+}
+@media (hover: hover) {
+  .on-vellum .ui-btn--ghost:hover {
+    color: var(--ink-900);
+    background: var(--vellum-100);
+  }
+}
+
+.ui-btn--sm {
+  min-height: 28px;
+  padding: 0 var(--sp-2);
+  font-size: var(--fs-small);
+}
+@media (pointer: coarse) {
+  .ui-btn--sm {
+    min-height: var(--touch);
+  }
+}
+
+/* ── Icon buttons ── */
+.ui-icon-btn {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--control);
+  height: var(--control);
+  border-radius: var(--r-sm);
+  color: var(--bone-300);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .ui-icon-btn:hover {
+    color: var(--bone-100);
+    background: var(--basalt-800);
+  }
+}
+.ui-icon-btn[aria-pressed='true'],
+.ui-icon-btn[aria-expanded='true'] {
+  color: var(--brass-300);
+  background: var(--basalt-800);
+}
+/* A floating, self-contained map control */
+.ui-icon-btn--float {
+  background: var(--glass);
+  box-shadow: var(--e2);
+  color: var(--bone-100);
+}
+@media (hover: hover) {
+  .ui-icon-btn--float:hover {
+    background: var(--basalt-800);
+  }
+}
+.on-vellum .ui-icon-btn {
+  color: var(--ink-700);
+}
+@media (hover: hover) {
+  .on-vellum .ui-icon-btn:hover {
+    color: var(--ink-900);
+    background: var(--vellum-100);
+  }
+}
+
+/* ── Segmented control ── */
+.ui-seg {
+  display: inline-flex;
+  padding: 2px;
+  gap: 2px;
+  border-radius: var(--r-sm);
+  background: var(--basalt-950);
+  box-shadow: inset 0 0 0 1px var(--line-dark);
+}
+.ui-seg__btn {
+  min-height: calc(var(--control) - 4px);
+  padding: 0 var(--sp-3);
+  border-radius: 3px;
+  color: var(--bone-300);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .ui-seg__btn:hover {
+    color: var(--bone-100);
+  }
+}
+.ui-seg__btn[aria-checked='true'],
+.ui-seg__btn[aria-pressed='true'] {
+  background: var(--brass-400);
+  color: var(--basalt-950);
+  font-weight: 600;
+}
+
+/* ── Chips ── */
+.ui-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line-dark-strong);
+  color: var(--bone-300);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .ui-chip:hover {
+    color: var(--bone-100);
+    border-color: var(--line-dark-input);
+  }
+}
+.ui-chip[aria-pressed='true'] {
+  background: rgba(201, 168, 103, 0.14);
+  border-color: var(--brass-400);
+  color: var(--brass-300);
+}
+/* A removable "active filter" token */
+.ui-chip--token {
+  background: var(--basalt-800);
+  color: var(--bone-100);
+  padding-right: 4px;
+}
+.ui-chip--token .ui-chip__x {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  color: var(--bone-400);
+}
+@media (hover: hover) {
+  .ui-chip--token .ui-chip__x:hover {
+    color: var(--bone-100);
+    background: var(--basalt-700);
+  }
+}
+@media (pointer: coarse) {
+  .ui-chip {
+    min-height: var(--touch);
+  }
+}
+
+/* ── Count badge ── */
+.ui-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--r-round);
+  background: var(--brass-400);
+  color: var(--basalt-950);
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Switch ── */
+.ui-switch {
+  position: relative;
+  flex-shrink: 0;
+  width: 34px;
+  height: 20px;
+  border-radius: var(--r-round);
+  background: var(--basalt-700);
+  box-shadow: inset 0 0 0 1px var(--line-dark-strong);
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.ui-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bone-300);
+  transition: transform var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+[aria-checked='true'] > .ui-switch,
+.ui-switch[aria-checked='true'] {
+  background: var(--brass-400);
+}
+[aria-checked='true'] > .ui-switch::after,
+.ui-switch[aria-checked='true']::after {
+  transform: translateX(14px);
+  background: var(--basalt-950);
+}
+
+/* ── Popover ── */
+.ui-popover {
+  position: fixed;
+  z-index: var(--z-popover);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--sp-2);
+  animation: ui-pop-in var(--dur-base) var(--ease-out);
+}
+@keyframes ui-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+.ui-popover__title {
+  padding: var(--sp-2) var(--sp-2) var(--sp-1);
+  color: var(--bone-400);
+}
+
+/* ── Modal dialog (native <dialog>, so focus trap + inert come free) ── */
+.ui-dialog {
+  margin: auto;
+  max-width: min(560px, calc(100vw - 32px));
+  max-height: min(760px, calc(100dvh - 32px));
+  width: 100%;
+  border: none;
+  border-radius: var(--r-lg);
+  box-shadow: var(--e3);
+  overflow: hidden;
+  padding: 0;
+}
+.ui-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  animation: ui-dialog-in var(--dur-slow) var(--ease-out);
+}
+.ui-dialog::backdrop {
+  background: var(--scrim);
+}
+@keyframes ui-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+}
+.ui-dialog--dark {
+  background: var(--basalt-900);
+  color: var(--bone-100);
+}
+.ui-dialog__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-6) var(--sp-6) var(--sp-3);
+}
+.ui-dialog__head > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+.ui-dialog__body {
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--sp-6) var(--sp-6);
+}
+@media (max-width: 699px) {
+  /* Phones: dialogs become full-height sheets. */
+  .ui-dialog {
+    max-width: 100vw;
+    max-height: 100dvh;
+    height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+  }
+  .ui-dialog__head {
+    padding: calc(var(--sp-4) + env(safe-area-inset-top)) var(--sp-4) var(--sp-3);
+  }
+  .ui-dialog__body {
+    padding: 0 var(--sp-4) calc(var(--sp-6) + env(safe-area-inset-bottom));
+  }
+}
+
+/* ── Keyboard key ── */
+.ui-kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  font-family: inherit; /* <kbd> defaults to monospace */
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* ── The type seal: pigment disc + bone glyph + confidence rim ── */
+.seal {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: var(--vellum-50);
+  border: 2px solid var(--vellum-50);
+  box-shadow: 0 0 0 1px rgba(11, 14, 17, 0.55);
+}
+.seal--medium {
+  border-style: dashed;
+}
+.seal--low {
+  border-style: dotted;
+}
+.seal--battle { background: var(--type-battle); }
+.seal--sea_battle { background: var(--type-sea_battle); }
+.seal--raid { background: var(--type-raid); }
+.seal--burning { background: var(--type-burning); }
+.seal--massacre { background: var(--type-massacre); }
+.seal--killing { background: var(--type-killing); }
+.seal--feud { background: var(--type-feud); }
+.seal--execution { background: var(--type-execution); }
+.seal--political { background: var(--type-political); }
+.seal--occupation { background: var(--type-occupation); }
+.seal--eruption { background: var(--type-eruption); }
+.seal--plague { background: var(--type-plague); }
+.seal--disaster { background: var(--type-disaster); }
+
+/* ── Confidence pips (●●○) ── */
+.ui-pips {
+  display: inline-flex;
+  gap: 3px;
+}
+.ui-pips > i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+}
+.ui-pips > i.on {
+  background: currentColor;
+}

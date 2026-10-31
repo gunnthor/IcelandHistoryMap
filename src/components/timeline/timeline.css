@@ -1,0 +1,956 @@
+/* ════════════════════════════════════════════════════════════════
+   Time dock. One ordinal axis everywhere (see model.ts): ticks at slot
+   centres, era bands over their slots, the brush on slot boundaries.
+   Geometry lives in --tl-* custom properties on the dock; colours, type,
+   motion and layers come from tokens only.
+   ════════════════════════════════════════════════════════════════ */
+
+.tl-dock {
+  position: fixed;
+  z-index: var(--z-chrome);
+  container-type: inline-size;
+  --tl-band-h: 16px; /* era label row */
+  --tl-tick-row: 22px;
+  --tl-axis-h: 18px;
+  --tl-rail-h: calc(var(--tl-band-h) + var(--tl-tick-row) + var(--tl-axis-h));
+}
+
+/* ── Wide: bottom-left, stops at the folio ── */
+.tl-dock--wide {
+  left: var(--gutter);
+  right: calc(var(--inset-right) + var(--gutter));
+  bottom: var(--gutter);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: var(--control) var(--tl-rail-h);
+  grid-template-areas:
+    'play eras status'
+    'rail rail rail';
+  align-items: center;
+  column-gap: var(--sp-3);
+  row-gap: var(--sp-0_5);
+  padding: 6px var(--sp-4) var(--sp-1);
+  transition: right var(--dur-slow) var(--ease-out);
+}
+
+/* ── Compact: full width at the bottom, safe-area aware ── */
+.tl-dock--compact {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+  padding: var(--sp-2) max(var(--sp-2), env(safe-area-inset-right)) max(var(--sp-2), env(safe-area-inset-bottom))
+    max(var(--sp-2), env(safe-area-inset-left));
+  display: grid;
+  grid-template-columns: var(--touch) minmax(0, 1fr) var(--touch);
+  grid-template-rows: var(--touch) var(--touch);
+  grid-template-areas:
+    'play eras eras'
+    'scrub scrub expand';
+  align-items: center;
+  gap: var(--sp-1) var(--sp-2);
+}
+.tl-dock--compact.is-collapsed {
+  grid-template-rows: var(--touch);
+  grid-template-areas: 'play scrub expand';
+}
+.tl-dock--compact.is-expanded {
+  border-radius: 0;
+}
+/* While the sheet is up, the dock stays live above the scrim: play, the
+   scrubber and ⌄ keep working. */
+.tl-dock.is-expanded {
+  z-index: calc(var(--z-scrim) + 1);
+}
+
+/* ── Short (landscape phones): one 48px row ── */
+.tl-dock--short {
+  left: max(var(--gutter), env(safe-area-inset-left));
+  right: calc(var(--inset-right) + var(--gutter));
+  bottom: max(var(--sp-2), env(safe-area-inset-bottom));
+  height: 48px;
+  padding: 2px;
+  display: grid;
+  grid-template-columns: var(--touch) auto minmax(0, 1fr) var(--touch);
+  grid-template-areas: 'play eras scrub expand';
+  align-items: center;
+  column-gap: var(--sp-2);
+  transition: right var(--dur-slow) var(--ease-out);
+}
+.tl-dock--short.is-collapsed {
+  grid-template-areas: 'play scrub scrub expand';
+}
+.tl-dock--short .tl-chips {
+  max-width: 44cqw;
+}
+.tl-dock--short.is-expanded {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* ── Play: the one round control, ringed in brass ── */
+.tl-dock .tl-play {
+  grid-area: play;
+  border-radius: var(--r-round);
+  border: 1.5px solid var(--brass-500);
+  color: var(--brass-300);
+}
+@media (hover: hover) {
+  .tl-dock .tl-play:hover {
+    border-color: var(--brass-300);
+    background: var(--basalt-800);
+    color: var(--brass-300);
+  }
+}
+.tl-dock .tl-play[aria-pressed='true'] {
+  background: var(--brass-400);
+  border-color: var(--brass-400);
+  color: var(--basalt-950);
+}
+@media (hover: hover) {
+  .tl-dock .tl-play[aria-pressed='true']:hover {
+    background: var(--brass-300);
+  }
+}
+.tl-dock .tl-play[aria-disabled='true'] {
+  border-color: var(--line-dark-strong);
+  color: var(--bone-500);
+  background: none;
+}
+.tl-dock .tl-play .icon {
+  /* the play triangle's optical centre sits left of its box */
+  transform: translateX(1px);
+}
+.tl-dock .tl-play[aria-pressed='true'] .icon {
+  transform: none;
+}
+
+.tl-expand {
+  grid-area: expand;
+}
+.tl-dock .tl-expand {
+  width: var(--touch);
+  height: var(--touch);
+}
+.tl-dock--compact .tl-play,
+.tl-dock--short .tl-play {
+  width: var(--touch);
+  height: var(--touch);
+}
+
+/* ── Dwell progress while playing: a brass fuse along the top edge ── */
+.tl-dwell {
+  position: absolute;
+  top: 0;
+  left: var(--sp-4);
+  right: var(--sp-4);
+  height: 2px;
+  border-radius: 1px;
+  background: var(--brass-400);
+  transform-origin: left center;
+  transform: scaleX(0);
+  animation-name: tl-dwell;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+@keyframes tl-dwell {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ── Era tabs (wide) ── */
+.tl-eras {
+  grid-area: eras;
+  justify-self: start;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tl-eras::-webkit-scrollbar {
+  display: none;
+}
+.tl-eras .tl-era {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Status ── */
+.tl-status {
+  grid-area: status;
+  justify-self: end;
+  white-space: nowrap;
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--bone-400);
+}
+.tl-status__range {
+  color: var(--bone-100);
+  font-weight: 500;
+}
+@container (max-width: 620px) {
+  .tl-status {
+    display: none;
+  }
+}
+
+/* ── Era chips (compact): scroll sideways, fade only the hidden edge ── */
+.tl-chips {
+  grid-area: eras;
+  display: flex;
+  gap: var(--sp-2);
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.tl-chips::-webkit-scrollbar {
+  display: none;
+}
+.tl-chips .tl-chip {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+.tl-chips[data-fade='end'],
+.tl-eras[data-fade='end'] {
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - var(--sp-8)), transparent);
+  mask-image: linear-gradient(to right, black calc(100% - var(--sp-8)), transparent);
+}
+.tl-chips[data-fade='start'],
+.tl-eras[data-fade='start'] {
+  -webkit-mask-image: linear-gradient(to left, black calc(100% - var(--sp-8)), transparent);
+  mask-image: linear-gradient(to left, black calc(100% - var(--sp-8)), transparent);
+}
+.tl-chips[data-fade='both'],
+.tl-eras[data-fade='both'] {
+  -webkit-mask-image: linear-gradient(to right, transparent, black var(--sp-8), black calc(100% - var(--sp-8)), transparent);
+  mask-image: linear-gradient(to right, transparent, black var(--sp-8), black calc(100% - var(--sp-8)), transparent);
+}
+
+/* ════ The rail (wide) ════ */
+.tl-rail {
+  grid-area: rail;
+  position: relative;
+  height: var(--tl-rail-h);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tl-empty {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--bone-400);
+  font-size: var(--fs-small);
+}
+
+/* Era bands: quiet alternating fields with the label in the top row */
+.tl-bands {
+  position: absolute;
+  inset: 0 0 var(--tl-axis-h) 0;
+}
+.tl-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--line-dark);
+  transition: left var(--dur-base) var(--ease-out), width var(--dur-base) var(--ease-out);
+}
+.tl-band:first-child {
+  border-left-color: transparent;
+}
+.tl-band:nth-child(even) {
+  background: color-mix(in srgb, var(--bone-100) 3%, transparent);
+}
+/* The label shows "name years", drops the years when they don't fit, and
+   drops itself when the name doesn't: items that don't fit wrap onto a
+   second line that the fixed height clips away. The zero-width strut lets
+   even the name wrap off. */
+.tl-band__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 6px;
+  height: var(--tl-band-h);
+  overflow: hidden;
+  padding: 0 6px;
+  font-size: var(--fs-caption);
+  line-height: var(--tl-band-h);
+  color: var(--bone-400);
+  white-space: nowrap;
+}
+.tl-band__strut {
+  width: 0;
+  height: var(--tl-band-h);
+  margin-right: -6px;
+}
+.tl-band__name {
+  font-weight: 600;
+  color: var(--bone-300);
+}
+.tl-band__years {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.tl-band[data-active] {
+  background: color-mix(in srgb, var(--brass-400) 9%, transparent);
+  box-shadow: inset 0 2px 0 var(--brass-500);
+}
+.tl-band[data-active] .tl-band__name {
+  color: var(--brass-300);
+}
+
+/* The brushed span: a faint field behind the ticks that are in range */
+.tl-span {
+  position: absolute;
+  top: var(--tl-band-h);
+  height: var(--tl-tick-row);
+  background: color-mix(in srgb, var(--bone-100) 5%, transparent);
+  pointer-events: none;
+  transition: left var(--dur-fast) var(--ease-out), width var(--dur-fast) var(--ease-out);
+}
+
+/* ── Ticks: the type seal shrunk to a bar. Pigment fill, a lighter rim of
+   the same pigment so the darkest pigments still read on basalt, and the
+   solidity rule: solid / half / hollow. ── */
+.tl-tick {
+  --pig: var(--type-political);
+  --rim: color-mix(in oklab, var(--pig) 50%, var(--bone-100));
+  display: block;
+  width: 5px;
+  height: 17px;
+  border-radius: 1px;
+  background: var(--pig);
+  box-shadow: inset 0 0 0 1px var(--rim);
+  transition: height var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out),
+    filter var(--dur-fast) var(--ease-out);
+}
+.tl-tick--medium {
+  background: linear-gradient(to top, var(--pig) 55%, transparent 55%);
+}
+.tl-tick--low {
+  background: transparent;
+}
+.tl-tick--battle { --pig: var(--type-battle); }
+.tl-tick--sea_battle { --pig: var(--type-sea_battle); }
+.tl-tick--raid { --pig: var(--type-raid); }
+.tl-tick--burning { --pig: var(--type-burning); }
+.tl-tick--massacre { --pig: var(--type-massacre); }
+.tl-tick--killing { --pig: var(--type-killing); }
+.tl-tick--feud { --pig: var(--type-feud); }
+.tl-tick--execution { --pig: var(--type-execution); }
+.tl-tick--political { --pig: var(--type-political); }
+.tl-tick--occupation { --pig: var(--type-occupation); }
+.tl-tick--eruption { --pig: var(--type-eruption); }
+.tl-tick--plague { --pig: var(--type-plague); }
+.tl-tick--disaster { --pig: var(--type-disaster); }
+
+.tl-ticks {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--tl-band-h);
+  height: var(--tl-tick-row);
+}
+.tl-opt {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-xs);
+  cursor: pointer;
+  transition: left var(--dur-base) var(--ease-out), width var(--dur-base) var(--ease-out);
+}
+.tl-opt[aria-disabled='true'] {
+  cursor: default;
+}
+.tl-opt[aria-disabled='true'] .tl-tick {
+  opacity: 0.32;
+  filter: grayscale(1);
+}
+.tl-opt.is-hover .tl-tick,
+.tl-opt:focus-visible .tl-tick {
+  height: var(--tl-tick-row);
+  --rim: var(--bone-100);
+}
+.tl-opt.is-linked .tl-tick {
+  height: var(--tl-tick-row);
+  box-shadow: inset 0 0 0 1px var(--rim), 0 0 0 2px var(--brass-400);
+}
+.tl-opt[aria-selected='true'] .tl-tick {
+  height: var(--tl-tick-row);
+  box-shadow: inset 0 0 0 1px var(--brass-300), 0 0 0 2px var(--basalt-900);
+}
+
+/* ── The needle: brass, through the selected tick, year flagged above ── */
+.tl-needle {
+  position: absolute;
+  top: 0;
+  bottom: calc(var(--tl-axis-h) - 4px);
+  width: 2px;
+  margin-left: -1px;
+  background: var(--brass-400);
+  pointer-events: none;
+  transition: left var(--dur-base) var(--ease-out);
+}
+.tl-needle__flag {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: var(--tl-band-h);
+  padding: 0 5px;
+  border-radius: var(--r-xs);
+  background: var(--brass-400);
+  color: var(--basalt-950);
+  font-size: var(--fs-caption);
+  line-height: var(--tl-band-h);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+  /* The flag sits in the band-label row; the band label it would cut
+     through is hidden (Rail marks it data-covered). */
+  z-index: 1;
+}
+.tl-band[data-covered] .tl-band__label {
+  visibility: hidden;
+}
+
+/* ── Axis: baseline, century marks, end years; press anywhere on it to move
+   the nearer brush handle ── */
+.tl-axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--tl-axis-h);
+  cursor: ew-resize;
+  touch-action: none;
+}
+.tl-axis::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--line-dark-strong);
+}
+.tl-axis__span {
+  position: absolute;
+  top: -0.5px;
+  height: 2px;
+  background: var(--line-dark-input);
+  transition: left var(--dur-fast) var(--ease-out), width var(--dur-fast) var(--ease-out);
+}
+.tl-rail[data-ranged] .tl-axis__span {
+  background: var(--brass-400);
+}
+.tl-mark {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 5px;
+  background: var(--line-dark-input);
+}
+.tl-axis__label {
+  position: absolute;
+  top: 3px;
+  padding-left: 4px;
+  font-size: var(--fs-caption);
+  line-height: 14px;
+  color: var(--bone-400);
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.tl-axis__label--first {
+  /* clear of the start handle's bead */
+  padding-left: var(--sp-3);
+}
+.tl-axis__label--end {
+  padding-left: 0;
+  padding-right: var(--sp-3);
+  transform: translateX(-100%);
+}
+
+/* ── Brush handles: a bead on the axis with a hairline up through the
+   ticks. Only the bead takes the pointer, so ticks stay clickable right
+   up to the boundary. Brass when the range is narrowed. ── */
+.tl-handle {
+  position: absolute;
+  bottom: 0;
+  width: 20px;
+  height: calc(var(--tl-axis-h) + 6px);
+  margin-left: -10px;
+  z-index: 2;
+  cursor: ew-resize;
+  touch-action: none;
+  border-radius: var(--r-sm);
+  transition: left var(--dur-fast) var(--ease-out);
+}
+.tl-handle::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  width: 2px;
+  bottom: calc(var(--tl-axis-h) - 6px);
+  height: calc(var(--tl-tick-row) + 4px);
+  background: var(--bone-300);
+  opacity: 0.55;
+  pointer-events: none;
+}
+.tl-handle::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bone-300);
+  box-shadow: 0 0 0 2px var(--basalt-900);
+  transition: transform var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.tl-rail[data-ranged] .tl-handle::after {
+  background: var(--brass-300);
+}
+.tl-rail[data-ranged] .tl-handle::before {
+  background: var(--brass-400);
+  opacity: 0.9;
+}
+.tl-handle.is-dragging::after {
+  transform: scale(1.2);
+  background: var(--bone-100);
+}
+@media (hover: hover) {
+  .tl-handle:hover::after {
+    transform: scale(1.2);
+    background: var(--bone-100);
+  }
+}
+.tl-rail[data-ranged] .tl-handle.is-dragging::after {
+  background: var(--brass-300);
+}
+@media (hover: hover) {
+  .tl-rail[data-ranged] .tl-handle:hover::after {
+    background: var(--brass-300);
+  }
+}
+.tl-handle__flag {
+  position: absolute;
+  bottom: calc(100% + var(--tl-tick-row) - 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  height: var(--tl-band-h);
+  padding: 0 5px;
+  border-radius: var(--r-xs);
+  background: var(--basalt-700);
+  color: var(--bone-100);
+  font-size: var(--fs-caption);
+  line-height: var(--tl-band-h);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+.tl-handle:focus-visible .tl-handle__flag,
+.tl-handle.is-dragging .tl-handle__flag {
+  opacity: 1;
+}
+@media (hover: hover) {
+  .tl-handle:hover .tl-handle__flag {
+    opacity: 1;
+  }
+}
+
+/* ── Tooltip (hover / keyboard focus) ── */
+.tl-tip {
+  position: absolute;
+  bottom: calc(100% + var(--sp-1));
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  max-width: 300px;
+  padding: 6px var(--sp-3) 6px 6px;
+  transform: translateX(calc(-50% + var(--tl-tip-shift, 0px)));
+  pointer-events: none;
+  animation: tl-fade var(--dur-fast) var(--ease-out);
+}
+.tl-tip__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tl-tip__name {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 600;
+  color: var(--bone-100);
+}
+.tl-tip__meta {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--bone-400);
+}
+.tl-tip__out {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--ember-400);
+}
+@keyframes tl-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ════ Scrubber (compact / short) ════ */
+.tl-scrub {
+  grid-area: scrub;
+  position: relative;
+  height: var(--touch);
+  min-width: 0;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tl-scrub[aria-disabled='true'] {
+  cursor: default;
+}
+
+/* The strip: decorative axis shared by the scrubber and the sheet slider */
+.tl-strip {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.tl-strip__band {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  border-left: 1px solid var(--line-dark);
+}
+.tl-strip__band:first-child {
+  border-left-color: transparent;
+}
+.tl-strip__band:nth-child(even) {
+  background: color-mix(in srgb, var(--bone-100) 4%, transparent);
+}
+.tl-strip__band[data-active] {
+  background: color-mix(in srgb, var(--brass-400) 10%, transparent);
+}
+.tl-strip__slot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.tl-strip .tl-tick {
+  width: 3px;
+  height: 20px;
+}
+.tl-strip__slot.is-out .tl-tick {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+.tl-strip__slot.is-cursor .tl-tick {
+  height: 26px;
+  --rim: var(--bone-100);
+}
+.tl-strip__pin {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--brass-400);
+  transition: left var(--dur-base) var(--ease-out);
+}
+.tl-strip__pin::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brass-300);
+  box-shadow: 0 0 0 2px var(--basalt-900);
+}
+.tl-scrub.is-scrubbing .tl-strip__pin {
+  opacity: 0.4;
+}
+
+/* Magnifier bubble above the finger */
+.tl-bubble {
+  position: absolute;
+  bottom: calc(100% + var(--sp-3));
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: max-content;
+  max-width: min(280px, calc(100vw - var(--sp-4)));
+  padding: var(--sp-2) var(--sp-4) var(--sp-2) var(--sp-2);
+  transform: translateX(calc(-50% + var(--tl-tip-shift, 0px)));
+  pointer-events: none;
+  box-shadow: var(--e3);
+}
+.tl-bubble__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tl-bubble__year {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 22px;
+  color: var(--brass-300);
+  font-variant-numeric: lining-nums;
+}
+.tl-bubble__name {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  font-weight: 600;
+  color: var(--bone-100);
+}
+.tl-bubble__type {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--bone-400);
+}
+
+/* ════ Expanded sheet ════ */
+.tl-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-scrim);
+  background: var(--scrim);
+  animation: tl-fade var(--dur-base) var(--ease-out);
+}
+.tl-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: var(--dock-h, 0px);
+  z-index: calc(var(--z-scrim) + 1);
+  display: flex;
+  flex-direction: column;
+  max-height: min(70dvh, calc(100dvh - var(--dock-h, 0px) - var(--sp-8)));
+  border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+  background: var(--basalt-900);
+  color: var(--bone-100);
+  box-shadow: var(--e3);
+  animation: tl-sheet-in var(--dur-slow) var(--ease-out);
+}
+@keyframes tl-sheet-in {
+  from {
+    transform: translateY(var(--sp-6));
+    opacity: 0;
+  }
+}
+/* Landscape phones: the sheet keeps the dock's column. */
+.tl-dock--short ~ .tl-sheet {
+  left: max(var(--gutter), env(safe-area-inset-left));
+  right: calc(var(--inset-right) + var(--gutter));
+  border-radius: var(--r-md) var(--r-md) 0 0;
+}
+.tl-sheet__head {
+  flex-shrink: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-4) var(--sp-2);
+}
+.tl-sheet__title {
+  color: var(--bone-300);
+}
+.tl-sheet__count {
+  font-size: var(--fs-small);
+  color: var(--bone-400);
+  white-space: nowrap;
+}
+.tl-sheet .tl-chips {
+  flex-shrink: 0;
+  padding: 0 var(--sp-4) var(--sp-2);
+}
+
+/* Year range: header + two-thumb slider on the ordinal axis */
+.tl-range {
+  flex-shrink: 0;
+  padding: 0 var(--sp-4) var(--sp-3);
+  border-bottom: 1px solid var(--line-dark);
+}
+.tl-range__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: var(--sp-10);
+}
+.tl-range__label {
+  font-size: var(--fs-small);
+  color: var(--bone-400);
+}
+.tl-range__value {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-subtitle);
+  line-height: var(--lh-subtitle);
+  color: var(--bone-100);
+}
+.tl-range[data-ranged] .tl-range__value {
+  color: var(--brass-300);
+}
+.tl-range__track {
+  position: relative;
+  height: var(--touch);
+  margin: 0 calc(var(--touch) / 2 - var(--sp-1));
+  touch-action: none;
+  cursor: ew-resize;
+}
+.tl-range__span {
+  position: absolute;
+  bottom: 4px;
+  height: 2px;
+  background: var(--bone-400);
+  pointer-events: none;
+}
+.tl-range[data-ranged] .tl-range__span {
+  background: var(--brass-400);
+}
+.tl-thumb {
+  position: absolute;
+  top: 0;
+  width: var(--touch);
+  height: var(--touch);
+  margin-left: calc(var(--touch) / -2);
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  z-index: 1;
+}
+.tl-thumb::before {
+  /* the boundary hairline the thumb sits on */
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: calc(50% - 1px);
+  width: 2px;
+  background: var(--bone-300);
+  opacity: 0.6;
+}
+.tl-thumb::after {
+  content: '';
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bone-100);
+  box-shadow: 0 0 0 2px var(--basalt-900), var(--e1);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.tl-range[data-ranged] .tl-thumb::after {
+  background: var(--brass-300);
+}
+.tl-thumb.is-dragging::after {
+  transform: scale(1.15);
+}
+
+/* Event list */
+.tl-sheet__list {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: var(--sp-2);
+}
+/* Short viewports (small phones, landscape): one scroller for the whole
+   sheet, so the range and chips scroll away and the list gets the height. */
+@media (max-height: 640px) {
+  .tl-sheet {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .tl-sheet__list {
+    flex: none;
+    overflow: visible;
+  }
+}
+.tl-empty--list {
+  height: auto;
+  padding: var(--sp-6) var(--sp-4);
+}
+.tl-group__head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4) var(--sp-1);
+  background: var(--basalt-900);
+  color: var(--bone-300);
+  font-size: inherit;
+  font-weight: inherit;
+}
+.tl-group__years {
+  font-size: var(--fs-caption);
+  color: var(--bone-400);
+}
+.tl-row {
+  display: grid;
+  grid-template-columns: 28px 3.25em minmax(0, 1fr);
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--sp-1) var(--sp-4);
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .tl-row:hover {
+    background: var(--basalt-800);
+  }
+}
+.tl-row:focus-visible {
+  outline-offset: -2px;
+}
+.tl-row[aria-current='true'] {
+  background: color-mix(in srgb, var(--brass-400) 14%, transparent);
+  box-shadow: inset 3px 0 0 var(--brass-400);
+}
+.tl-row__year {
+  font-weight: 600;
+  color: var(--bone-300);
+}
+.tl-row[aria-current='true'] .tl-row__year {
+  color: var(--brass-300);
+}
+.tl-row__name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  color: var(--bone-100);
+}
+.tl-row[data-out] .tl-row__name,
+.tl-row[data-out] .tl-row__year {
+  color: var(--bone-500);
+}
+.tl-row[data-out] .seal {
+  filter: grayscale(1);
+  opacity: 0.45;
+}

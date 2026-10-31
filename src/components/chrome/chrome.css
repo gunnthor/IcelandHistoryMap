@@ -1,0 +1,1490 @@
+/* ════════════════════════════════════════════════════════════════
+   Chrome — the command surfaces around the map: top row / top bar,
+   search, filters, story routes, about, welcome, menu, toast.
+   Layout only on top of the ui primitives; tokens only.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Wordmark (the page h1) ── */
+.chrome-wordmark {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-heading);
+  line-height: var(--lh-heading);
+  letter-spacing: 0.01em;
+  color: var(--bone-100);
+  white-space: nowrap;
+}
+.chrome-wordmark em {
+  /* The italic cut only ships at 500. */
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ember-400);
+}
+.chrome-wordmark--compact {
+  font-size: var(--fs-subtitle);
+  line-height: var(--lh-subtitle);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ════════════ Wide: the fixed top row ════════════ */
+.chrome-wide {
+  position: fixed;
+  top: var(--gutter);
+  left: var(--gutter);
+  right: var(--gutter);
+  z-index: var(--z-chrome);
+  /* The gap between the two clusters is map, not chrome. */
+  pointer-events: none;
+}
+.chrome-wide__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+}
+.chrome-wide__left {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--sp-2);
+  min-width: 0;
+}
+.chrome-wide__left > *,
+.chrome-cluster {
+  pointer-events: auto;
+}
+
+.chrome-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: var(--chrome-h);
+  padding: 0 calc(var(--sp-1) + var(--sp-0_5)) 0 var(--sp-4);
+  min-width: 0;
+}
+.chrome-bar .chrome-wordmark {
+  padding-right: var(--sp-2);
+}
+.chrome-bar__rule {
+  flex-shrink: 0;
+  width: 1px;
+  height: var(--sp-6);
+  background: var(--line-dark);
+}
+
+.chrome-cluster {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-0_5);
+  flex-shrink: 0;
+  height: var(--chrome-h);
+  padding: 0 calc(var(--sp-1) + var(--sp-0_5));
+}
+.chrome-cluster__btn {
+  color: var(--bone-100);
+}
+.chrome-cluster .chrome-lang {
+  margin-left: var(--sp-1);
+}
+
+/* Tokens wrap within the command bar's width, never under the folio. */
+.chrome-wide__tokens {
+  width: 0;
+  min-width: 100%;
+}
+
+/* Responsive collapse: labels go before anything gets cramped. */
+@media (max-width: 1279px) {
+  .chrome-cluster__about .chrome-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .chrome-cluster__about {
+    width: var(--control);
+    padding: 0;
+  }
+}
+@media (max-width: 1023px) {
+  .chrome-filters-btn:not(.is-icon) .chrome-filters-btn__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+@media (max-width: 899px) {
+  .chrome-cluster__routes .chrome-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .chrome-cluster__routes {
+    width: var(--control);
+    padding: 0;
+  }
+}
+
+/* ── Search field ── */
+.chrome-search {
+  flex: 0 1 auto;
+  width: clamp(200px, 25vw, 360px);
+  min-width: 0;
+}
+.chrome-search__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  height: var(--control);
+  padding: 0 var(--sp-1) 0 var(--sp-3);
+  border-radius: var(--r-sm);
+  background: var(--basalt-950);
+  box-shadow: inset 0 0 0 1px var(--line-dark);
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .chrome-search__field:hover {
+    box-shadow: inset 0 0 0 1px var(--line-dark-strong);
+  }
+}
+/* The ring sits on the field so the icon and clear button sit inside it. */
+.chrome-search__field:focus-within {
+  box-shadow: inset 0 0 0 1px var(--line-dark-input);
+  outline: 2px solid var(--focus-dark);
+  outline-offset: 2px;
+}
+.chrome-search__icon {
+  flex-shrink: 0;
+  color: var(--bone-400);
+}
+.chrome-search__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: none;
+  font-size: var(--fs-ui);
+  color: var(--bone-100);
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* Focus is drawn by the field (:focus-within) instead. */
+.chrome-search__input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.chrome-search__input::placeholder {
+  color: var(--bone-500);
+  opacity: 1;
+}
+.chrome-search__input::-webkit-search-cancel-button,
+.chrome-search__input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.chrome-search__kbd {
+  flex-shrink: 0;
+  margin-right: var(--sp-1);
+  color: var(--bone-400);
+  opacity: 1;
+  border-color: var(--line-dark-strong);
+}
+.chrome-search__clear {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-sm);
+  color: var(--bone-400);
+}
+@media (hover: hover) {
+  .chrome-search__clear:hover {
+    color: var(--bone-100);
+    background: var(--basalt-800);
+  }
+}
+@media (pointer: coarse) {
+  .chrome-search__input {
+    font-size: var(--fs-body); /* 16px: no iOS zoom on focus */
+  }
+  .chrome-search__clear {
+    width: var(--touch);
+    height: var(--touch);
+  }
+}
+
+/* ── Filters button ── */
+.chrome-filters-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-shrink: 0;
+  height: var(--control);
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-sm);
+  color: var(--bone-300);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .chrome-filters-btn:hover {
+    color: var(--bone-100);
+    background: var(--basalt-800);
+  }
+}
+.chrome-filters-btn[aria-expanded='true'] {
+  color: var(--brass-300);
+  background: var(--basalt-800);
+}
+.chrome-filters-btn.is-icon {
+  position: relative;
+  justify-content: center;
+  padding: 0;
+  width: var(--control);
+}
+.chrome-filters-btn.is-icon .chrome-filters-btn__badge {
+  position: absolute;
+  top: var(--sp-0_5);
+  right: var(--sp-0_5);
+}
+
+/* ── Active-filter tokens ── */
+.chrome-tokens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--sp-1) + var(--sp-0_5));
+}
+.chrome-token {
+  box-shadow: var(--e1);
+  max-width: 100%;
+}
+.chrome-token .seal {
+  border-width: 1.5px;
+}
+.chrome-token__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (hover: hover) {
+  .chrome-token:hover .ui-chip__x {
+    color: var(--bone-100);
+    background: var(--basalt-700);
+  }
+}
+.chrome-tokens__clear {
+  background: var(--glass);
+  box-shadow: var(--e1);
+  color: var(--bone-100);
+}
+
+/* ════════════ Search results (popover + phone view) ════════════ */
+.chrome-results.ui-popover {
+  padding: calc(var(--sp-1) + var(--sp-0_5));
+}
+.sr-count {
+  padding: var(--sp-2) var(--sp-2) var(--sp-1);
+  color: var(--bone-400);
+}
+.sr-list {
+  display: flex;
+  flex-direction: column;
+}
+.sr-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: 52px;
+  padding: calc(var(--sp-1) + var(--sp-0_5)) var(--sp-3) calc(var(--sp-1) + var(--sp-0_5)) var(--sp-2);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  scroll-margin: var(--sp-2);
+}
+.sr-row[aria-selected='true'] {
+  background: var(--basalt-800);
+  box-shadow: inset 2px 0 0 var(--brass-400);
+}
+.sr-row__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.sr-row__name,
+.sr-row__meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sr-row__name {
+  font-weight: 500;
+  color: var(--bone-100);
+}
+.sr-row__meta {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--bone-400);
+}
+.sr-row__year {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-subtitle);
+  line-height: 1;
+  color: var(--bone-300);
+}
+.sr-mark {
+  background: none;
+  color: var(--bone-100);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--brass-500);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.sr-row--all {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  min-height: 44px;
+  margin-top: var(--sp-1);
+  color: var(--bone-100);
+  font-weight: 500;
+}
+.sr--popover .sr-row--all {
+  border-top: 1px solid var(--line-dark);
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+}
+.sr-row__icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  color: var(--brass-300);
+}
+.sr-row__go {
+  color: var(--bone-400);
+}
+.sr-row--all[aria-selected='true'] .sr-row__go {
+  color: var(--brass-300);
+}
+.sr-empty {
+  padding: var(--sp-3) var(--sp-3) var(--sp-3);
+}
+.sr-empty__title {
+  font-weight: 500;
+  color: var(--bone-100);
+}
+.sr-empty__hint {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--bone-400);
+  max-width: 46ch;
+}
+.sr-outside {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: var(--sp-1);
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-3);
+  border-top: 1px solid var(--line-dark);
+  font-size: var(--fs-small);
+  color: var(--bone-400);
+}
+
+/* ════════════ Filters panel ════════════ */
+.chrome-filters-pop.ui-popover {
+  padding: var(--sp-3) var(--sp-3) 0;
+}
+.flt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+.flt-section {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+}
+.flt-section__title {
+  padding: 0 var(--sp-2);
+  margin-bottom: var(--sp-2);
+  color: var(--bone-400);
+}
+.flt-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-0_5) var(--sp-2);
+}
+.flt-check {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 36px;
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .flt-check:hover {
+    background: var(--basalt-800);
+  }
+}
+.flt-check--all {
+  margin-bottom: var(--sp-1);
+}
+/* A real checkbox, painted by its sibling box. */
+.flt-check__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.flt-check__box {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1.5px var(--line-dark-input);
+  color: transparent;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.flt-check__input:checked + .flt-check__box {
+  background: var(--brass-400);
+  box-shadow: none;
+  color: var(--basalt-950);
+}
+.flt-check__input:focus-visible + .flt-check__box {
+  outline: 2px solid var(--focus-dark);
+  outline-offset: 2px;
+}
+.flt-check__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--bone-100);
+}
+.flt-check--all .flt-check__label {
+  font-weight: 500;
+}
+.flt-check__count {
+  font-size: var(--fs-caption);
+  color: var(--bone-400);
+}
+.flt-check[data-empty] .flt-check__label {
+  color: var(--bone-400);
+}
+.flt-check[data-empty] .seal {
+  filter: saturate(0.4);
+}
+
+.flt-confidence.ui-seg {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  width: 100%;
+}
+.flt-confidence .ui-seg__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1);
+  min-height: 52px;
+  padding: calc(var(--sp-1) + var(--sp-0_5)) var(--sp-1);
+  line-height: var(--lh-caption);
+  text-align: center;
+}
+.flt-confidence__label {
+  text-wrap: balance;
+}
+/* The desktop popover has room for every label on one line if "Any" takes
+   less of it; the phone sheet keeps balanced wrapping. */
+.chrome-filters-pop .flt-confidence.ui-seg {
+  grid-template-columns: minmax(0, 0.7fr) repeat(3, minmax(0, 1.1fr));
+}
+.chrome-filters-pop .flt-confidence__label {
+  white-space: nowrap;
+}
+
+.flt-years {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: 0 var(--sp-2);
+}
+.flt-years__value {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--sp-1) var(--sp-3);
+}
+.flt-years__range {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-heading);
+  line-height: var(--lh-heading);
+  color: var(--bone-100);
+}
+.flt-years__era {
+  font-size: var(--fs-small);
+  color: var(--brass-300);
+}
+.flt-years__hint {
+  margin-top: var(--sp-1);
+  padding: 0 var(--sp-2);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--bone-400);
+}
+
+.flt-foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin: 0 calc(-1 * var(--sp-3));
+  padding: var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-5);
+  border-top: 1px solid var(--line-dark);
+}
+.flt-foot__count {
+  flex: 1;
+  font-size: var(--fs-small);
+  color: var(--bone-300);
+}
+.flt-foot [aria-disabled='true'] {
+  color: var(--bone-500);
+  background: none;
+}
+
+/* Sheet variant: bigger rows, a sticky footer with "Show n events". */
+.flt--sheet .flt-check {
+  min-height: 48px;
+}
+.flt--sheet .flt-foot {
+  position: sticky;
+  bottom: 0;
+  margin: var(--sp-2) calc(-1 * var(--sp-4)) 0;
+  padding: var(--sp-3) var(--sp-4) calc(var(--sp-3) + env(safe-area-inset-bottom));
+  background: var(--basalt-900);
+}
+.flt-foot__done {
+  flex-basis: 100%;
+  min-height: var(--touch);
+}
+@media (max-width: 479px) {
+  .flt--sheet .flt-types {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ════════════ Dialog shells shared by sheets ════════════ */
+.chrome-sheet__head {
+  align-items: center;
+}
+.chrome-sheet__body {
+  padding-bottom: 0;
+}
+
+/* ════════════ Story routes ════════════ */
+@media (min-width: 700px) {
+  .ui-dialog.chrome-routes {
+    max-width: min(880px, calc(100vw - 32px));
+  }
+}
+.chrome-routes__head {
+  padding: var(--sp-8) var(--sp-8) var(--sp-4);
+}
+.chrome-routes__title {
+  color: var(--bone-100);
+}
+.chrome-routes__tagline {
+  margin-top: var(--sp-2);
+  max-width: 54ch;
+  font-size: var(--fs-body);
+  line-height: 24px;
+  color: var(--bone-300);
+}
+.chrome-routes__body {
+  padding: 0 var(--sp-8) var(--sp-6);
+}
+.chrome-routes__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+.chrome-routes__grid > .is-featured {
+  grid-column: 1 / -1;
+}
+.route-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr;
+  column-gap: var(--sp-4);
+  row-gap: var(--sp-1);
+  align-items: start;
+  width: 100%;
+  height: 100%;
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--basalt-850);
+  box-shadow: inset 0 0 0 1px var(--line-dark);
+  text-align: left;
+  transition: background-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .route-card:hover {
+    background: var(--basalt-800);
+    box-shadow: inset 0 0 0 1px var(--brass-500);
+  }
+}
+.route-card__sketch {
+  grid-row: 1 / -1;
+  padding: calc(var(--sp-1) + var(--sp-0_5));
+  border-radius: var(--r-sm);
+  background: var(--basalt-950);
+}
+.route-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+.route-card__eyebrow {
+  color: var(--ember-400);
+}
+.route-card__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-heading);
+  line-height: 25px;
+  color: var(--bone-100);
+  text-wrap: balance;
+}
+.is-featured .route-card__title {
+  font-size: var(--fs-title);
+  line-height: var(--lh-title);
+}
+/* Taglines are the pitch for each route — shown whole on desktop (the
+   cards grow); phones clamp them further down. */
+.route-card__tagline {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--bone-300);
+}
+.is-featured .route-card__tagline {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-ui);
+  max-width: 60ch;
+}
+.route-card__meta {
+  display: flex;
+  align-items: center;
+  align-self: end;
+  gap: var(--sp-2);
+  padding-top: var(--sp-1);
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  font-weight: 500;
+  color: var(--bone-400);
+}
+.route-card__go {
+  color: var(--brass-300);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.route-card:focus-visible .route-card__go {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: hover) {
+  .route-card:hover .route-card__go {
+    opacity: 1;
+    transform: none;
+  }
+}
+.route-sketch {
+  display: block;
+}
+.route-sketch__land {
+  fill: var(--basalt-700);
+  stroke: var(--line-dark-strong);
+  stroke-width: 1;
+}
+.route-sketch__casing {
+  fill: none;
+  stroke: var(--basalt-950);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.route-sketch__line {
+  fill: none;
+  stroke: var(--brass-400);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.route-sketch__stop {
+  fill: var(--bone-100);
+  stroke: var(--basalt-950);
+  stroke-width: 1;
+}
+.route-sketch__start {
+  fill: var(--ember-400);
+  stroke: var(--basalt-950);
+  stroke-width: 1.25;
+}
+@media (hover: hover) {
+  .route-card:hover .route-sketch__line {
+    stroke: var(--brass-300);
+  }
+}
+.chrome-routes__foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--sp-1) var(--sp-2);
+  margin-top: var(--sp-5);
+  font-size: var(--fs-small);
+  color: var(--bone-400);
+}
+@media (max-width: 699px) {
+  .chrome-routes__head {
+    padding: calc(var(--sp-5) + env(safe-area-inset-top)) var(--sp-4) var(--sp-3);
+  }
+  .chrome-routes__body {
+    padding: 0 var(--sp-3) calc(var(--sp-6) + env(safe-area-inset-bottom));
+  }
+  .chrome-routes__tagline {
+    font-size: var(--fs-ui);
+    line-height: var(--lh-ui);
+  }
+  .chrome-routes__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-2);
+  }
+  .chrome-routes__title {
+    font-size: var(--fs-title);
+    line-height: var(--lh-title);
+  }
+  /* Phones: the sketch becomes a thumbnail beside the title; tagline and
+     meta run the full card width beneath. */
+  .route-card {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto;
+    column-gap: var(--sp-3);
+  }
+  .route-card__sketch {
+    grid-column: 2;
+    grid-row: 1;
+    padding: var(--sp-1);
+  }
+  .route-card__head {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .route-card__tagline,
+  .route-card__meta {
+    grid-column: 1 / -1;
+  }
+  .route-card__title,
+  .is-featured .route-card__title {
+    font-size: var(--fs-subtitle);
+    line-height: 22px;
+  }
+  .route-card__tagline,
+  .is-featured .route-card__tagline {
+    font-size: var(--fs-small);
+    line-height: var(--lh-small);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Landscape phones: the dialogs get the full height and a quieter head. */
+@media (max-height: 500px) {
+  .ui-dialog.chrome-routes,
+  .ui-dialog.chrome-about {
+    max-height: calc(100dvh - var(--sp-4));
+  }
+  .chrome-routes__head,
+  .chrome-about__head {
+    padding: var(--sp-4) var(--sp-6) var(--sp-3);
+  }
+  .chrome-routes__title,
+  .chrome-about__title {
+    font-size: var(--fs-title);
+    line-height: var(--lh-title);
+  }
+  .chrome-routes__tagline {
+    font-size: var(--fs-ui);
+    line-height: var(--lh-ui);
+  }
+}
+
+/* ════════════ About (vellum) ════════════ */
+.chrome-about__head {
+  padding: var(--sp-8) var(--sp-8) var(--sp-4);
+}
+.chrome-about__eyebrow {
+  color: var(--oxblood);
+}
+.chrome-about__title {
+  margin-top: var(--sp-2);
+  color: var(--ink-900);
+}
+.chrome-about__title em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--oxblood);
+}
+.chrome-about__tagline {
+  margin-top: var(--sp-1);
+  color: var(--ink-700);
+}
+.chrome-about__body {
+  padding: 0 var(--sp-8) var(--sp-6);
+}
+.chrome-about__body > .t-body {
+  color: var(--ink-900);
+}
+.chrome-about__inline {
+  display: inline;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--oxblood);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+@media (hover: hover) {
+  .chrome-about__inline:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+.chrome-about__disclaimer {
+  margin-top: var(--sp-4);
+  padding-left: var(--sp-4);
+  border-left: 2px solid var(--brass-700);
+  font-size: var(--fs-ui);
+  line-height: 22px;
+  color: var(--ink-700);
+}
+.about-section {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--vellum-200);
+}
+.about-section__title {
+  margin-bottom: var(--sp-3);
+  color: var(--ink-500);
+}
+.about-keys__list {
+  display: grid;
+  gap: var(--sp-2);
+}
+.about-keys__row {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--sp-3);
+}
+.about-keys__row dt {
+  display: flex;
+  gap: var(--sp-1);
+  color: var(--ink-700);
+}
+/* <kbd> defaults to monospace; key caps here are set in the UI face. */
+.about-keys .ui-kbd,
+.chrome-search__kbd {
+  font-family: var(--font-ui);
+}
+.about-keys__row dd {
+  font-size: var(--fs-ui);
+  color: var(--ink-700);
+}
+/* Touch-only devices have no keyboard to take shortcuts from. */
+@media (hover: none) and (pointer: coarse) {
+  .about-keys {
+    display: none;
+  }
+}
+.about-flags__row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+.about-flag {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-0_5);
+}
+.about-flag__art {
+  width: 50px;
+  height: 36px;
+  margin-bottom: var(--sp-2);
+  border-radius: var(--r-xs);
+  box-shadow: 0 0 0 1px var(--vellum-300), 0 2px 6px -2px var(--focus-halo);
+}
+.about-flag__name {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 600;
+  color: var(--ink-900);
+}
+.about-flag__gloss,
+.about-flag__years {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-caption);
+  color: var(--ink-500);
+}
+.about-credit__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-heading);
+  line-height: var(--lh-heading);
+  color: var(--ink-900);
+}
+.about-credit__note {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-ui);
+  line-height: 22px;
+  color: var(--ink-700);
+}
+.about-credit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+.about-credit__actions .ui-btn {
+  white-space: normal;
+}
+.chrome-about__foot {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--vellum-200);
+}
+@media (max-width: 699px) {
+  .chrome-about__head {
+    padding: calc(var(--sp-5) + env(safe-area-inset-top)) var(--sp-4) var(--sp-3);
+  }
+  .chrome-about__body {
+    padding: 0 var(--sp-4) calc(var(--sp-6) + env(safe-area-inset-bottom));
+  }
+  .chrome-about__title {
+    font-size: var(--fs-title);
+    line-height: var(--lh-title);
+  }
+  .about-flags__row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ════════════ Welcome placard (vellum) ════════════ */
+.chrome-welcome {
+  position: fixed;
+  z-index: var(--z-chrome);
+  left: var(--gutter);
+  bottom: calc(var(--inset-bottom) + var(--gutter));
+  width: 360px;
+  max-height: calc(100dvh - var(--inset-top) - var(--inset-bottom) - var(--sp-8));
+  overflow: auto;
+  padding: var(--sp-5) var(--sp-5) var(--sp-3);
+  border-radius: var(--r-lg);
+  box-shadow: var(--e3);
+  animation: chrome-welcome-in var(--dur-slow) var(--ease-out) 300ms both;
+}
+@keyframes chrome-welcome-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+.chrome-welcome__close {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+}
+.chrome-welcome__eyebrow {
+  padding-right: var(--sp-10);
+  color: var(--oxblood);
+}
+.chrome-welcome__title {
+  margin-top: var(--sp-2);
+  padding-right: var(--sp-4);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-title);
+  line-height: var(--lh-title);
+  letter-spacing: -0.01em;
+  color: var(--ink-900);
+  text-wrap: balance;
+}
+.chrome-welcome__body {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-ui);
+  line-height: 21px;
+  color: var(--ink-700);
+}
+.chrome-welcome__start {
+  justify-content: flex-start;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: 60px;
+  margin-top: var(--sp-4);
+  padding: var(--sp-2) var(--sp-4);
+  text-align: left;
+  white-space: normal;
+}
+.chrome-welcome__start-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+.chrome-welcome__start-label {
+  font-size: var(--fs-body);
+  line-height: 22px;
+  font-weight: 600;
+}
+.chrome-welcome__start-sub {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 400;
+}
+.chrome-welcome__more {
+  display: grid;
+  gap: calc(var(--sp-1) + var(--sp-0_5));
+  margin-top: var(--sp-2);
+}
+.chrome-welcome__more .ui-btn {
+  justify-content: flex-start;
+}
+.chrome-welcome__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+.chrome-welcome__or {
+  font-size: var(--fs-small);
+  font-style: italic;
+  color: var(--ink-500);
+}
+.chrome-welcome__foot .ui-btn {
+  margin-right: calc(-1 * var(--sp-2));
+}
+
+/* Compact: full width above the dock, a little tighter. */
+.chrome-welcome.is-compact {
+  left: var(--sp-2);
+  right: var(--sp-2);
+  /* Above the dock only: on phones the card reports its own height as a
+     bottom inset (so the map frames Iceland above it), and positioning it
+     from --inset-bottom would chase its own tail. */
+  bottom: calc(var(--dock-h, 0px) + var(--sp-2));
+  /* Same reason for the height cap: --inset-bottom includes this card, so
+     a cap derived from it would flip the card between two heights forever. */
+  max-height: calc(100dvh - var(--inset-top) - var(--dock-h, 0px) - var(--sp-6));
+  width: auto;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--sp-4) var(--sp-4) var(--sp-2);
+}
+.chrome-welcome.is-compact .chrome-welcome__title {
+  font-size: var(--fs-heading);
+  line-height: var(--lh-heading);
+}
+.chrome-welcome.is-compact .chrome-welcome__start {
+  margin-top: var(--sp-3);
+}
+.chrome-welcome.is-compact .chrome-welcome__more {
+  display: flex;
+  flex-wrap: wrap;
+}
+.chrome-welcome.is-compact .chrome-welcome__more .ui-btn {
+  flex: 1 1 auto;
+}
+/* Landscape phones: keep the island visible — hug the left edge. */
+.chrome-welcome.is-short {
+  left: max(var(--sp-2), env(safe-area-inset-left));
+  right: auto;
+  width: min(380px, 52vw);
+  margin: 0;
+}
+@media (max-height: 700px) {
+  .chrome-welcome.is-compact .chrome-welcome__eyebrow,
+  .chrome-welcome.is-compact .chrome-welcome__or {
+    display: none;
+  }
+  .chrome-welcome.is-compact .chrome-welcome__title {
+    margin-top: 0;
+    padding-right: var(--sp-10);
+  }
+  .chrome-welcome.is-compact .chrome-welcome__foot {
+    justify-content: flex-end;
+  }
+}
+@media (max-height: 600px) {
+  /* Small phones: title and the three ways in — the ✕ still dismisses. */
+  .chrome-welcome.is-compact .chrome-welcome__body,
+  .chrome-welcome.is-compact .chrome-welcome__foot {
+    display: none;
+  }
+  .chrome-welcome.is-compact {
+    padding-bottom: var(--sp-4);
+  }
+}
+
+/* ════════════ Missing-link toast ════════════ */
+.chrome-toast {
+  position: fixed;
+  z-index: var(--z-toast);
+  top: calc(var(--inset-top) + var(--sp-3));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--gutter));
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-4);
+  animation: chrome-toast-in var(--dur-base) var(--ease-out);
+}
+@keyframes chrome-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -6px);
+  }
+}
+.chrome-toast__icon {
+  flex-shrink: 0;
+  color: var(--brass-300);
+}
+.chrome-toast__text {
+  font-size: var(--fs-ui);
+  color: var(--bone-100);
+}
+
+/* ════════════ Compact: the phone top bar ════════════ */
+.chrome-compact {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-chrome);
+  pointer-events: none;
+}
+.chrome-compact > * {
+  pointer-events: auto;
+}
+.chrome-compact__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  height: calc(52px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) max(var(--sp-1), env(safe-area-inset-right)) 0
+    max(var(--sp-4), env(safe-area-inset-left));
+  border-radius: 0;
+}
+.chrome-compact__actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.chrome-iconbtn.ui-icon-btn,
+.chrome-iconbtn.chrome-filters-btn {
+  width: var(--touch);
+  height: var(--touch);
+  color: var(--bone-100);
+}
+.chrome-compact__tokens {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: var(--sp-2) var(--sp-3);
+  scrollbar-width: none;
+  /* A soft edge says "this row scrolls". */
+  -webkit-mask-image: linear-gradient(to right, transparent, black var(--sp-3), black calc(100% - var(--sp-6)), transparent);
+  mask-image: linear-gradient(to right, transparent, black var(--sp-3), black calc(100% - var(--sp-6)), transparent);
+}
+.chrome-compact__tokens::-webkit-scrollbar {
+  display: none;
+}
+.chrome-compact__tokens > * {
+  flex-shrink: 0;
+}
+.chrome-compact__filters.ui-chip {
+  height: auto;
+  min-height: 30px;
+  padding: 0 var(--sp-3);
+  background: var(--glass);
+  border-color: var(--line-dark-strong);
+  box-shadow: var(--e1);
+  color: var(--bone-100);
+}
+.chrome-compact__filters.ui-chip[aria-expanded='true'] {
+  color: var(--brass-300);
+}
+@media (pointer: coarse) {
+  .chrome-compact__filters.ui-chip {
+    min-height: var(--touch);
+  }
+}
+
+/* Landscape phones: one floating 44px bar, top left. */
+.chrome-compact.is-floating {
+  top: max(var(--sp-2), env(safe-area-inset-top));
+  left: max(var(--sp-2), env(safe-area-inset-left));
+  right: auto;
+  max-width: calc(100vw - 2 * var(--sp-2));
+}
+.chrome-compact.is-floating .chrome-compact__bar {
+  height: var(--touch);
+  padding: 0 0 0 var(--sp-3);
+  border-radius: var(--r-md);
+}
+.chrome-compact.is-floating .chrome-compact__tokens {
+  max-width: min(560px, calc(100vw - 2 * var(--sp-2)));
+  padding: calc(var(--sp-1) + var(--sp-0_5)) 0 0;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* ── Phone search view: the whole screen ── */
+.ui-dialog.chrome-searchview {
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0;
+  border-radius: 0;
+}
+.chrome-searchview__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  flex-shrink: 0;
+  padding: calc(var(--sp-2) + env(safe-area-inset-top)) max(var(--sp-1), env(safe-area-inset-right)) var(--sp-2)
+    max(var(--sp-1), env(safe-area-inset-left));
+  border-bottom: 1px solid var(--line-dark);
+}
+.chrome-searchview__field {
+  flex: 1;
+  height: var(--touch);
+}
+.chrome-searchview__field .chrome-search__input {
+  font-size: var(--fs-body);
+}
+.chrome-searchview__body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: var(--sp-2) max(var(--sp-2), env(safe-area-inset-right)) calc(var(--sp-6) + env(safe-area-inset-bottom))
+    max(var(--sp-2), env(safe-area-inset-left));
+}
+.sr--view .sr-row {
+  min-height: 64px;
+  padding: var(--sp-2) var(--sp-3);
+}
+.sr--view .sr-row--all {
+  min-height: 56px;
+  margin: 0 0 var(--sp-1);
+  background: var(--basalt-850);
+  box-shadow: inset 0 0 0 1px var(--line-dark);
+}
+.sr--view .sr-row--all[aria-selected='true'] {
+  background: var(--basalt-800);
+  box-shadow: inset 2px 0 0 var(--brass-400), inset 0 0 0 1px var(--line-dark);
+}
+.sr--view .sr-row__name {
+  font-size: var(--fs-body);
+  line-height: 22px;
+}
+.chrome-searchview__try {
+  padding: var(--sp-3) var(--sp-2);
+}
+.chrome-searchview__try > .t-eyebrow {
+  color: var(--bone-400);
+}
+.chrome-searchview__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+.chrome-searchview__routes {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  margin-top: var(--sp-8);
+  padding: var(--sp-4);
+  border-radius: var(--r-md);
+  background: var(--basalt-850);
+  box-shadow: inset 0 0 0 1px var(--line-dark);
+  text-align: left;
+  color: var(--bone-100);
+}
+.chrome-searchview__routes > svg:first-child {
+  color: var(--brass-300);
+}
+.chrome-searchview__routes > span {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--sp-0_5);
+}
+.chrome-searchview__routes-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-subtitle);
+  line-height: var(--lh-subtitle);
+}
+.chrome-searchview__routes-sub {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  color: var(--bone-400);
+}
+
+/* ── Menu: a bottom sheet ── */
+.ui-dialog.chrome-menu {
+  /* top: auto lets the sheet shrink to its content, anchored at the bottom. */
+  top: auto;
+  bottom: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: min(560px, 100vw);
+  height: auto;
+  max-height: calc(100dvh - var(--sp-6) - env(safe-area-inset-top));
+  border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+}
+.ui-dialog.chrome-menu[open] {
+  animation-name: chrome-sheet-in;
+}
+@keyframes chrome-sheet-in {
+  from {
+    transform: translateY(32px);
+    opacity: 0;
+  }
+}
+.ui-dialog.chrome-menu .chrome-sheet__head {
+  padding: var(--sp-4) var(--sp-4) var(--sp-2) var(--sp-5);
+}
+.chrome-menu__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: 0 var(--sp-3) calc(var(--sp-4) + env(safe-area-inset-bottom));
+}
+.chrome-menu__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.chrome-menu__label {
+  padding: 0 var(--sp-2);
+  color: var(--bone-400);
+}
+.chrome-menu__seg.ui-seg {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  width: 100%;
+}
+.chrome-menu__seg .ui-seg__btn {
+  min-height: var(--touch);
+  font-size: var(--fs-ui);
+}
+.chrome-menu__styles.ui-seg {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.chrome-menu__row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  min-height: 52px;
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--r-sm);
+  color: var(--bone-100);
+  text-align: left;
+  text-decoration: none;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .chrome-menu__row:hover {
+    background: var(--basalt-800);
+  }
+}
+.chrome-menu__row > svg:first-child {
+  flex-shrink: 0;
+  color: var(--bone-300);
+}
+.chrome-menu__row-label {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  font-weight: 500;
+}
+.chrome-menu__row-hint {
+  font-size: var(--fs-small);
+  line-height: var(--lh-small);
+  font-weight: 400;
+  color: var(--bone-400);
+}
+.chrome-menu__chev {
+  flex-shrink: 0;
+  color: var(--bone-400);
+}
+.chrome-menu__switch {
+  background: var(--basalt-850);
+  box-shadow: inset 0 0 0 1px var(--line-dark);
+}
+.chrome-menu__links {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--line-dark);
+}
+
+/* Phones: the token row scrolls sideways, so "Clear all" goes up front,
+   right after the Filters chip, instead of under the fade at the far end. */
+.chrome-compact__tokens > .chrome-compact__filters {
+  order: -2;
+}
+.chrome-compact__tokens > .chrome-tokens__clear {
+  order: -1;
+}

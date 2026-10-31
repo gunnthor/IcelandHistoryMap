@@ -14,7 +14,8 @@ export const CLAN_CONFIG: Record<ClanId, ClanConfig> = {
   sturlungar: {
     label: 'Sturlungar',
     crest: 'S',
-    color: '#2c3e7a',
+    // Lifted from #2c3e7a, which vanished over dark sea on Satellite.
+    color: '#3e5ba9',
     blurb:
       "The dominant kin-group of the age — Snorri Sturluson's family — sprawling from the Dalir to Borgarfjörður and Eyjafjörður.",
   },
