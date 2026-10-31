@@ -19,6 +19,14 @@ export function yearRange(e: ConflictEvent): [number, number] | null {
   return from < to && from <= e.year && e.year <= to ? [from, to] : null;
 }
 
+/** The end of a span the way it's set beside a big start year: the last two
+ *  digits when the century matches ("1958–76"), else in full ("999–1000"). */
+export function rangeEnd([from, to]: [number, number]): string {
+  const a = String(from);
+  const b = String(to);
+  return a.length === 4 && b.length === 4 && a.slice(0, 2) === b.slice(0, 2) ? b.slice(2) : b;
+}
+
 /** "1958–1976" for spans, else the year. Never adds "c." on its own. */
 export function shortDate(e: ConflictEvent): string {
   const r = yearRange(e);

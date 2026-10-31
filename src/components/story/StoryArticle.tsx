@@ -6,11 +6,13 @@ import { useI18n } from '../../i18n';
 import { Button, Pips } from '../ui';
 import { FLAG_ICONS, Icon, TypeSeal } from '../icons/Icon';
 import { SheetContext, useStory } from './context';
+import { Locator } from './Locator';
 import {
   correctionUrl,
   eventUrl,
   headlineCaveat,
   hostname,
+  rangeEnd,
   seeAlso,
   shortDate,
   splitFlags,
@@ -95,22 +97,25 @@ function Masthead({ e }: { e: ConflictEvent }) {
         {/* The dateline carries the date in words; the big year is the anchor. */}
         <p className="masthead__year" aria-hidden="true">
           <span className="t-year">{range ? range[0] : e.year}</span>
-          {range && <span className="masthead__year-to t-num">–{range[1]}</span>}
+          {range && <span className="masthead__year-to">–{rangeEnd(range)}</span>}
         </p>
       </div>
-      <p className="masthead__dateline">
-        <span className="masthead__date">{e.dateText ?? e.year}</span>
-        <span className="masthead__dot" aria-hidden="true">
-          {' · '}
-        </span>
-        <span>{e.locationName}</span>
-        {flags.includes('location_uncertain') && (
-          <span className="masthead__approx">
-            <Icon name="pin" size={14} />
-            {t.story.locationApprox}
+      <div className="masthead__where">
+        <Locator event={e} />
+        <p className="masthead__dateline">
+          <span className="masthead__date">{e.dateText ?? e.year}</span>
+          <span className="masthead__dot" aria-hidden="true">
+            {' · '}
           </span>
-        )}
-      </p>
+          <span>{e.locationName}</span>
+          {flags.includes('location_uncertain') && (
+            <span className="masthead__approx">
+              <Icon name="pin" size={14} />
+              {t.story.locationApprox}
+            </span>
+          )}
+        </p>
+      </div>
       <button
         type="button"
         className="masthead__certainty"

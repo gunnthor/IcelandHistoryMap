@@ -152,13 +152,17 @@ export function Ribbon({ compact = false }: { compact?: boolean }) {
         <span className="story-ribbon__count t-num" aria-hidden="true">
           {pos}/{n}
         </span>
-        {compact ? (
-          <IconButton icon="x" label={t.tours.exit} className="story-ribbon__exit" onClick={x.exitRoute} />
-        ) : (
-          <Button variant="ghost" size="sm" icon="x" className="story-ribbon__exit" onClick={x.exitRoute}>
-            {t.tours.exit}
-          </Button>
-        )}
+        {/* Always labelled: an icon-only ✕ here sat a thumb's width from the
+            story's own ✕ and did something quite different. */}
+        <Button
+          variant="ghost"
+          size="sm"
+          icon={compact ? undefined : 'x'}
+          className="story-ribbon__exit"
+          onClick={x.exitRoute}
+        >
+          {t.tours.exit}
+        </Button>
         <span className="story-ribbon__progress" style={{ ['--p' as string]: pos / n }} aria-hidden="true" />
       </div>
     );

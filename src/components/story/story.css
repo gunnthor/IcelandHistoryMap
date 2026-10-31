@@ -187,10 +187,12 @@
   flex: 1;
   min-width: 0;
 }
+/* Label over title: route titles are long ("Start Here: 7 events that
+   explain Iceland") and deserve two lines rather than an ellipsis. */
 .story-ribbon__line {
   display: flex;
-  align-items: baseline;
-  gap: var(--sp-2);
+  flex-direction: column;
+  align-items: flex-start;
   min-width: 0;
 }
 .story-ribbon__kind {
@@ -199,9 +201,12 @@
 }
 .story-ribbon__title {
   min-width: 0;
+  max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--fs-subtitle);
@@ -288,8 +293,10 @@
   text-underline-offset: 2px;
   border-radius: var(--r-xs);
 }
-.story-textlink:hover {
-  text-decoration-thickness: 2px;
+@media (hover: hover) {
+  .story-textlink:hover {
+    text-decoration-thickness: 2px;
+  }
 }
 
 /* ── Masthead ── */
@@ -318,23 +325,49 @@
   text-align: right;
   color: var(--pigment);
 }
-.masthead__year .t-year {
-  display: block;
+/* A span sets its end small on the same baseline — "1958–76" — so it reads
+   as one date, not a year with a stray line under it. */
+.masthead__year {
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
 }
 .masthead__year-to {
-  display: block;
-  margin-top: var(--sp-1);
+  margin-left: 1px;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: var(--fs-subtitle);
-  line-height: var(--lh-subtitle);
+  font-size: var(--fs-heading);
+  line-height: 1;
+  font-variant-numeric: lining-nums;
 }
 .masthead__alt {
   margin-top: var(--sp-1);
   color: var(--ink-700);
 }
-.masthead__dateline {
+/* Where: the island thumbnail beside the dateline. */
+.masthead__where {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
   margin-top: var(--sp-3);
+}
+.locator {
+  flex-shrink: 0;
+}
+.locator__land {
+  fill: var(--vellum-100);
+  stroke: var(--ink-500);
+  stroke-linejoin: round;
+}
+.locator__halo {
+  fill: color-mix(in srgb, var(--pigment, var(--oxblood)) 22%, transparent);
+}
+.locator__dot {
+  fill: var(--pigment, var(--oxblood));
+  stroke: var(--vellum-50);
+}
+.masthead__dateline {
+  min-width: 0;
   font-size: var(--fs-ui);
   line-height: var(--lh-ui);
   color: var(--ink-700);
@@ -379,12 +412,16 @@
   color: var(--ink-500);
   transition: transform var(--dur-fast) var(--ease-out);
 }
-.masthead__certainty:hover {
-  color: var(--oxblood);
+@media (hover: hover) {
+  .masthead__certainty:hover {
+    color: var(--oxblood);
+  }
 }
-.masthead__certainty:hover .masthead__jump {
-  color: var(--oxblood);
-  transform: translateY(2px);
+@media (hover: hover) {
+  .masthead__certainty:hover .masthead__jump {
+    color: var(--oxblood);
+    transform: translateY(2px);
+  }
 }
 .masthead__dot {
   color: var(--ink-500);
@@ -568,9 +605,11 @@
   text-align: left;
   transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
-.story-jump:hover {
-  background: var(--vellum-100);
-  border-color: var(--vellum-300);
+@media (hover: hover) {
+  .story-jump:hover {
+    background: var(--vellum-100);
+    border-color: var(--vellum-300);
+  }
 }
 .story-jump__text {
   flex: 1;
@@ -593,9 +632,11 @@
   color: var(--ink-500);
   transition: transform var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
-.story-jump:hover .story-jump__arrow {
-  color: var(--oxblood);
-  transform: translateX(2px);
+@media (hover: hover) {
+  .story-jump:hover .story-jump__arrow {
+    color: var(--oxblood);
+    transform: translateX(2px);
+  }
 }
 
 /* The chain of events: a small vertical timeline */
@@ -766,8 +807,10 @@
   text-underline-offset: 3px;
   overflow-wrap: anywhere;
 }
-.sources__link:hover .sources__title {
-  text-decoration-color: currentColor;
+@media (hover: hover) {
+  .sources__link:hover .sources__title {
+    text-decoration-color: currentColor;
+  }
 }
 .sources__host {
   font-size: var(--fs-caption);
@@ -837,8 +880,10 @@
   text-align: left;
   transition: background-color var(--dur-fast) var(--ease-out);
 }
-.story-chrono__btn:hover {
-  background: var(--vellum-50);
+@media (hover: hover) {
+  .story-chrono__btn:hover {
+    background: var(--vellum-50);
+  }
 }
 .story-chrono__btn--next {
   grid-column: 2;
@@ -849,8 +894,10 @@
   flex-shrink: 0;
   color: var(--ink-500);
 }
-.story-chrono__btn:hover .icon {
-  color: var(--oxblood);
+@media (hover: hover) {
+  .story-chrono__btn:hover .icon {
+    color: var(--oxblood);
+  }
 }
 .story-chrono__text {
   display: flex;
@@ -922,8 +969,10 @@
   top: 8px;
   height: 8px;
 }
-.stepper__seg:hover::before {
-  background: var(--ink-500);
+@media (hover: hover) {
+  .stepper__seg:hover::before {
+    background: var(--ink-500);
+  }
 }
 .stepper__row {
   display: flex;
@@ -1025,9 +1074,11 @@
   text-align: left;
   transition: background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
-.endcard__route:hover {
-  background: var(--vellum-100);
-  border-color: var(--line-vellum-input);
+@media (hover: hover) {
+  .endcard__route:hover {
+    background: var(--vellum-100);
+    border-color: var(--line-vellum-input);
+  }
 }
 .endcard__route-title {
   font-family: var(--font-display);
@@ -1145,8 +1196,10 @@
   background: var(--vellum-300);
   transition: background-color var(--dur-fast) var(--ease-out);
 }
-.sheet-handle:hover .sheet-handle__pill {
-  background: var(--line-vellum-input);
+@media (hover: hover) {
+  .sheet-handle:hover .sheet-handle__pill {
+    background: var(--line-vellum-input);
+  }
 }
 .story--sheet .story-bar {
   padding: 0 var(--sp-1) var(--sp-1) var(--story-pad);
@@ -1163,7 +1216,7 @@
 /* Peek: a placard — title, the opening lines, "Read the full story". */
 .story--sheet[data-layout='peek'] :is(
     .masthead__alt,
-    .masthead__dateline,
+    .masthead__where,
     .masthead__certainty,
     .lede__eli12,
     .lede__caveat-desc,
@@ -1218,4 +1271,10 @@
   .story--sheet .story-bar__eyebrow {
     -webkit-line-clamp: 1;
   }
+}
+
+/* Landscape phones: the route ribbon keeps to its title — the tagline would
+   take a third of a 390px-tall screen. */
+.story--side .story-ribbon__sub {
+  display: none;
 }
