@@ -11,9 +11,6 @@ import { Thumb, useBrush } from './useBrush';
 // the ticks (a listbox — one tab stop), and the axis line carrying century
 // marks and the range brush. Everything is positioned in % of the rail.
 
-/** Rough width of a year label at the caption size, for collision checks. */
-const yearWidth = (y: number) => String(y).length * 7.4;
-
 export function Rail() {
   const x = useExplorer();
   const { t } = useI18n();
@@ -117,27 +114,42 @@ export function Rail() {
     focusSlot(next);
   };
 
-  // ── Axis labels: first and last year at the ends, then each century turn
-  // that has room for its label.
+  // ── Axis labels: the first and last year only. The axis gives every event
+  // the same room, so century numbers at uneven spacing read as a broken
+  // linear scale; the era bands above carry each period's years, and the
+  // century turns stay as unlabelled marks.
   const labels = useMemo(() => {
     if (!width || !n) return [];
-    const px = (b: number) => (b / n) * width;
     const first = list[0].year;
     const last = list[n - 1].year;
     // The end labels sit inside the handles' beads (12px in from each end).
     const out: { key: string; x: number; year: number; end?: boolean }[] = [{ key: 'first', x: 0, year: first }];
-    let free = 12 + yearWidth(first) + 10;
-    const stop = width - 12 - yearWidth(last) - 10;
-    for (const c of axis.centuries) {
-      const left = px(c.at) + 4;
-      if (left >= free && left + yearWidth(c.year) <= stop) {
-        out.push({ key: `c${c.at}`, x: left, year: c.year });
-        free = left + yearWidth(c.year) + 10;
-      }
-    }
     if (n > 1 && last !== first) out.push({ key: 'last', x: width, year: last, end: true });
     return out;
-  }, [width, n, list, axis.centuries]);
+  }, [width, n, list]);
+
+  // ── The needle's year flag sits in the band-label row: hide whichever
+  // band label it would cut through mid-word. ──
+  const bandsRef = useRef<HTMLDivElement>(null);
+  const flagRef = useRef<HTMLSpanElement>(null);
+  useLayoutEffect(() => {
+    const host = bandsRef.current;
+    if (!host) return;
+    const f = flagRef.current?.getBoundingClientRect();
+    host.querySelectorAll<HTMLElement>('.tl-band').forEach((band) => {
+      let covered = false;
+      const label = band.querySelector<HTMLElement>('.tl-band__label');
+      if (f && label) {
+        const top = label.getBoundingClientRect().top;
+        // Only the first line shows; items that wrapped are clipped away.
+        for (const part of label.querySelectorAll<HTMLElement>('.tl-band__name, .tl-band__years')) {
+          const r = part.getBoundingClientRect();
+          if (r.width && r.top < top + 2 && f.left < r.right + 4 && f.right > r.left - 4) covered = true;
+        }
+      }
+      band.toggleAttribute('data-covered', covered);
+    });
+  }, [axis.selected, width, axis.bands]);
 
   if (!n) {
     return (
@@ -181,7 +193,7 @@ export function Rail() {
 
   return (
     <div className="tl-rail" ref={railRef} data-ranged={ranged || undefined}>
-      <div className="tl-bands" aria-hidden="true">
+      <div className="tl-bands" aria-hidden="true" ref={bandsRef}>
         {axis.bands.map((b) => (
           <div
             key={b.id}
@@ -205,7 +217,9 @@ export function Rail() {
 
       {sel && (
         <div className="tl-needle" aria-hidden="true" style={{ left: at(axis.selected + 0.5, n) }}>
-          <span className="tl-needle__flag">{sel.year}</span>
+          <span className="tl-needle__flag" ref={flagRef}>
+            {sel.year}
+          </span>
         </div>
       )}
 

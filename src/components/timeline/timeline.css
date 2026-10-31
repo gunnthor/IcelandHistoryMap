@@ -408,10 +408,12 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums lining-nums;
   white-space: nowrap;
-  /* The flag sits in the band-label row; a halo of the dock's own surface
-     cuts the label cleanly instead of colliding with its letters. */
+  /* The flag sits in the band-label row; the band label it would cut
+     through is hidden (Rail marks it data-covered). */
   z-index: 1;
-  box-shadow: 0 0 0 4px var(--basalt-850);
+}
+.tl-band[data-covered] .tl-band__label {
+  visibility: hidden;
 }
 
 /* ── Axis: baseline, century marks, end years; press anywhere on it to move
