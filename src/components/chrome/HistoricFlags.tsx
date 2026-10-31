@@ -1,31 +1,16 @@
-// A small heraldic cartouche of Iceland's historic banners, shown as a
-// decorative strip in the About modal. Each flag has a tooltip naming it and
-// its era. (Formerly lived on the map itself, but earned no map real estate.)
+// Iceland's historic banners, set as a small captioned row in the About
+// dialog. (They once floated on the map, but earned no map real estate.)
+// The fills are the flags' own heraldic colours — artwork, not UI colour.
 import { useI18n } from '../../i18n';
 
-interface FlagDef {
-  id: string;
-  name: string;
-  years: string;
-  svg: JSX.Element;
-}
-
-// All drawn on a 25×18 field (the Icelandic flag ratio).
-const FLAGS: FlagDef[] = [
+const FLAGS: { id: string; svg: JSX.Element }[] = [
   {
     id: 'stockfish',
-    name: 'Þorskmerkið — the crowned stockfish (old arms of Iceland)',
-    years: 'to 1903',
     svg: (
       <>
         <rect width="25" height="18" fill="#9e2b25" />
         {/* split dried cod, silver, headless */}
-        <path
-          d="M7 9 q5-3 11 0 q-6 3-11 0 Z"
-          fill="#e9e2cf"
-          stroke="#cfc6ac"
-          strokeWidth="0.4"
-        />
+        <path d="M7 9 q5-3 11 0 q-6 3-11 0 Z" fill="#e9e2cf" stroke="#cfc6ac" strokeWidth="0.4" />
         <path d="M18 8.2 l2 0.8 -2 0.8 Z" fill="#e9e2cf" />
         {/* crown */}
         <path d="M9.5 6.2 l1.3 1 1.2-1.4 1.2 1.4 1.3-1 -0.5 2 -4 0 Z" fill="#d9b441" />
@@ -34,8 +19,6 @@ const FLAGS: FlagDef[] = [
   },
   {
     id: 'hvitblainn',
-    name: 'Hvítbláinn — the white-and-blue',
-    years: '1897',
     svg: (
       <>
         <rect width="25" height="18" fill="#1c5fa8" />
@@ -46,8 +29,6 @@ const FLAGS: FlagDef[] = [
   },
   {
     id: 'falcon',
-    name: 'Fálkafáninn — the white falcon',
-    years: '1903–1918',
     svg: (
       <>
         <rect width="25" height="18" fill="#15539a" />
@@ -62,8 +43,6 @@ const FLAGS: FlagDef[] = [
   },
   {
     id: 'modern',
-    name: 'The current flag of Iceland',
-    years: 'since 1915',
     svg: (
       <>
         <rect width="25" height="18" fill="#02529c" />
@@ -78,22 +57,31 @@ const FLAGS: FlagDef[] = [
 
 export function HistoricFlags() {
   const { t } = useI18n();
+  const strings = t.chrome.about;
   return (
-    <div className="about-flags" aria-label={t.chrome.about.flagsAria}>
-      {/* Deliberately Icelandic in both languages — heraldic flavor text. */}
-      <div className="about-flags-title">Fánar Íslands</div>
-      <div className="about-flags-row">
+    <section className="about-section about-flags" aria-labelledby="about-flags-title">
+      <h3 id="about-flags-title" className="t-eyebrow about-section__title">
+        {strings.flagsTitle}
+      </h3>
+      <ul className="about-flags__row">
         {FLAGS.map((f) => {
-          const l10n = t.chrome.about.flags[f.id] ?? { name: f.name, years: f.years };
+          const l = strings.flags[f.id];
+          if (!l) return null;
           return (
-            <span className="about-flag" key={f.id} title={`${l10n.name} · ${l10n.years}`}>
-              <svg viewBox="0 0 25 18" role="img" aria-label={`${l10n.name}, ${l10n.years}`}>
+            <li className="about-flag" key={f.id}>
+              <svg className="about-flag__art" viewBox="0 0 25 18" aria-hidden="true" focusable="false">
                 {f.svg}
               </svg>
-            </span>
+              {/* The flags' own names stay Icelandic in both languages. */}
+              <span className="about-flag__name" lang="is">
+                {l.name}
+              </span>
+              <span className="about-flag__gloss">{l.gloss}</span>
+              <span className="about-flag__years t-num">{l.years}</span>
+            </li>
           );
         })}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 }

@@ -11,6 +11,12 @@ export interface ToursStrings {
   pickerTitle: string;
   pickerTagline: string;
   stops: (n: number) => string;
+  /** Route card meta line: "7 stops · 1000–1975". */
+  meta: (n: number, from: number, to: number) => string;
+  /** Eyebrow on the featured first card in the route picker. */
+  recommended: string;
+  /** Picker footer: "{surpriseLead} [Surprise me]". */
+  surpriseLead: string;
   /** "Stop 2 of 7" */
   stopOf: (n: number, total: number) => string;
   start: string;
@@ -36,6 +42,9 @@ const en: ToursStrings = {
   pickerTitle: 'Story routes',
   pickerTagline: "Don't browse — be led. Pick a route and we'll walk you through it, stop by stop.",
   stops: (n) => `${n} ${enPick(n, 'stop', 'stops')}`,
+  meta: (n, from, to) => `${n} ${enPick(n, 'stop', 'stops')} · ${from === to ? from : `${from}–${to}`}`,
+  recommended: 'New here? Begin with this one',
+  surpriseLead: 'Rather be surprised?',
   stopOf: (n, total) => `Stop ${n} of ${total}`,
   start: 'Start the route',
   next: 'Next stop',
@@ -59,6 +68,9 @@ const is: ToursStrings = {
   pickerTagline:
     'Slepptu því að vafra — láttu leiða þig. Veldu leið og við göngum hana með þér, stopp fyrir stopp.',
   stops: (n) => `${n} stopp`,
+  meta: (n, from, to) => `${n} stopp · ${from === to ? from : `${from}–${to}`}`,
+  recommended: 'Fyrsta heimsókn? Byrjaðu á þessari',
+  surpriseLead: 'Viltu frekar láta koma þér á óvart?',
   stopOf: (n, total) => `Stopp ${n} af ${total}`,
   start: 'Hefja leiðina',
   next: 'Næsta stopp',
