@@ -357,6 +357,7 @@
   padding: 0 6px;
   border-radius: 3px;
   border: 1px solid currentColor;
+  font-family: inherit; /* <kbd> defaults to monospace */
   font-size: 12px;
   font-weight: 600;
   opacity: 0.85;

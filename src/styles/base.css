@@ -166,6 +166,9 @@ a,
   top: var(--sp-2);
   left: var(--sp-2);
   z-index: var(--z-toast);
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch);
   padding: var(--sp-2) var(--sp-3);
   border-radius: var(--r-sm);
   background: var(--brass-400);

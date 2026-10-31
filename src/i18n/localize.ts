@@ -1,6 +1,5 @@
 import { ConflictEvent, Source } from '../types';
 import { events as baseEvents } from '../data/events';
-import { eventTranslations } from '../data/events.is';
 
 export type Lang = 'en' | 'is';
 
@@ -47,15 +46,34 @@ export function localizeEvent(base: ConflictEvent, tr: EventTranslation | undefi
   };
 }
 
+// ── Lazy Icelandic overlay ──
+// The overlay is a quarter of the event data and most visitors never need it,
+// so it ships as its own chunk. Callers must `await loadIcelandic()` before
+// switching to 'is' — main.tsx does it before first render when Icelandic is
+// the starting language, and the provider does it on a switch.
+let translations: Record<string, EventTranslation> | null = null;
+let pending: Promise<void> | null = null;
+
+export function loadIcelandic(): Promise<void> {
+  if (translations) return Promise.resolve();
+  pending ??= import('../data/events.is').then((m) => {
+    translations = m.eventTranslations;
+  });
+  return pending;
+}
+
 // One localized array per language, built lazily and reused — components can
 // call this from anywhere and object identity stays stable within a language.
 const cache = new Map<Lang, ConflictEvent[]>();
 
 export function localizeEvents(lang: Lang): ConflictEvent[] {
-  if (lang === 'en') return baseEvents;
+  // Until the overlay arrives, Icelandic falls back to the English base —
+  // the same graceful degradation as a missing translation.
+  if (lang === 'en' || !translations) return baseEvents;
   let list = cache.get(lang);
   if (!list) {
-    list = baseEvents.map((e) => localizeEvent(e, eventTranslations[e.id]));
+    const tr = translations;
+    list = baseEvents.map((e) => localizeEvent(e, tr[e.id]));
     cache.set(lang, list);
   }
   return list;

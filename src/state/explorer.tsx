@@ -38,8 +38,19 @@ export type Route = { kind: 'tour'; id: string } | { kind: 'person'; key: string
 export type DialogId = 'about' | 'routes' | null;
 
 /** Where a selection came from — lets the map and story decide whether to
- *  fly, steal focus, or announce. */
-export type SelectSource = 'map' | 'timeline' | 'search' | 'story' | 'route' | 'play' | 'link' | 'keyboard';
+ *  fly, steal focus, or announce. 'scrub' is a slider step (the compact
+ *  timeline scrubber): the visitor's own choice, but focus must stay on the
+ *  slider so the next arrow key keeps stepping. */
+export type SelectSource =
+  | 'map'
+  | 'timeline'
+  | 'scrub'
+  | 'search'
+  | 'story'
+  | 'route'
+  | 'play'
+  | 'link'
+  | 'keyboard';
 
 export const ALL_YEARS: [number, number] = [MIN_YEAR, MAX_YEAR];
 export const INITIAL_FILTERS: FilterState = { types: [], confidence: 'all', yearRange: ALL_YEARS };
@@ -203,9 +214,16 @@ export const byYear = (a: ConflictEvent, b: ConflictEvent) =>
   a.year - b.year || (dataOrder.get(a.id) ?? 0) - (dataOrder.get(b.id) ?? 0);
 
 /** Which field a search hit came from — shown next to search results. */
-export type MatchField = 'name' | 'alias' | 'person' | 'side' | 'place' | 'period';
+export type MatchField = 'name' | 'alias' | 'person' | 'side' | 'place' | 'period' | 'type';
 
-export function matchEvent(e: ConflictEvent, normalizedQuery: string): MatchField | null {
+/** Which field of an event matches an already-normalized query, best first.
+ *  Pass the localized type names so "eruption" / "eldgos" finds every
+ *  eruption — checked last, so a name hit always outranks it. */
+export function matchEvent(
+  e: ConflictEvent,
+  normalizedQuery: string,
+  typeName?: (type: EventType) => string,
+): MatchField | null {
   const q = normalizedQuery;
   const has = (s: string) => normalizeForSearch(s).includes(q);
   if (has(e.name) || (e.icelandicName && has(e.icelandicName))) return 'name';
@@ -214,6 +232,7 @@ export function matchEvent(e: ConflictEvent, normalizedQuery: string): MatchFiel
   if (e.factions.some(has)) return 'side';
   if (has(e.locationName)) return 'place';
   if (has(e.period)) return 'period';
+  if (typeName && has(typeName(e.type))) return 'type';
   return null;
 }
 
@@ -249,6 +268,9 @@ export interface Explorer {
   /** Index of the selection within the route, or -1 when off-route. */
   routeIndex: number;
   playlist: ConflictEvent[];
+  /** matchEvent bound to the active language's type names — the one search
+   *  rule the map, counts and result lists all share. */
+  matchQuery: (e: ConflictEvent, normalizedQuery: string) => MatchField | null;
   earlier: ConflictEvent | null;
   later: ConflictEvent | null;
   // actions
@@ -301,17 +323,22 @@ export function ExplorerProvider({ children, announcer }: { children: ReactNode;
   const { filters, search } = state;
   const q = search.trim() ? normalizeForSearch(search.trim()) : '';
 
+  const matchQuery = useMemo(() => {
+    const typeName = (type: EventType) => t.types[type];
+    return (e: ConflictEvent, nq: string) => matchEvent(e, nq, typeName);
+  }, [t]);
+
   const timeline = useMemo(
     () =>
       events
         .filter((e) => {
           if (filters.types.length > 0 && !filters.types.includes(e.type)) return false;
           if (filters.confidence !== 'all' && e.confidence !== filters.confidence) return false;
-          if (q && !matchEvent(e, q)) return false;
+          if (q && !matchQuery(e, q)) return false;
           return true;
         })
         .sort(byYear),
-    [events, filters.types, filters.confidence, q],
+    [events, filters.types, filters.confidence, q, matchQuery],
   );
 
   const filtered = useMemo(
@@ -528,6 +555,14 @@ export function ExplorerProvider({ children, announcer }: { children: ReactNode;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtered.length]);
 
+  // ── The welcome card, once dismissed by any action, stays dismissed ──
+  // (the reducer closes it on select / route / play; this persists that).
+  const welcomeWasOpen = useRef(state.welcome);
+  useEffect(() => {
+    if (welcomeWasOpen.current && !state.welcome) storage.set(KEYS.welcomed, '1');
+    welcomeWasOpen.current = state.welcome;
+  }, [state.welcome]);
+
   // ── URL + tab title follow the selection ──
   // Always written (a legacy #event= hash is rewritten to the path form);
   // the initial state already came from the URL, so the first write is a no-op.
@@ -597,6 +632,7 @@ export function ExplorerProvider({ children, announcer }: { children: ReactNode;
       route,
       routeIndex,
       playlist,
+      matchQuery,
       earlier,
       later,
       announce: announcer,
@@ -616,6 +652,7 @@ export function ExplorerProvider({ children, announcer }: { children: ReactNode;
       route,
       routeIndex,
       playlist,
+      matchQuery,
       earlier,
       later,
       announcer,
