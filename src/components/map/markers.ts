@@ -254,8 +254,10 @@ export class EventLayer {
     el.tabIndex = -1;
     const en: Entry = { e, m, el, z: 0 };
     m.on('click', () => this.hooks.select(en.e.id));
-    m.on('mouseover', () => this.hooks.hover(en.e.id));
-    m.on('mouseout', () => this.hooks.hover(null));
+    // A real mouse only: a tap fires mouseover too, and with no mouseout to
+    // follow, the linked label and timeline halo would stick after a touch.
+    el.addEventListener('pointerenter', (ev) => ev.pointerType === 'mouse' && this.hooks.hover(en.e.id));
+    el.addEventListener('pointerleave', (ev) => ev.pointerType === 'mouse' && this.hooks.hover(null));
     this.label(en);
     return en;
   }
@@ -365,7 +367,12 @@ export class EventLayer {
       const p = map.project(en.e.coordinates, z);
       return { id: en.e.id, x: p.x, y: p.y, pinned: pinned.has(en.e.id) };
     });
-    const res = layoutMarkers(points, this.primaryOf);
+    // Seals shrink at overview zooms: at whole-island scale a full-size seal
+    // swallows its neighbours and most of Iceland turns into count badges.
+    // CSS reads --seal-scale; the layout merges at the drawn size.
+    const scale = z < 5.75 ? 0.6 : z < 6.5 ? 0.72 : z < 7.5 ? 0.86 : 1;
+    map.getContainer().style.setProperty('--seal-scale', String(scale));
+    const res = layoutMarkers(points, this.primaryOf, SEAL * scale);
 
     const shown = new Set([...res.singles, ...pinned]);
     for (const en of this.entries.values()) {
@@ -658,7 +665,12 @@ export class EventLayer {
     if (!key) return;
     if (key !== this.tabKey) this.setTab(key);
     // Browsers scroll the overflow:hidden map container to show a focused
-    // element; Leaflet snaps that back. Reveal it properly instead.
+    // element; Leaflet snaps that back. Reveal it properly instead — but only
+    // when the visitor moved focus here (Tab, arrows: relatedTarget is the
+    // element they came from). Focus handed back by a closing story arrives
+    // from a removed element (relatedTarget null) and must not hijack the
+    // camera's way back to the overview.
+    if (!ev.relatedTarget) return;
     const ll = this.latLngOf(key);
     if (ll && !comfortablyVisible(this.map, ll, 0.04)) this.hooks.reveal(ll);
   };

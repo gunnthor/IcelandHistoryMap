@@ -41,12 +41,18 @@ export const badgeSize = (n: number) => Math.min(44, Math.round(32 + 4 * Math.sq
 
 const d = (ax: number, ay: number, bx: number, by: number) => Math.hypot(ax - bx, ay - by);
 
-export function layoutMarkers(points: LayoutPoint[], primaryOf: (ids: string[]) => string): LayoutResult {
+/** `seal` is the drawn seal diameter at this zoom (seals shrink at overview
+ *  zooms, see markers.ts), so markers merge only when they truly overlap. */
+export function layoutMarkers(
+  points: LayoutPoint[],
+  primaryOf: (ids: string[]) => string,
+  seal = SEAL,
+): LayoutResult {
   const pinned = points.filter((p) => p.pinned);
   const free = points.filter((p) => !p.pinned);
   const offsets = new Map<string, { dx: number; dy: number }>();
   const satellites = new Map<string, string[]>();
-  const near = SEAL * MERGE;
+  const near = seal * MERGE;
 
   // ── 1. Fan out pinned markers that collide ──
   const parent = new Map(pinned.map((p) => [p.id, p.id]));
@@ -130,7 +136,9 @@ export function layoutMarkers(points: LayoutPoint[], primaryOf: (ids: string[]) 
   // A badge is bigger than a seal, so it can land on a neighbour: merge
   // until nothing overlaps (by rendered radius). Each pass merges one pair,
   // so this ends after at most n passes.
-  const radiusOf = (it: Item) => (it.ids.length > 1 ? badgeSize(it.ids.length) : SEAL) / 2;
+  // Badges shrink with the seals, but not below 78% (see .cl-disc in map.css).
+  const badgeScale = Math.max(0.78, seal / SEAL);
+  const radiusOf = (it: Item) => (it.ids.length > 1 ? badgeSize(it.ids.length) * badgeScale : seal) / 2;
   for (let pass = 0; pass < points.length; pass++) {
     let merged = false;
     outer: for (let i = 0; i < items.length; i++) {
@@ -155,7 +163,7 @@ export function layoutMarkers(points: LayoutPoint[], primaryOf: (ids: string[]) 
 
   // A badge that drifted onto a pinned seal joins that seal's satellites.
   items = items.filter((it) => {
-    const pin = nearestPinned(it.x, it.y, (radiusOf(it) + (SEAL * 1.25) / 2) * MERGE);
+    const pin = nearestPinned(it.x, it.y, (radiusOf(it) + (seal * 1.25) / 2) * MERGE);
     if (!pin) return true;
     addSatellites(pin, it.ids);
     return false;

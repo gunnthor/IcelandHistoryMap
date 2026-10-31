@@ -55,7 +55,7 @@ export function useGlaciers(map: L.Map | null, dodgeRef: MutableRefObject<Dodge 
       }).addTo(map);
       layers.push(m);
       const el = m.getElement();
-      if (el) labels.push({ el, minZoom: LABEL_MIN_ZOOM[g.name] ?? 7 });
+      if (el) labels.push({ el, minZoom: LABEL_MIN_ZOOM[g.name] ?? 6.5 });
     }
     dodgeRef.current = (occupied) => {
       const z = map.getZoom();

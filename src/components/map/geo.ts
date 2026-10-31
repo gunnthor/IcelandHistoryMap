@@ -11,12 +11,12 @@ import { getInsets } from '../../state/layout';
 export const ICELAND_LAND = L.latLngBounds([63.3, -24.6], [66.6, -13.4]);
 
 /** How far the view may wander: wide enough that an event near the coast can
- *  still be centred in the visible map while a panel covers one side. On a
- *  phone the story sheet covers half the screen, so at whole-island zoom the
- *  viewport is already taller than Iceland — the bounds need that much open
- *  sea to the south, or the pan that lifts a marker above the sheet is
- *  clamped to nothing. */
-export const MAX_BOUNDS = L.latLngBounds([55.5, -33], [71, -5]);
+ *  still be centred in the visible map while a panel covers one side. At
+ *  whole-island zoom on a phone the viewport is already taller than Iceland
+ *  (and on a landscape phone wider), and the story sheet covers half of it —
+ *  so the bounds need about a viewport of open sea on every side, or the pan
+ *  that lifts a marker clear of the sheet is clamped to nothing. */
+export const MAX_BOUNDS = L.latLngBounds([54, -42], [72.5, 4]);
 
 /** Bounds for the Ortelius engraving: a least-squares fit of 23 identifiable
  *  features on the chart (Hekla, Skálholt, Hólar, Papey…) against their real
@@ -67,7 +67,10 @@ export function comfortablyVisible(map: L.Map, latlng: L.LatLngExpression, frac 
   const mx = Math.min(72, w * frac);
   const my = Math.min(72, h * frac);
   const p = map.latLngToContainerPoint(latlng);
-  return p.x >= r.min!.x + mx && p.x <= r.max!.x - mx && p.y >= r.min!.y + my && p.y <= r.max!.y - my;
+  // The control column (Fit, zoom, Layers) sits on the right edge of the
+  // visible map: a marker under it isn't "visible".
+  const controls = 60;
+  return p.x >= r.min!.x + mx && p.x <= r.max!.x - Math.max(mx, controls) && p.y >= r.min!.y + my && p.y <= r.max!.y - my;
 }
 
 /** The zoom (snapped down, unclamped) at which `bounds` fits a rect. */

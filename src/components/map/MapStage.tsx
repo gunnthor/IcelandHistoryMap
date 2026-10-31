@@ -3,7 +3,7 @@ import L from 'leaflet';
 import { MapContainer } from 'react-leaflet';
 import { ClanId, PowerCenter } from '../../types';
 import { useExplorer } from '../../state/explorer';
-import { prefersReducedMotion, useInsets, useLayoutMode } from '../../state/layout';
+import { prefersReducedMotion, useInsets, useIsShort, useLayoutMode } from '../../state/layout';
 import { useI18n } from '../../i18n';
 import { CLAN_BATTLES } from '../../data/clanBattles';
 import { CLAN_CONFIG } from '../../utils/clanConfig';
@@ -30,6 +30,7 @@ export function MapStage() {
   const { t } = useI18n();
   const x = useExplorer();
   const mode = useLayoutMode();
+  const short = useIsShort();
   const insets = useInsets();
   const [map, setMap] = useState<L.Map | null>(null);
   const [tracing, setTracing] = useState<ClanId | null>(null);
@@ -230,7 +231,7 @@ export function MapStage() {
 
       <MapControls map={map} tracing={tracing} onTrace={trace} hidden={sheetHigh} />
 
-      <Credits style={style} hidden={sheetHigh} compact={mode === 'compact'} />
+      <Credits style={style} hidden={sheetHigh} compact={mode === 'compact' || short} />
 
       {empty && (
         <div className="map-empty">

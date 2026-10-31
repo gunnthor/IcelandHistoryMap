@@ -12,8 +12,8 @@ import { ORTELIUS_BOUNDS } from './geo';
 // basalt wall. Per-style colour treatments live in map.css.
 //
 // Esri has no Iceland relief tiles past ~z10 (it serves a "Map data not yet
-// available" placeholder), so relief stops at native z10 and those styles
-// stop zooming at 12.
+// available" placeholder), and the z10 tiles are coarse for Iceland, so the
+// relief styles stop at z9 — any closer and the hillshade turns to blocks.
 
 const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services';
 export const TILE_URL = {
@@ -25,8 +25,8 @@ export const ORTELIUS_URL = `${import.meta.env.BASE_URL}ortelius-islandia.webp`;
 
 export const STYLE_MAX_ZOOM: Record<MapStyle, number> = {
   satellite: 14,
-  summer: 12,
-  parchment: 12,
+  summer: 9,
+  parchment: 9,
   ortelius: 9,
 };
 

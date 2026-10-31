@@ -158,24 +158,32 @@
 .cl-marker.is-hidden {
   display: none !important;
 }
-.ev-marker:hover,
 .ev-marker:focus-visible,
 .ev-marker.is-linked,
-.cl-marker:hover,
 .cl-marker:focus-visible,
 .cl-marker.is-linked,
-.seat-marker:hover,
 .seat-marker:focus-visible {
   z-index: 999999 !important;
 }
-.ev-marker:hover .map-label,
+@media (hover: hover) {
+  .ev-marker:hover,
+  .cl-marker:hover,
+  .seat-marker:hover {
+    z-index: 999999 !important;
+  }
+}
 .ev-marker:focus-visible .map-label,
 .ev-marker.is-linked .map-label,
-.cl-marker:hover .map-label,
 .cl-marker:focus-visible .map-label,
-.seat-marker:hover .map-label,
 .seat-marker:focus-visible .map-label {
   display: block;
+}
+@media (hover: hover) {
+  .ev-marker:hover .map-label,
+  .cl-marker:hover .map-label,
+  .seat-marker:hover .map-label {
+    display: block;
+  }
 }
 .leaflet-marker-icon[aria-expanded='true'] .map-label {
   display: none !important;
@@ -203,6 +211,7 @@
 .ev-seal {
   position: absolute;
   inset: 0;
+  transform: scale(var(--seal-scale, 1));
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -228,14 +237,15 @@
   stroke: var(--vellum-50);
   stroke-width: 2;
 }
-/* Confidence = solidity: solid / four long segments / ten dots. */
+/* Confidence = solidity: solid / four long segments / a fine dotted line.
+   Narrow gaps and small dots read as a broken line, not a gaming chip. */
 .ev--medium .ev-rim circle {
-  stroke-dasharray: 19 6;
-  stroke-dashoffset: -3;
+  stroke-dasharray: 22 3;
+  stroke-dashoffset: -1.5;
 }
 .ev--low .ev-rim circle {
-  stroke-dasharray: 0 10;
-  stroke-width: 2.6;
+  stroke-dasharray: 0 5;
+  stroke-width: 2.2;
   stroke-linecap: round;
 }
 
@@ -252,9 +262,13 @@
 .ev--eruption { --pig: var(--type-eruption); }
 .ev--plague { --pig: var(--type-plague); }
 
-.ev-marker:hover .ev-seal,
 .ev-marker.is-linked .ev-seal {
-  transform: scale(1.12);
+  transform: scale(calc(var(--seal-scale, 1) * 1.12));
+}
+@media (hover: hover) {
+  .ev-marker:hover .ev-seal {
+    transform: scale(calc(var(--seal-scale, 1) * 1.12));
+  }
 }
 .ev-marker.is-linked .ev-seal {
   box-shadow: 0 0 0 3px var(--halo), 0 0 0 6px color-mix(in srgb, var(--brass-400) 60%, transparent), var(--drop);
@@ -262,7 +276,7 @@
 
 /* Selected: larger, brass ring, one ember ripple. */
 .ev-marker.is-selected .ev-seal {
-  transform: scale(1.25);
+  transform: scale(max(1, calc(var(--seal-scale, 1) * 1.25)));
   box-shadow: 0 0 0 2px var(--brass-400), 0 0 0 4px var(--halo-strong), 0 4px 10px var(--halo);
 }
 .ev-seal::after {
@@ -296,10 +310,15 @@
   opacity: 0.35;
   filter: saturate(0.3);
 }
-.ev-marker.is-dim:hover .ev-seal,
 .ev-marker.is-dim:focus-visible .ev-seal {
   opacity: 0.85;
   filter: none;
+}
+@media (hover: hover) {
+  .ev-marker.is-dim:hover .ev-seal {
+    opacity: 0.85;
+    filter: none;
+  }
 }
 
 /* Focus: dark inner line, brass ring, dark halo — legible on any basemap. */
@@ -310,11 +329,11 @@
   box-shadow: none;
 }
 .ev-marker:focus-visible .ev-seal {
-  transform: scale(1.12);
+  transform: scale(calc(var(--seal-scale, 1) * 1.12));
   box-shadow: 0 0 0 2px var(--basalt-950), 0 0 0 4px var(--focus-dark), 0 0 0 7px var(--focus-halo);
 }
 .ev-marker.is-selected:focus-visible .ev-seal {
-  transform: scale(1.25);
+  transform: scale(max(1, calc(var(--seal-scale, 1) * 1.25)));
 }
 
 /* Route stop numbers. */
@@ -368,9 +387,12 @@
 }
 
 /* ── Count badges ── */
+/* Badges shrink with the seals at overview zooms, but never so far that the
+   count stops being legible (mirrors badgeScale in cluster.ts). */
 .cl-disc {
   position: absolute;
   inset: 0;
+  transform: scale(max(0.78, var(--seal-scale, 1)));
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -393,8 +415,10 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums lining-nums;
 }
-.cl-marker:hover .cl-disc {
-  transform: scale(1.08);
+@media (hover: hover) {
+  .cl-marker:hover .cl-disc {
+    transform: scale(calc(max(0.78, var(--seal-scale, 1)) * 1.08));
+  }
 }
 .cl-marker.is-linked .cl-disc {
   box-shadow: 0 0 0 1.5px var(--vellum-50), 0 0 0 4px var(--halo), 0 0 0 7px color-mix(in srgb, var(--brass-400) 60%, transparent);
@@ -427,8 +451,10 @@
 .cl-marker--pill.is-on-selected .cl-pill {
   box-shadow: 0 0 0 1.5px var(--brass-400), 0 0 0 3px var(--halo);
 }
-.cl-marker--pill:hover .cl-pill {
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .cl-marker--pill:hover .cl-pill {
+    background: var(--basalt-800);
+  }
 }
 .cl-marker--pill:focus-visible .cl-pill {
   box-shadow: 0 0 0 2px var(--basalt-950), 0 0 0 4px var(--focus-dark), 0 0 0 7px var(--focus-halo);
@@ -459,8 +485,10 @@
 .seat-shield text.is-pair {
   font-size: 10.5px;
 }
-.seat-marker:hover .seat-shield {
-  transform: scale(1.12);
+@media (hover: hover) {
+  .seat-marker:hover .seat-shield {
+    transform: scale(1.12);
+  }
 }
 .seat-marker:focus-visible .seat-shield {
   transform: scale(1.12);
@@ -630,8 +658,10 @@
   color: var(--bone-100);
   text-decoration: none;
 }
-.map-credits a:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .map-credits a:hover {
+    text-decoration: underline;
+  }
 }
 .map-credits__toggle {
   display: grid;
@@ -733,9 +763,11 @@
   transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
     box-shadow var(--dur-fast) var(--ease-out);
 }
-.map-style-card:hover {
-  background: var(--basalt-800);
-  color: var(--bone-100);
+@media (hover: hover) {
+  .map-style-card:hover {
+    background: var(--basalt-800);
+    color: var(--bone-100);
+  }
 }
 .map-style-card[aria-checked='true'] {
   box-shadow: inset 0 0 0 2px var(--brass-400);
@@ -789,8 +821,10 @@
   border-radius: var(--r-sm);
   text-align: left;
 }
-.map-layers__switch:hover {
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .map-layers__switch:hover {
+    background: var(--basalt-800);
+  }
 }
 .map-layers__switch-text {
   flex: 1;
@@ -825,8 +859,10 @@
   color: var(--bone-100);
   text-align: left;
 }
-.map-legend__row:hover {
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .map-legend__row:hover {
+    background: var(--basalt-800);
+  }
 }
 .map-legend__row[aria-pressed='true'] {
   background: color-mix(in srgb, var(--brass-400) 14%, transparent);
@@ -835,8 +871,10 @@
 .map-legend__row[aria-disabled='true'] {
   color: var(--bone-500);
 }
-.map-legend__row[aria-disabled='true']:hover {
-  background: none;
+@media (hover: hover) {
+  .map-legend__row[aria-disabled='true']:hover {
+    background: none;
+  }
 }
 .map-legend__row[aria-disabled='true'] .map-legend__shield {
   opacity: 0.45;
@@ -895,8 +933,10 @@
   color: var(--bone-100);
   text-align: left;
 }
-.map-card__row:hover {
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .map-card__row:hover {
+    background: var(--basalt-800);
+  }
 }
 .map-card__row[aria-current='true'] {
   box-shadow: inset 0 0 0 1px var(--brass-400);
@@ -946,6 +986,8 @@
   line-height: var(--lh-small);
   text-decoration: none;
 }
-.map-card__sources a:hover {
-  text-decoration: underline;
+@media (hover: hover) {
+  .map-card__sources a:hover {
+    text-decoration: underline;
+  }
 }

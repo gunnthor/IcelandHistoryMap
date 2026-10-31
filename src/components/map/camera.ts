@@ -27,6 +27,8 @@ type Intent =
   | { kind: 'iceland' }
   | { kind: 'bounds'; bounds: L.LatLngBounds; maxZoom: number }
   | { kind: 'event'; id: string }
+  /** A remembered viewpoint (what the visitor was looking at before a story). */
+  | { kind: 'view'; center: L.LatLng; zoom: number }
   | { kind: 'free' };
 
 export interface Camera {
@@ -48,6 +50,9 @@ export function useCamera(map: L.Map | null, x: Explorer): Camera {
   const readyAt = useRef(0);
   const framedInsets = useRef(getInsets());
   const lastSelected = useRef<string | null>(null);
+  /** What the view was for before the current story opened — closing the
+   *  story returns there, unless the visitor has since moved the map. */
+  const beforeStory = useRef<Intent | null>(null);
   const live = useRef(x);
   live.current = x;
   const style = x.state.mapStyle;
@@ -210,13 +215,51 @@ export function useCamera(map: L.Map | null, x: Explorer): Camera {
 
   // ── Selection ──
   const selId = x.selected?.id ?? null;
+  const routeKey = x.state.route ? JSON.stringify(x.state.route) : null;
+  const lastRoute = useRef<string | null>(routeKey);
   useEffect(() => {
     if (!map) return;
+    // Track route changes even when the selection stays put (leaving a
+    // route, or following someone from the event you're reading).
+    const startedRoute = routeKey !== null && routeKey !== lastRoute.current;
+    lastRoute.current = routeKey;
+    // A route that has just started opens on the whole route — every stop
+    // and the line between them — rather than diving straight into stop 1
+    // (also when stop 1 is the event already open).
+    const stops = live.current.route?.stops;
+    // Remember what the view was for before a story first opens.
+    if (selId && !lastSelected.current && !beforeStory.current) {
+      const i = intent.current;
+      beforeStory.current = i.kind === 'free' ? { kind: 'view', center: map.getCenter(), zoom: map.getZoom() } : i;
+    }
+    if (startedRoute && stops && stops.length > 1) {
+      const bounds = L.latLngBounds(stops.map((s) => s.coordinates));
+      if (bounds.isValid()) {
+        lastSelected.current = selId;
+        intent.current = { kind: 'bounds', bounds, maxZoom: 9 };
+        frame(bounds, 9);
+        return;
+      }
+    }
     if (selId === lastSelected.current) return;
     lastSelected.current = selId;
     const e = selId ? live.current.byId.get(selId) : null;
     if (!e) {
-      if (intent.current.kind === 'event') intent.current = { kind: 'free' };
+      // Closed. If the camera was still doing the story's framing (the
+      // visitor hasn't taken the map), go back to what they were looking at.
+      const back = beforeStory.current;
+      beforeStory.current = null;
+      const ours = intent.current.kind === 'event' || intent.current.kind === 'bounds';
+      if (back && ours) {
+        if (back.kind === 'iceland') fitIceland();
+        else if (back.kind === 'bounds') {
+          intent.current = back;
+          frame(back.bounds, back.maxZoom);
+        } else if (back.kind === 'view') {
+          intent.current = { kind: 'free' };
+          move(back.center, back.zoom);
+        } else intent.current = { kind: 'free' };
+      } else if (intent.current.kind === 'event') intent.current = { kind: 'free' };
       return;
     }
     // Picked on the map: it's already in front of you. Only move if it's
@@ -232,7 +275,42 @@ export function useCamera(map: L.Map | null, x: Explorer): Camera {
       return;
     }
     focusEvent(e);
-  }, [map, selId, focusEvent, move]);
+  }, [map, selId, routeKey, focusEvent, frame, fitIceland, move]);
+
+  // ── Filters, search and eras: show what matches ──
+  // Narrowing the map must never leave the visitor looking at an empty
+  // valley. Once the set settles (typing is debounced), frame the matches —
+  // or all of Iceland when nothing is filtered. While a story is open, only
+  // step in if no match is in view; routes and autoplay drive the camera
+  // themselves.
+  const filterSig = x.filtered.map((e) => e.id).join(',');
+  const firstFilter = useRef(true);
+  useEffect(() => {
+    if (!map) return;
+    if (firstFilter.current) {
+      firstFilter.current = false;
+      return;
+    }
+    const t = window.setTimeout(() => {
+      const L_ = live.current;
+      if (L_.route || L_.state.playing || L_.filtered.length === 0) return;
+      const all = L_.filtered.length === L_.events.length;
+      if (L_.selected) {
+        if (all || L_.filtered.some((e) => comfortablyVisible(map, e.coordinates, 0.04))) return;
+      } else if (all) {
+        fitIceland();
+        return;
+      }
+      const pts = L_.filtered.map((e) => e.coordinates);
+      if (L_.selected) pts.push(L_.selected.coordinates);
+      const bounds = L.latLngBounds(pts);
+      if (!bounds.isValid()) return;
+      intent.current = { kind: 'bounds', bounds, maxZoom: 9 };
+      frame(bounds, 9);
+    }, 450);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, filterSig]);
 
   // ── Requests from elsewhere ──
   const { fitRequest, focusRequest } = x.state;
