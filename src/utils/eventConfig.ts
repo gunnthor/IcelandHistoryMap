@@ -1,155 +1,78 @@
 import { EventType, Confidence, UncertaintyFlag } from '../types';
 
+// Imported under Node by the validator and the vite config — keep this file
+// free of JSX, DOM and import.meta. Display names live in src/i18n (both
+// languages); glyphs live in src/components/icons.
+
 export interface TypeConfig {
+  /** English name — the build-time fallback; the UI reads t.types. */
   label: string;
-  symbol: string;
+  /** Mineral pigment, mirrored as --type-<id> in styles/tokens.css. Every one
+   *  carries a bone (#f6f1e7) glyph at ≥ 4.5:1. */
   color: string;
-  bgColor: string;
-  borderColor: string;
 }
 
 export const EVENT_CONFIG: Record<EventType, TypeConfig> = {
-  battle: {
-    label: 'Battle',
-    symbol: '⚔',
-    color: '#8b1a1a',
-    bgColor: '#f8d7da',
-    borderColor: '#c0392b',
-  },
-  sea_battle: {
-    label: 'Sea Battle',
-    symbol: '⚓',
-    color: '#1a4a7a',
-    bgColor: '#d1ecf1',
-    borderColor: '#2980b9',
-  },
-  raid: {
-    label: 'Raid',
-    symbol: '⚡',
-    color: '#7a3a00',
-    bgColor: '#fdebd0',
-    borderColor: '#e67e22',
-  },
-  burning: {
-    label: 'Burning',
-    symbol: '🔥',
-    color: '#7a1a00',
-    bgColor: '#fce4e4',
-    borderColor: '#c0392b',
-  },
-  massacre: {
-    label: 'Massacre',
-    symbol: '✕',
-    color: '#5f1111',
-    bgColor: '#f4cccc',
-    borderColor: '#8a1f1f',
-  },
-  killing: {
-    label: 'Killing',
-    symbol: '🗡',
-    color: '#6e1423',
-    bgColor: '#f7d6dd',
-    borderColor: '#a4133c',
-  },
-  feud: {
-    label: 'Feud',
-    symbol: '🪓',
-    color: '#5d4037',
-    bgColor: '#efe5dc',
-    borderColor: '#8d6e63',
-  },
-  execution: {
-    label: 'Execution',
-    symbol: '☩',
-    color: '#4a1a7a',
-    bgColor: '#e8daef',
-    borderColor: '#8e44ad',
-  },
-  political: {
-    label: 'Political',
-    symbol: '⚖',
-    color: '#2c3e50',
-    bgColor: '#e2e8f0',
-    borderColor: '#546e7a',
-  },
-  occupation: {
-    label: 'Occupation',
-    symbol: '⚑',
-    color: '#1a4a2a',
-    bgColor: '#d5f5e3',
-    borderColor: '#27ae60',
-  },
-  eruption: {
-    label: 'Eruption',
-    symbol: '🌋',
-    color: '#a8341a',
-    bgColor: '#fbe0d3',
-    borderColor: '#c0560f',
-  },
-  plague: {
-    label: 'Plague',
-    symbol: '🦠',
-    color: '#4a5d23',
-    bgColor: '#e7edd6',
-    borderColor: '#6b8e23',
-  },
+  battle: { label: 'Battle', color: '#9a2b30' },
+  sea_battle: { label: 'Sea battle', color: '#2a5c92' },
+  raid: { label: 'Raid', color: '#8f6418' },
+  burning: { label: 'Burning', color: '#b84e1c' },
+  massacre: { label: 'Massacre', color: '#4e1a1e' },
+  killing: { label: 'Killing', color: '#842a57' },
+  feud: { label: 'Feud', color: '#6b5a43' },
+  execution: { label: 'Execution', color: '#5b3a78' },
+  political: { label: 'Political', color: '#6a6670' },
+  occupation: { label: 'Occupation', color: '#2f6247' },
+  eruption: { label: 'Eruption', color: '#332f2e' },
+  plague: { label: 'Plague', color: '#5e6a28' },
 };
 
-export const CONFIDENCE_CONFIG: Record<Confidence, {
-  label: string;
-  description: string;
-  color: string;
-  bgColor: string;
-}> = {
-  high: {
-    label: 'High',
-    description: 'Well-documented in primary sources',
-    color: '#1e6b40',
-    bgColor: '#d4edda',
-  },
-  medium: {
-    label: 'Medium',
-    description: 'Documented but some details uncertain',
-    color: '#856404',
-    bgColor: '#fff3cd',
-  },
-  low: {
-    label: 'Low',
-    description: 'Needs more source verification',
-    color: '#721c24',
-    bgColor: '#f8d7da',
-  },
+/** Display order for filters and legends: violence first, then the state,
+ *  then nature. */
+export const EVENT_TYPES: EventType[] = [
+  'battle',
+  'sea_battle',
+  'raid',
+  'burning',
+  'massacre',
+  'killing',
+  'feud',
+  'execution',
+  'political',
+  'occupation',
+  'eruption',
+  'plague',
+];
+
+export const CONFIDENCE_LEVELS: Confidence[] = ['high', 'medium', 'low'];
+
+// "Solidity = certainty": the same three steps everywhere — a solid,
+// segmented or dotted marker rim; a solid, half or hollow timeline tick;
+// three, two or one filled pip. Never opacity, which washes out on imagery.
+export const CONFIDENCE_CONFIG: Record<Confidence, { pips: 1 | 2 | 3 }> = {
+  high: { pips: 3 },
+  medium: { pips: 2 },
+  low: { pips: 1 },
 };
 
-// Source-quality flags: label + tooltip for the chips under the card badges.
-// Uncertainty is part of the fun — say exactly what is and isn't known.
-export const FLAG_CONFIG: Record<UncertaintyFlag, { label: string; symbol: string; description: string }> = {
-  event_likely: {
-    label: 'Event likely happened',
-    symbol: '✓',
-    description: 'The core event is accepted as historical, even if the details are debated.',
-  },
-  saga_dramatized: {
-    label: 'Saga account dramatized',
-    symbol: '📜',
-    description: 'Known mainly through saga literature, which polishes, compresses, and dramatizes.',
-  },
-  location_uncertain: {
-    label: 'Location approximate',
-    symbol: '📍',
-    description: 'The map marker is a best guess — the exact site is unverified or representative.',
-  },
-  date_uncertain: {
-    label: 'Date uncertain',
-    symbol: '🗓',
-    description: 'The year is traditional, approximate, or debated between sources.',
-  },
-  legendary: {
-    label: 'Legendary / folklore',
-    symbol: '🐉',
-    description: 'The story may be legend more than history — real places, unverifiable plot.',
-  },
+// Source-quality flags. `positive` flags are reassurance ("well
+// established"); the rest are open questions. Uncertainty is part of the
+// fun — say exactly what is and isn't known.
+export const FLAG_CONFIG: Record<UncertaintyFlag, { positive: boolean }> = {
+  event_likely: { positive: true },
+  saga_dramatized: { positive: false },
+  location_uncertain: { positive: false },
+  date_uncertain: { positive: false },
+  legendary: { positive: false },
 };
+
+/** The one caveat worth surfacing next to the title, most serious first. */
+export const FLAG_PRIORITY: UncertaintyFlag[] = [
+  'legendary',
+  'saga_dramatized',
+  'date_uncertain',
+  'location_uncertain',
+];
 
 /**
  * Compute the [min, max] year across a set of events.
@@ -165,47 +88,23 @@ export function getYearBounds(events: { year: number }[]): [number, number] {
 // ── Historical eras ──
 // One-click presets that snap the timeline to a period. The Sturlung Age is the
 // only era for which the clan power-centres existed, so picking it auto-shows
-// the clan-seats layer (and leaving it hides them again).
+// the clan-seats layer (and leaving it hides them again). Labels and hints
+// live in src/i18n/strings/common.ts. Ranges are contiguous where events
+// exist, so every event belongs to exactly one era.
 export interface Era {
   id: string;
-  label: string;
   range: [number, number]; // inclusive [from, to]; clamped to data bounds
   showClans?: boolean; // reveal the clan-seats layer while this era is active
-  hint: string; // tooltip
 }
 
 export const ERAS: Era[] = [
-  {
-    id: 'saga',
-    label: 'Saga Age',
-    range: [870, 1130],
-    hint: 'Settlement and the classic saga feuds (c. 870–1130)',
-  },
-  {
-    id: 'sturlung',
-    label: 'Sturlung Age',
-    range: [1200, 1264],
-    showClans: true,
-    hint: 'Civil war of the great chieftain families (c. 1220–1264) — clan seats shown',
-  },
-  {
-    id: 'late-medieval',
-    label: 'Late Medieval',
-    range: [1264, 1540],
-    hint: 'Norwegian and early Danish rule (1264–1540)',
-  },
-  {
-    id: 'danish',
-    label: 'Danish Rule',
-    range: [1540, 1918],
-    hint: 'Reformation to sovereignty (1540–1918)',
-  },
-  {
-    id: 'modern',
-    label: 'Modern',
-    range: [1918, 2100],
-    hint: 'Republic and the World Wars (1918 onward)',
-  },
+  { id: 'saga', range: [870, 1130] },
+  // Starts before the conventional 1220 so the run-up feuds of the 1190s–1200s
+  // (Önundarbrenna, Víðines) belong to an era instead of falling in a gap.
+  { id: 'sturlung', range: [1180, 1264], showClans: true },
+  { id: 'late-medieval', range: [1265, 1540] },
+  { id: 'danish', range: [1541, 1918] },
+  { id: 'modern', range: [1919, 2100] },
 ];
 
 /** Clamp an era's range to the available data bounds. */
@@ -215,4 +114,9 @@ export function clampRange(
   max: number,
 ): [number, number] {
   return [Math.max(range[0], min), Math.min(range[1], max)];
+}
+
+/** The era an event year belongs to. */
+export function eraOf(year: number): Era | undefined {
+  return ERAS.find((e) => year >= e.range[0] && year <= e.range[1]);
 }

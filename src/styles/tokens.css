@@ -1,0 +1,193 @@
+/* ════════════════════════════════════════════════════════════════
+   Design tokens — "Basalt & Vellum"
+   Basalt is the museum (chrome), vellum is what you read (stories),
+   brass means "you are here", ember means "act". Colours keep those
+   meanings everywhere; see docs/DESIGN.md for the full rationale and
+   measured contrast ratios.
+   ════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Basalt: dark chrome ── */
+  --basalt-950: #0b0e11; /* page / letterbox around the 1590 plate */
+  --basalt-900: #11151a; /* bars */
+  --basalt-850: #181d23; /* popovers, glass fallback */
+  --basalt-800: #20262d; /* hover */
+  --basalt-700: #2c333c; /* disabled fills, strong separators */
+  --glass: rgba(17, 21, 26, 0.92);
+  --glass-blur: blur(12px) saturate(1.2);
+
+  /* Text on basalt (contrast on basalt-900) */
+  --bone-100: #efe8da; /* 15.0 — primary */
+  --bone-300: #c8bfad; /* 10.0 — secondary */
+  --bone-400: #aba28f; /*  7.2 — tertiary, still fine on glass over parchment */
+  --bone-500: #9a917f; /*  5.9 — placeholders only */
+
+  /* ── Brass: "you are here" ── */
+  --brass-300: #dcc28a;
+  --brass-400: #c9a867; /* active fills (basalt-950 text on it: 8.6) */
+  --brass-500: #a98a4e; /* hairline rules on basalt */
+  --brass-700: #7a5f2a; /* brass on vellum (5.3) */
+
+  /* ── Ember: "act" ── */
+  --ember-500: #a83b28; /* CTA fill, bone text 5.2 */
+  --ember-600: #8f3020; /* CTA hover */
+  --ember-400: #e2765a; /* ember text on basalt (6.1) */
+
+  /* ── Vellum: the reading surface ── */
+  --vellum-50: #f6f1e7;
+  --vellum-100: #ede5d6;
+  --vellum-200: #ded3bf; /* lines only */
+  --vellum-300: #c7b89c; /* strong rules */
+  --ink-900: #1c1915; /* 15.6 on vellum-50 */
+  --ink-700: #463f35; /*  9.2 */
+  --ink-500: #6a6052; /*  5.5 — never on vellum-200 */
+  --oxblood: #8a2a1f; /*  7.7 — eyebrows, links on vellum */
+
+  /* ── Lines ── */
+  --line-dark: rgba(239, 232, 218, 0.12);
+  --line-dark-strong: rgba(239, 232, 218, 0.24);
+  --line-dark-input: rgba(239, 232, 218, 0.4); /* 3.3:1 input boundary */
+  --line-vellum-input: #8f8063; /* 3.4:1 */
+
+  /* ── Focus ── */
+  --focus-dark: #e8c77e;
+  --focus-vellum: #8a2a1f;
+  --focus-halo: rgba(11, 14, 17, 0.8);
+
+  /* ── Status ── */
+  --danger-dark: #f08a70;
+  --danger-vellum: #a3271c;
+  --success-dark: #93c29a;
+  --success-vellum: #2d6943;
+
+  /* ── Event pigments (bone glyph #f6f1e7 on each ≥ 4.5:1) ── */
+  --type-battle: #9a2b30; /* madder */
+  --type-sea_battle: #2a5c92; /* lapis */
+  --type-raid: #8f6418; /* ochre */
+  --type-burning: #b84e1c; /* ember */
+  --type-massacre: #4e1a1e; /* oxblood */
+  --type-killing: #842a57; /* garnet */
+  --type-feud: #6b5a43; /* umber */
+  --type-execution: #5b3a78; /* aubergine */
+  --type-political: #6a6670; /* pewter */
+  --type-occupation: #2f6247; /* spruce */
+  --type-eruption: #332f2e; /* tephra */
+  --type-plague: #5e6a28; /* lichen */
+
+  /* ── Typography ── */
+  --font-display: 'Cormorant Garamond', 'Cormorant', Garamond, 'Times New Roman', serif;
+  --font-ui: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* size / line-height pairs (never below 12px) */
+  --fs-display: 44px;
+  --lh-display: 48px;
+  --fs-title: 30px;
+  --lh-title: 34px;
+  --fs-year: 48px;
+  --fs-heading: 22px;
+  --lh-heading: 28px;
+  --fs-subtitle: 18px;
+  --lh-subtitle: 24px;
+  --fs-body: 16px;
+  --lh-body: 26px;
+  --fs-ui: 14px;
+  --lh-ui: 20px;
+  --fs-small: 13px;
+  --lh-small: 18px;
+  --fs-caption: 12px;
+  --lh-caption: 16px;
+  --fs-eyebrow: 11px;
+  --lh-eyebrow: 14px;
+  --tracking-eyebrow: 0.14em;
+
+  /* ── Spacing ── */
+  --sp-0_5: 2px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* ── Radii ── */
+  --r-xs: 2px; /* ticks */
+  --r-sm: 4px; /* buttons, inputs, chips */
+  --r-md: 6px; /* popovers, bars */
+  --r-lg: 10px; /* modals, folio */
+  --r-sheet: 14px; /* mobile sheet top */
+  --r-round: 999px; /* markers, pips, play only */
+
+  /* ── Elevation ── */
+  --e1: 0 0 0 1px rgba(239, 232, 218, 0.1), 0 1px 2px rgba(5, 7, 9, 0.5);
+  --e2: 0 0 0 1px rgba(239, 232, 218, 0.1), 0 8px 24px -6px rgba(5, 7, 9, 0.6),
+    0 2px 6px rgba(5, 7, 9, 0.35);
+  --e3: 0 24px 64px -12px rgba(5, 7, 9, 0.72), 0 4px 12px rgba(5, 7, 9, 0.4);
+  --e-folio: -1px 0 0 var(--basalt-950), -12px 0 32px -16px rgba(5, 7, 9, 0.6);
+  --scrim: rgba(7, 9, 11, 0.62);
+
+  /* ── Z-layers (the map wrapper is isolated, so Leaflet's own
+        200–1000 z-indexes never leak out of layer 0) ── */
+  --z-map: 0;
+  --z-map-ui: 10;
+  --z-chrome: 20;
+  --z-folio: 30;
+  --z-popover: 40;
+  --z-scrim: 50;
+  --z-modal: 60;
+  --z-toast: 70;
+
+  /* ── Motion ── */
+  --dur-instant: 80ms;
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 320ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+
+  /* ── Layout ── */
+  --gutter: 16px;
+  --chrome-h: 48px; /* floating command bar */
+  --folio-w: 420px;
+  --touch: 44px; /* minimum touch target */
+  --control: 36px; /* desktop control height */
+
+  /* Live layout insets: how much of each viewport edge is covered by UI.
+     Written by the shell (see state/layout.tsx) and read by map controls,
+     attribution and fly-to so nothing lands under a panel. */
+  --inset-top: 0px;
+  --inset-right: 0px;
+  --inset-bottom: 0px;
+  --inset-left: 0px;
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --folio-w: 440px;
+  }
+}
+
+@media (max-width: 699px) {
+  :root {
+    --fs-title: 26px;
+    --lh-title: 30px;
+    --fs-year: 40px;
+  }
+}
+
+@media (pointer: coarse) {
+  :root {
+    --control: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+  }
+}

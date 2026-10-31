@@ -1,7 +1,7 @@
 // A small heraldic cartouche of Iceland's historic banners, shown as a
 // decorative strip in the About modal. Each flag has a tooltip naming it and
 // its era. (Formerly lived on the map itself, but earned no map real estate.)
-import { useI18n } from '../i18n';
+import { useI18n } from '../../i18n';
 
 interface FlagDef {
   id: string;
@@ -79,12 +79,12 @@ const FLAGS: FlagDef[] = [
 export function HistoricFlags() {
   const { t } = useI18n();
   return (
-    <div className="about-flags" aria-label={t.about.flagsAria}>
+    <div className="about-flags" aria-label={t.chrome.about.flagsAria}>
       {/* Deliberately Icelandic in both languages — heraldic flavor text. */}
       <div className="about-flags-title">Fánar Íslands</div>
       <div className="about-flags-row">
         {FLAGS.map((f) => {
-          const l10n = t.about.flags[f.id] ?? { name: f.name, years: f.years };
+          const l10n = t.chrome.about.flags[f.id] ?? { name: f.name, years: f.years };
           return (
             <span className="about-flag" key={f.id} title={`${l10n.name} · ${l10n.years}`}>
               <svg viewBox="0 0 25 18" role="img" aria-label={`${l10n.name}, ${l10n.years}`}>
