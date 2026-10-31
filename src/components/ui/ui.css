@@ -53,8 +53,10 @@
   background: var(--ember-500);
   color: var(--bone-100);
 }
-.ui-btn--primary:hover {
-  background: var(--ember-600);
+@media (hover: hover) {
+  .ui-btn--primary:hover {
+    background: var(--ember-600);
+  }
 }
 
 /* secondary = quiet surface with a hairline */
@@ -63,17 +65,21 @@
   border-color: var(--line-dark-strong);
   color: var(--bone-100);
 }
-.ui-btn--secondary:hover {
-  background: var(--basalt-700);
+@media (hover: hover) {
+  .ui-btn--secondary:hover {
+    background: var(--basalt-700);
+  }
 }
 
 /* ghost = text-only until hovered */
 .ui-btn--ghost {
   color: var(--bone-300);
 }
-.ui-btn--ghost:hover {
-  color: var(--bone-100);
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .ui-btn--ghost:hover {
+    color: var(--bone-100);
+    background: var(--basalt-800);
+  }
 }
 
 /* on vellum */
@@ -82,15 +88,19 @@
   border-color: var(--line-vellum-input);
   color: var(--ink-900);
 }
-.on-vellum .ui-btn--secondary:hover {
-  background: var(--vellum-200);
+@media (hover: hover) {
+  .on-vellum .ui-btn--secondary:hover {
+    background: var(--vellum-200);
+  }
 }
 .on-vellum .ui-btn--ghost {
   color: var(--ink-700);
 }
-.on-vellum .ui-btn--ghost:hover {
-  color: var(--ink-900);
-  background: var(--vellum-100);
+@media (hover: hover) {
+  .on-vellum .ui-btn--ghost:hover {
+    color: var(--ink-900);
+    background: var(--vellum-100);
+  }
 }
 
 .ui-btn--sm {
@@ -115,9 +125,11 @@
   color: var(--bone-300);
   transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
-.ui-icon-btn:hover {
-  color: var(--bone-100);
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .ui-icon-btn:hover {
+    color: var(--bone-100);
+    background: var(--basalt-800);
+  }
 }
 .ui-icon-btn[aria-pressed='true'],
 .ui-icon-btn[aria-expanded='true'] {
@@ -130,15 +142,19 @@
   box-shadow: var(--e2);
   color: var(--bone-100);
 }
-.ui-icon-btn--float:hover {
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .ui-icon-btn--float:hover {
+    background: var(--basalt-800);
+  }
 }
 .on-vellum .ui-icon-btn {
   color: var(--ink-700);
 }
-.on-vellum .ui-icon-btn:hover {
-  color: var(--ink-900);
-  background: var(--vellum-100);
+@media (hover: hover) {
+  .on-vellum .ui-icon-btn:hover {
+    color: var(--ink-900);
+    background: var(--vellum-100);
+  }
 }
 
 /* ── Segmented control ── */
@@ -159,8 +175,10 @@
   font-weight: 500;
   transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
-.ui-seg__btn:hover {
-  color: var(--bone-100);
+@media (hover: hover) {
+  .ui-seg__btn:hover {
+    color: var(--bone-100);
+  }
 }
 .ui-seg__btn[aria-checked='true'],
 .ui-seg__btn[aria-pressed='true'] {
@@ -185,9 +203,11 @@
   transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out);
 }
-.ui-chip:hover {
-  color: var(--bone-100);
-  border-color: var(--line-dark-input);
+@media (hover: hover) {
+  .ui-chip:hover {
+    color: var(--bone-100);
+    border-color: var(--line-dark-input);
+  }
 }
 .ui-chip[aria-pressed='true'] {
   background: rgba(201, 168, 103, 0.14);
@@ -208,9 +228,11 @@
   border-radius: 3px;
   color: var(--bone-400);
 }
-.ui-chip--token .ui-chip__x:hover {
-  color: var(--bone-100);
-  background: var(--basalt-700);
+@media (hover: hover) {
+  .ui-chip--token .ui-chip__x:hover {
+    color: var(--bone-100);
+    background: var(--basalt-700);
+  }
 }
 @media (pointer: coarse) {
   .ui-chip {

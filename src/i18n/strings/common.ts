@@ -83,7 +83,7 @@ const en: CommonStrings & CategoryStrings = {
     plague: 'Plague',
   },
   confidence: {
-    high: { label: 'Well documented', description: 'Well documented in primary sources' },
+    high: { label: 'Well documented', description: 'Backed by primary sources' },
     medium: { label: 'Some doubt', description: 'Documented, but some details are uncertain' },
     low: { label: 'Uncertain', description: 'Thin sources — needs more verification' },
   },
@@ -162,7 +162,7 @@ const is: CommonStrings & CategoryStrings = {
     plague: 'Farsótt',
   },
   confidence: {
-    high: { label: 'Vel skjalfest', description: 'Vel skjalfest í frumheimildum' },
+    high: { label: 'Vel skjalfest', description: 'Byggt á frumheimildum' },
     medium: { label: 'Nokkur óvissa', description: 'Skjalfest en sum atriði óviss' },
     low: { label: 'Óvisst', description: 'Rýrar heimildir — þarfnast frekari heimildarýni' },
   },

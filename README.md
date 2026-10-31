@@ -15,22 +15,28 @@ Then open `http://localhost:5173` in your browser.
 
 ## Project structure
 
+The interface is a full-bleed map with everything else floating over it. The
+design system and the contract between regions are documented in
+[`docs/DESIGN.md`](docs/DESIGN.md).
+
 ```
 src/
 ├── components/
-│   ├── BattleMap.tsx     # Leaflet map + markers
-│   ├── EventPanel.tsx    # Desktop sidebar + mobile bottom drawer
-│   ├── FilterBar.tsx     # Type/confidence filter chips
-│   ├── Timeline.tsx      # Horizontal timeline + year-range sliders
-│   ├── SearchBar.tsx     # Name/person/location search
-│   └── TourBanner.tsx    # "Start Here" guided tour banner
+│   ├── map/        # Leaflet stage: event seals, clusters, camera, layers, clan seats, route lines
+│   ├── story/      # The event story: desktop folio, landscape side sheet, mobile bottom sheet
+│   ├── timeline/   # Time dock: eras, ordinal rail with range brush, autoplay, mobile scrubber
+│   ├── chrome/     # Command bar, search, filters, story routes, about, welcome card
+│   ├── ui/         # Primitives: Button, IconButton, SegmentedControl, Popover, Dialog
+│   └── icons/      # SVG icon set + the 12 event-type glyphs (shared by React and Leaflet)
+├── state/          # The explorer store (useExplorer), layout insets, Escape stack, people index
+├── styles/         # Design tokens, base styles, self-hosted fonts
+├── i18n/           # EN/ÍS: one strings file per area under strings/, event overlay loader
 ├── data/
-│   └── events.ts         # ← Add new events here
-├── types/
-│   └── index.ts          # ConflictEvent and FilterState types
-├── utils/
-│   └── eventConfig.ts    # Icon symbols, colors per event type
-└── App.tsx               # State, layout, filter logic
+│   ├── events.ts   # ← Add new events here
+│   └── events.is.ts # Icelandic text for each event (loaded lazily)
+├── types/          # ConflictEvent and FilterState types
+└── utils/
+    └── eventConfig.ts # Type pigments, confidence steps, eras
 ```
 
 ## Adding a new event
@@ -80,15 +86,25 @@ Saga-era events often have uncertain exact locations. Use the closest known mode
 
 ## Event types
 
-| Type         | Symbol | Use for                                     |
-|--------------|--------|---------------------------------------------|
-| `battle`     | ⚔      | Organized land battles                      |
-| `sea_battle` | ⚓      | Naval / fjord / bay engagements             |
-| `raid`       | ⚡      | Raids, abductions, guerrilla attacks        |
-| `burning`    | 🔥      | Arson attacks on farms or buildings         |
-| `execution`  | ☩      | Political or judicial killings              |
-| `occupation` | ⚑      | Sieges, occupations, takeovers              |
-| `other`      | ?      | Anything that doesn't fit the above         |
+Each type has a pigment (`EVENT_CONFIG` in `src/utils/eventConfig.ts`, mirrored as
+`--type-*` in `src/styles/tokens.css`) and an SVG glyph (`TYPE_GLYPHS` in
+`src/components/icons/paths.ts`). A new type needs both, plus a label in
+`src/i18n/strings/common.ts` in both languages.
+
+| Type         | Glyph           | Use for                                          |
+|--------------|-----------------|--------------------------------------------------|
+| `battle`     | crossed swords  | Organized land battles                           |
+| `sea_battle` | sailboat        | Naval / fjord / bay engagements                  |
+| `raid`       | double chevron  | Raids, abductions, guerrilla attacks             |
+| `burning`    | flame           | Arson attacks on farms or buildings              |
+| `massacre`   | struck tally    | Mass killings                                    |
+| `killing`    | sword           | A targeted slaying (víg)                         |
+| `feud`       | axe             | Long-running kin or clan conflicts               |
+| `execution`  | gallows         | Judicial or political executions                 |
+| `political`  | scales          | Conversions, oaths, riots, trade wars            |
+| `occupation` | planted flag    | Sieges, occupations, takeovers                   |
+| `eruption`   | volcano         | Volcanic eruptions                               |
+| `plague`     | skull           | Epidemics                                        |
 
 ## Confidence levels
 
@@ -98,18 +114,21 @@ Saga-era events often have uncertain exact locations. Use the closest known mode
 
 ## Keyboard shortcuts
 
-- **Esc** — close the event panel, or exit the "Start Here" tour
-- **← / →** — step backward/forward while the tour is active
-- **Tab + Enter/Space** — focus and open map markers and timeline events
-- Selecting an event updates the URL hash (`#event=<id>`) so you can share a
-  direct link to any event.
+- **/** — search
+- **← / →** — previous / next stop on a story route, otherwise the earlier / later event
+- **Esc** — step back one layer: close a popover, clear the search, pause autoplay,
+  leave a route (the current stop stays open), close the story
+- **Tab** reaches the map markers and the timeline as single stops; arrow keys move
+  within them and **Enter** opens an event
+
+Every event has a shareable URL, `/event/<id>` (legacy `#event=<id>` links still work).
 
 ## Suggested next features
 
-- **Wikipedia integration** — auto-fetch a summary when a Wikipedia URL is in sources
-- **More events** — Commonwealth-era feuds and 13th-century raids
-- **Photo/illustration** — add an optional `imageUrl` field to `ConflictEvent`
-- **Cluster markers** — use Leaflet.markercluster for when many events overlap
+- **Share cards** — a per-event Open Graph image for link previews
+- **Clickable place names** — place names in a story fly the map there
+- **Animated routes** — the corsair fleet's path for Tyrkjaránið, drawn on the map
+- **Photo/illustration** — an optional, properly licensed `image` field on `ConflictEvent`
 
 ## Deployment
 

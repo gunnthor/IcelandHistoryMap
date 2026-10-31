@@ -83,6 +83,12 @@ a,
   outline-color: var(--focus-vellum);
   box-shadow: none;
 }
+/* Headings and regions that receive focus programmatically (a story title
+   when it opens) aren't controls — a ring there just looks like a text box. */
+[tabindex='-1']:focus {
+  outline: none;
+  box-shadow: none;
+}
 
 /* ── Typography helpers ── */
 .t-display {

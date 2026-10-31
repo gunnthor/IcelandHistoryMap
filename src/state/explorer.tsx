@@ -445,7 +445,13 @@ export function ExplorerProvider({ children, announcer }: { children: ReactNode;
         const active = L.eras.find(
           (e) => e.range[0] === L.state.filters.yearRange[0] && e.range[1] === L.state.filters.yearRange[1],
         );
-        dispatch({ type: 'era', era: era && active?.id === era.id ? null : era });
+        const next = era && active?.id === era.id ? null : era;
+        dispatch({ type: 'era', era: next });
+        // Travelling to another era puts away a story from outside it, so
+        // the map can show the period instead of an out-of-era event.
+        const sel = L.state.selectedId ? L.byId.get(L.state.selectedId) : null;
+        if (next && sel && !L.state.route && (sel.year < next.range[0] || sel.year > next.range[1]))
+          dispatch({ type: 'select', id: null, source: 'timeline' });
       },
       setShowClans: (show: boolean) => dispatch({ type: 'clans', show }),
       startTour: (tourId: string) => {
@@ -563,15 +569,51 @@ export function ExplorerProvider({ children, announcer }: { children: ReactNode;
     welcomeWasOpen.current = state.welcome;
   }, [state.welcome]);
 
-  // ── URL + tab title follow the selection ──
-  // Always written (a legacy #event= hash is rewritten to the path form);
-  // the initial state already came from the URL, so the first write is a no-op.
+  // ── URL + tab title follow the selection; Back closes the story ──
+  // Opening a story from the map pushes one history entry, so the browser's
+  // (or Android's) Back closes it; moving between stories replaces that entry
+  // rather than piling up dozens. Closing from the UI steps back over the
+  // entry we pushed, so Back never lands on a dead duplicate. A legacy
+  // #event= hash is rewritten to the path form; the initial state already
+  // came from the URL, so the first write is a no-op.
+  const pushed = useRef(false);
+  const fromHistory = useRef(false);
+  const prevSelected = useRef(state.selectedId);
   useEffect(() => {
     const base = import.meta.env.BASE_URL;
     const path = selected ? `${base}event/${selected.id}` : base;
-    if (window.location.pathname !== path || window.location.hash) window.history.replaceState(null, '', path);
+    const opening = !prevSelected.current && !!selected;
+    const closing = !!prevSelected.current && !selected;
+    prevSelected.current = selected?.id ?? null;
+    if (fromHistory.current) fromHistory.current = false;
+    else if (closing && pushed.current) {
+      pushed.current = false;
+      fromHistory.current = true;
+      window.history.back();
+    } else if (window.location.pathname !== path || window.location.hash) {
+      if (opening) {
+        window.history.pushState(null, '', path);
+        pushed.current = true;
+      } else window.history.replaceState(null, '', path);
+    }
     document.title = selected ? t.doc.eventTitle(selected.name) : t.doc.siteTitle;
   }, [selected, t]);
+
+  useEffect(() => {
+    const onPop = () => {
+      const id = idFromUrl();
+      const next = id && ids.has(id) ? id : null;
+      pushed.current = !!next;
+      if (next === live.current.state.selectedId) {
+        fromHistory.current = false;
+        return;
+      }
+      fromHistory.current = true;
+      dispatch({ type: 'select', id: next, source: 'link' });
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
 
   // ── Escape, base layer: pause → leave the route → close the story ──
   useEscape(
