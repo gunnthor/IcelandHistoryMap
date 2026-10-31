@@ -41,6 +41,21 @@ export interface StoryStrings {
   spotError: string;
   suggestCorrection: string;
   confidenceAria: (label: string) => string;
+  /** Accessible name of the bottom sheet's drag handle (state is aria-expanded). */
+  sheetHandle: string;
+  /** Earlier / Later buttons: "Earlier: Apavatnsför, 1238". */
+  earlierAria: (name: string, date: string) => string;
+  laterAria: (name: string, date: string) => string;
+  /** A progress segment in the route stepper: "Stop 3: Battle of Örlygsstaðir". */
+  stopAria: (n: number, name: string) => string;
+  /** Shown in the stepper when you've wandered off the route mid-way. */
+  offRoute: string;
+  backToStop: (n: number) => string;
+  /** End-of-route card: heading over the list of stops you just walked. */
+  recap: string;
+  /** Prefilled GitHub issue for "Suggest a correction". */
+  issueTitle: (name: string, id: string) => string;
+  issueBody: (url: string) => string;
 }
 
 const en: StoryStrings = {
@@ -83,6 +98,15 @@ const en: StoryStrings = {
   spotError: 'Spot an error in this entry?',
   suggestCorrection: 'Suggest a correction',
   confidenceAria: (label) => `Confidence: ${label}`,
+  sheetHandle: 'Full story',
+  earlierAria: (name, date) => `Earlier: ${name}, ${date}`,
+  laterAria: (name, date) => `Later: ${name}, ${date}`,
+  stopAria: (n, name) => `Stop ${n}: ${name}`,
+  offRoute: 'Off the route',
+  backToStop: (n) => `Back to stop ${n}`,
+  recap: 'The stops',
+  issueTitle: (name, id) => `Correction: ${name} (${id})`,
+  issueBody: (url) => `Event page: ${url}\n\nWhat should be corrected, and what is your source?\n`,
 };
 
 const is: StoryStrings = {
@@ -125,6 +149,15 @@ const is: StoryStrings = {
   spotError: 'Sástu villu í þessari færslu?',
   suggestCorrection: 'Senda leiðréttingu',
   confidenceAria: (label) => `Áreiðanleiki: ${label}`,
+  sheetHandle: 'Öll sagan',
+  earlierAria: (name, date) => `Fyrr: ${name}, ${date}`,
+  laterAria: (name, date) => `Síðar: ${name}, ${date}`,
+  stopAria: (n, name) => `Stopp ${n}: ${name}`,
+  offRoute: 'Utan leiðar',
+  backToStop: (n) => `Aftur í stopp ${n}`,
+  recap: 'Stoppin',
+  issueTitle: (name, id) => `Leiðrétting: ${name} (${id})`,
+  issueBody: (url) => `Síða atburðarins: ${url}\n\nHvað þarf að leiðrétta og hver er heimildin?\n`,
 };
 
 export const story = { en, is };
