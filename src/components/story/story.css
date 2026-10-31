@@ -1273,6 +1273,19 @@
   }
 }
 
+/* Sheets: the peek must fit the route ribbon, title, opening line and "Read
+   the full story" above the dock, so the ribbon title keeps to one line and
+   the smallest phones get one line of summary. */
+.story--sheet .story-ribbon__title {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+@media (max-height: 600px) {
+  .story--sheet[data-layout='peek'] .lede__text {
+    -webkit-line-clamp: 1;
+  }
+}
+
 /* Landscape phones: the route ribbon keeps to its title — the tagline would
    take a third of a 390px-tall screen. */
 .story--side .story-ribbon__sub {

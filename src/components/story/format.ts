@@ -91,8 +91,17 @@ export function seeAlso(e: ConflictEvent, byId: Map<string, ConflictEvent>): Con
   return out;
 }
 
+/** A confidence note without its bare opening rating ("High.", "Miðlungs
+ *  áreiðanleiki."): the rating is set just above it as pips and a label.
+ *  Qualified openings ("High for the eruption itself, …") are kept whole. */
+export function noteBody(note: string): string {
+  return note.replace(/^(?:High|Medium|Low|Mikill áreiðanleiki|Miðlungs áreiðanleiki|Lítill áreiðanleiki)\.\s+/, '');
+}
+
+/** The shareable URL. Ends in "/": that's the prerendered page carrying the
+ *  event's own title, description and share card (see vite.config.ts). */
 export function eventUrl(id: string): string {
-  return `${window.location.origin}${import.meta.env.BASE_URL}event/${id}`;
+  return `${window.location.origin}${import.meta.env.BASE_URL}event/${id}/`;
 }
 
 const ISSUES = 'https://github.com/gunnthor/IcelandHistoryMap/issues/new';
@@ -101,13 +110,21 @@ export function correctionUrl(title: string, body: string): string {
   return `${ISSUES}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 }
 
-/** Routes to suggest after finishing one: the two that share the fewest
- *  stops with it (ties keep list order), so "where next" is somewhere new. */
-export function suggestTours(finishedStopIds: string[], excludeId?: string, n = 2): Tour[] {
+/** Routes to suggest after finishing one. After a curated tour: the two that
+ *  share the fewest stops with it, so "where next" is somewhere new. After
+ *  following a person: the routes that share the most, i.e. the ones that
+ *  tell that person's story at larger scale. Ties keep list order. */
+export function suggestTours(
+  finishedStopIds: string[],
+  excludeId?: string,
+  n = 2,
+  mode: 'new' | 'related' = 'new',
+): Tour[] {
   const done = new Set(finishedStopIds);
+  const dir = mode === 'related' ? -1 : 1;
   return TOURS.map((tour, i) => ({ tour, i, overlap: tour.eventIds.filter((id) => done.has(id)).length }))
     .filter((c) => c.tour.id !== excludeId && c.tour.eventIds.length > 0)
-    .sort((a, b) => a.overlap - b.overlap || a.i - b.i)
+    .sort((a, b) => dir * (a.overlap - b.overlap) || a.i - b.i)
     .slice(0, n)
     .map((c) => c.tour);
 }

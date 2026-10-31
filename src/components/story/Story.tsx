@@ -5,6 +5,7 @@ import { useI18n } from '../../i18n';
 import { FinishedRoute, StepControl, StoryContext, StoryController } from './context';
 import { eventUrl, shortDate } from './format';
 import { Folio } from './Folio';
+import { restoreFocus } from '../ui';
 import { BottomSheet } from './BottomSheet';
 import './story.css';
 
@@ -72,7 +73,7 @@ export function Story() {
     wasOpen.current = false;
     const a = document.activeElement;
     // Only when focus was lost with the story — a click elsewhere keeps it.
-    if ((!a || a === document.body) && opener.current?.isConnected) opener.current.focus();
+    if ((!a || a === document.body) && opener.current?.isConnected) restoreFocus(opener.current);
     opener.current = null;
     // The selection id alone drives this; the source is read with it.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -145,8 +146,11 @@ export function Story() {
   const finish = useCallback(() => {
     if (!route || !selected) return;
     focusEnd.current = true;
-    setFinished({ route: route.route, stopIds: route.stops.map((s) => s.id), lastId: selected.id });
+    const stopIds = route.stops.map((s) => s.id);
+    setFinished({ route: route.route, stopIds, lastId: selected.id });
     x.exitRoute();
+    // The end card recaps the route; the map pulls back to show all of it.
+    x.requestFit(stopIds);
     x.announce(t.tours.endTitle);
   }, [route, selected, x, t]);
 

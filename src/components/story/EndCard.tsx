@@ -32,7 +32,7 @@ export function EndCard() {
   const meta = person
     ? t.tours.personEvents(title, stops.length)
     : t.tours.meta(stops.length, Math.min(...years), Math.max(...years));
-  const suggestions = suggestTours(done.stopIds, tour?.id);
+  const suggestions = suggestTours(done.stopIds, tour?.id, 2, person ? 'related' : 'new');
 
   const startOver = () => {
     if (tour) {

@@ -12,6 +12,7 @@ import {
   eventUrl,
   headlineCaveat,
   hostname,
+  noteBody,
   rangeEnd,
   seeAlso,
   shortDate,
@@ -378,7 +379,7 @@ function Trust({ e }: { e: ConflictEvent }) {
           <span className="trust__desc"> — {conf.description}</span>
         </span>
       </p>
-      {e.confidenceNote && <p className="trust__note">{e.confidenceNote}</p>}
+      {e.confidenceNote && <p className="trust__note">{noteBody(e.confidenceNote)}</p>}
       {established.length > 0 && (
         <div className="trust__group">
           <h4 className="trust__h4">{t.story.established}</h4>
