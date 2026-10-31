@@ -11,22 +11,22 @@ import { ORTELIUS_BOUNDS } from './geo';
 // Ortelius' hand-coloured Islandia engraving, shown as a plate on the
 // basalt wall. Per-style colour treatments live in map.css.
 //
-// Esri has no Iceland relief tiles past ~z10 (it serves a "Map data not yet
-// available" placeholder), and the z10 tiles are coarse for Iceland, so the
-// relief styles stop at z9 — any closer and the hillshade turns to blocks.
+// The relief is Esri's World Hillshade (elevation-derived, crisp to z13 over
+// Iceland). The older World Shaded Relief it replaced is a blur of blocks
+// past z7 here and has no tiles at all past ~z10.
 
 const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services';
 export const TILE_URL = {
   imagery: `${ESRI}/World_Imagery/MapServer/tile/{z}/{y}/{x}`,
   physical: `${ESRI}/World_Physical_Map/MapServer/tile/{z}/{y}/{x}`,
-  relief: `${ESRI}/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}`,
+  relief: `${ESRI}/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}`,
 };
 export const ORTELIUS_URL = `${import.meta.env.BASE_URL}ortelius-islandia.webp`;
 
 export const STYLE_MAX_ZOOM: Record<MapStyle, number> = {
   satellite: 14,
-  summer: 9,
-  parchment: 9,
+  summer: 11,
+  parchment: 11,
   ortelius: 9,
 };
 
@@ -63,7 +63,7 @@ export function Basemap({ style }: { style: MapStyle }) {
   return (
     <>
       <TileLayer key={`${style}-colour`} url={TILE_URL.physical} maxNativeZoom={8} maxZoom={STYLE_MAX_ZOOM[style]} className="map-tiles-colour" />
-      <TileLayer key={`${style}-relief`} url={TILE_URL.relief} maxNativeZoom={10} maxZoom={STYLE_MAX_ZOOM[style]} className="map-tiles-relief" />
+      <TileLayer key={`${style}-relief`} url={TILE_URL.relief} maxNativeZoom={13} maxZoom={STYLE_MAX_ZOOM[style]} className="map-tiles-relief" />
     </>
   );
 }

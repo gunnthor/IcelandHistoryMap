@@ -83,6 +83,7 @@ export function useCamera(map: L.Map | null, x: Explorer): Camera {
     (e: ConflictEvent) => {
       if (!map) return 9;
       let z = hasFlag(e, 'location_uncertain') ? 8 : clamp(map.getZoom(), 9, DEEPEST_FLIGHT);
+      // The 1590 plate is one 2300px image: past z8 it's all blur.
       if (live.current.state.mapStyle === 'ortelius') z = Math.min(z, 8);
       return clamp(z, map.getMinZoom(), map.getMaxZoom());
     },
@@ -183,9 +184,12 @@ export function useCamera(map: L.Map | null, x: Explorer): Camera {
     ro.observe(map.getContainer());
 
     // Initial view: a shared link opens on its event, otherwise Iceland.
+    // Closing a story that arrived by link has nothing to go back to, so it
+    // opens out onto the whole island.
     const sel = live.current.selected;
     if (sel) {
       lastSelected.current = sel.id;
+      beforeStory.current = { kind: 'iceland' };
       focusEvent(sel, { animate: false });
     } else fitIceland({ animate: false });
 
@@ -317,11 +321,16 @@ export function useCamera(map: L.Map | null, x: Explorer): Camera {
   useEffect(() => {
     if (!map || !fitRequest) return;
     const L_ = live.current;
-    const pts = L_.route
-      ? L_.route.stops.map((e) => e.coordinates)
-      : L_.filtered.length > 0 && L_.filtered.length < L_.events.length
-        ? L_.filtered.map((e) => e.coordinates)
-        : null;
+    const asked = L_.state.fitIds
+      ?.map((id) => L_.byId.get(id)?.coordinates)
+      .filter((c): c is [number, number] => !!c);
+    const pts = asked?.length
+      ? asked
+      : L_.route
+        ? L_.route.stops.map((e) => e.coordinates)
+        : L_.filtered.length > 0 && L_.filtered.length < L_.events.length
+          ? L_.filtered.map((e) => e.coordinates)
+          : null;
     const bounds = pts && pts.length ? L.latLngBounds(pts) : null;
     if (bounds?.isValid()) {
       intent.current = { kind: 'bounds', bounds, maxZoom: 10 };

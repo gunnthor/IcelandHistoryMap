@@ -2,6 +2,7 @@ import { MutableRefObject, useEffect, useRef } from 'react';
 import L from 'leaflet';
 import { ClanId, ConflictEvent, PowerCenter } from '../../types';
 import { glaciers } from '../../data/glaciers';
+import { places } from '../../data/places';
 import { powerCenters } from '../../data/powerCenters';
 import { CLAN_BATTLES } from '../../data/clanBattles';
 import { CLAN_CONFIG } from '../../utils/clanConfig';
@@ -78,6 +79,80 @@ export function useGlaciers(map: L.Map | null, dodgeRef: MutableRefObject<Dodge 
       layers.forEach((l) => l.remove());
     };
   }, [map, dodgeRef]);
+}
+
+// ── Place names ──
+// Regions in spaced small caps, towns with a dot — a quiet layer under the
+// seals (same pane as the glacier labels) that tells a newcomer where they
+// are. Each appears from its own zoom and, like the glacier names, steps
+// aside for event markers. The 1590 plate hides them: it has its own.
+export function usePlaces(map: L.Map | null, lang: 'en' | 'is', dodgeRef: MutableRefObject<Dodge | null>): void {
+  useEffect(() => {
+    if (!map) return;
+    const markers: L.Marker[] = [];
+    const labels: { el: HTMLElement; minZoom: number; region: boolean }[] = [];
+    for (const p of places) {
+      const m = L.marker(p.coordinates, {
+        pane: 'glacierLabels',
+        interactive: false,
+        keyboard: false,
+        icon: L.divIcon({
+          className: `map-place map-place--${p.kind}`,
+          html: `<span lang="${lang === 'is' || p.name.en === p.name.is ? 'is' : 'en'}">${esc(p.name[lang])}</span>`,
+          iconSize: [0, 0],
+        }),
+      }).addTo(map);
+      markers.push(m);
+      const el = m.getElement();
+      if (el) labels.push({ el, minZoom: p.minZoom, region: p.kind === 'region' });
+    }
+    // Events cluster exactly where the places are, so a region label tries a
+    // few nearby spots before giving up (it names an area, not a point). A
+    // town keeps its dot on the real spot and simply steps back if covered.
+    const SHIFTS: [number, number][] = [
+      [0, 0],
+      [0, -24],
+      [0, 24],
+      [-56, 0],
+      [56, 0],
+      [0, -44],
+      [0, 44],
+    ];
+    dodgeRef.current = (occupied) => {
+      const z = map.getZoom();
+      const box = map.getContainer().getBoundingClientRect();
+      for (const l of labels) {
+        let hide = z < l.minZoom;
+        if (!hide) {
+          l.el.classList.remove('is-hidden');
+          l.el.style.setProperty('--dx', '0px');
+          l.el.style.setProperty('--dy', '0px');
+          const r = (l.el.firstElementChild as HTMLElement).getBoundingClientRect();
+          const free = (l.region ? SHIFTS : SHIFTS.slice(0, 1)).find(
+            ([dx, dy]) =>
+              !hitsAny(
+                {
+                  left: r.left - box.left + dx,
+                  top: r.top - box.top + dy,
+                  right: r.right - box.left + dx,
+                  bottom: r.bottom - box.top + dy,
+                },
+                occupied,
+              ),
+          );
+          if (free) {
+            l.el.style.setProperty('--dx', `${free[0]}px`);
+            l.el.style.setProperty('--dy', `${free[1]}px`);
+          } else hide = true;
+        }
+        l.el.classList.toggle('is-hidden', hide);
+      }
+    };
+    return () => {
+      dodgeRef.current = null;
+      markers.forEach((m) => m.remove());
+    };
+  }, [map, lang, dodgeRef]);
 }
 
 // ── Route line ──

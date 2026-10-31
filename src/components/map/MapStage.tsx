@@ -15,7 +15,7 @@ import { PlaceCard, SeatCard } from './Cards';
 import { ICELAND_LAND, MAX_BOUNDS } from './geo';
 import { MapControls } from './MapControls';
 import { EventLayer, MarkerState, MarkerText } from './markers';
-import { Dodge, traceBounds, useClanLayer, useGlaciers, useRouteLine } from './overlays';
+import { Dodge, traceBounds, useClanLayer, useGlaciers, usePlaces, useRouteLine } from './overlays';
 import './map.css';
 
 // ════════════════════════════════════════════════════════════════
@@ -27,7 +27,7 @@ import './map.css';
 // ════════════════════════════════════════════════════════════════
 
 export function MapStage() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const x = useExplorer();
   const mode = useLayoutMode();
   const short = useIsShort();
@@ -40,6 +40,7 @@ export function MapStage() {
   const seatAnchor = useRef<HTMLElement | null>(null);
   const layerRef = useRef<EventLayer | null>(null);
   const glacierDodge = useRef<Dodge | null>(null);
+  const placeDodge = useRef<Dodge | null>(null);
   const seatDodge = useRef<Dodge | null>(null);
   // Leaflet reads its animation options once, at creation.
   const [reduced] = useState(prefersReducedMotion);
@@ -93,6 +94,7 @@ export function MapStage() {
         laidOut: () => {
           const occupied = layer.occupied();
           glacierDodge.current?.(occupied);
+          placeDodge.current?.(occupied);
           seatDodge.current?.(occupied);
         },
       },
@@ -123,6 +125,7 @@ export function MapStage() {
 
   // ── Overlays ──
   useGlaciers(map, glacierDodge);
+  usePlaces(map, lang, placeDodge);
   useRouteLine(map, x.route?.stops ?? null, x.state.routeCursor);
   const onMap = useMemo(() => new Set(x.mapEvents.map((e) => e.id)), [x.mapEvents]);
   const seatName = useCallback((pc: PowerCenter) => `${pc.name}, ${CLAN_CONFIG[pc.clan].label}`, []);
@@ -148,8 +151,9 @@ export function MapStage() {
     const occupied = layerRef.current?.occupied();
     if (!occupied) return;
     glacierDodge.current?.(occupied);
+    placeDodge.current?.(occupied);
     if (showClans) seatDodge.current?.(occupied);
-  }, [showClans, map]);
+  }, [showClans, map, lang]);
 
   // The trace dies with the layer (manual toggle, leaving the Sturlung era,
   // a route starting).

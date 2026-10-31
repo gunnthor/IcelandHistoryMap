@@ -76,7 +76,7 @@ export function MapControls({
   return (
     <>
       <div className="map-controls" data-hidden={hidden || undefined}>
-        <IconButton float icon="fit" label={t.map.fit} onClick={x.requestFit} />
+        <IconButton float icon="fit" label={t.map.fit} onClick={() => x.requestFit()} />
         {!coarse && (
           <div className="map-controls__zoom">
             <IconButton

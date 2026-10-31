@@ -64,9 +64,22 @@
   filter: sepia(0.72) saturate(0.7) contrast(1.14) brightness(0.97);
 }
 
+/* Relief styles: Esri's physical map supplies the colour (green lowlands,
+   brown highlands) and World Hillshade the terrain, multiplied on top. The
+   hillshade is neutral grey, so it's warmed to the old relief's brown. The
+   colour layer has little real detail past z7 — upscaled, its own baked-in
+   shading turns to blocks — so it softens as you zoom in (--colour-blur is
+   set per zoom in markers.ts) while the hillshade keeps every ridge crisp. */
 .map-stage .map-tiles-relief {
   mix-blend-mode: multiply;
-  opacity: 0.62;
+  opacity: 0.85;
+  filter: sepia(0.8) saturate(1.8) hue-rotate(-8deg);
+}
+.map-stage .map-tiles-colour {
+  filter: blur(var(--colour-blur, 0px));
+}
+.map-stage[data-style='summer'] .map-tiles-colour {
+  filter: saturate(1.45) brightness(0.97) blur(var(--colour-blur, 0px));
 }
 
 /* 1590: the engraving as a plate lit on the basalt wall. */
@@ -110,6 +123,56 @@
   text-shadow: 0 0 2px var(--basalt-950), 0 0 6px var(--basalt-950);
 }
 .map-glacier-label.is-hidden {
+  visibility: hidden;
+}
+
+/* ── Place names: regions in spaced caps, towns with a dot ──
+   Quiet by design — orientation, not a road map. Ink with a vellum halo on
+   the relief styles; vellum with a basalt halo on satellite. */
+.map-place > span {
+  position: absolute;
+  white-space: nowrap;
+  font-family: var(--font-ui);
+  color: var(--ink-700);
+  text-shadow: 0 0 2px var(--vellum-50), 0 0 5px var(--vellum-50), 0 0 9px var(--vellum-50);
+  pointer-events: none;
+}
+.map-place--region > span {
+  /* --dx/--dy: the nudge the dodge picked to clear the event seals. */
+  transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px)));
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.86;
+}
+.map-place--town > span {
+  transform: translate(-4px, -50%);
+  padding-left: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.map-place--town > span::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2.5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 1.5px var(--vellum-50);
+}
+.map-stage[data-style='satellite'] .map-place > span {
+  color: var(--vellum-50);
+  text-shadow: 0 0 2px var(--basalt-950), 0 0 6px var(--basalt-950), 0 0 10px var(--basalt-950);
+}
+.map-stage[data-style='satellite'] .map-place--town > span::before {
+  box-shadow: 0 0 0 1.5px var(--basalt-950);
+}
+.map-place.is-hidden,
+.map-stage[data-style='ortelius'] .map-place {
   visibility: hidden;
 }
 
@@ -990,4 +1053,17 @@
   .map-card__sources a:hover {
     text-decoration: underline;
   }
+}
+
+/* Landscape phones: the control column reaches the bottom of the short map,
+   so the credits ⓘ moves to the opposite corner. */
+.app[data-short] .map-credits[data-compact] {
+  right: auto;
+  left: calc(var(--inset-left) + var(--sp-2));
+}
+
+/* On a route, the numbered stops carry the story; the "+n" pills for
+   stepped-back events beneath them are hidden (except on the open stop). */
+.map-canvas[data-route] .cl-marker[data-key^='s:']:not(.is-on-selected) {
+  display: none;
 }

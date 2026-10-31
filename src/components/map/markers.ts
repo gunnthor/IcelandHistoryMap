@@ -199,6 +199,9 @@ export class EventLayer {
     // Moving through a route changes which crowded stop is in front.
     const fanChanged = prev.cursor !== next.cursor && next.stops.length > 0;
     if (selectionChanged && next.selectedId) this.tabKey = next.selectedId;
+    // During a route the off-route events step back; their "+n" pills on
+    // the numbered stops would only add noise (see map.css).
+    this.map.getContainer().toggleAttribute('data-route', next.stops.length > 0);
     this.applyState(selectionChanged);
     if (pinsChanged) this.entries.forEach((en) => this.label(en)); // "stop n of m" in names
     if (pinsChanged || fanChanged) this.relayout();
@@ -372,6 +375,8 @@ export class EventLayer {
     // CSS reads --seal-scale; the layout merges at the drawn size.
     const scale = z < 5.75 ? 0.6 : z < 6.5 ? 0.72 : z < 7.5 ? 0.86 : 1;
     map.getContainer().style.setProperty('--seal-scale', String(scale));
+    // The relief styles' colour layer softens once it's being upscaled (map.css).
+    map.getContainer().style.setProperty('--colour-blur', z <= 7.25 ? '0px' : z <= 8.25 ? '3px' : '6px');
     const res = layoutMarkers(points, this.primaryOf, SEAL * scale);
 
     const shown = new Set([...res.singles, ...pinned]);
