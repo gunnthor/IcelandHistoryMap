@@ -16,6 +16,23 @@ import { Confidence } from '../../types';
 import { CONFIDENCE_CONFIG } from '../../utils/eventConfig';
 import './ui.css';
 
+// ── Focus restoration that respects how the visitor got here ──
+// Handing focus back after a dialog, sheet or story closes is essential for
+// keyboard users — but after a tap it lights a focus ring on whatever opened
+// the layer, which reads as a stuck highlight. So the ring follows the last
+// input: keyboard → visible, pointer → focus quietly.
+let lastInput: 'keyboard' | 'pointer' = 'pointer';
+if (typeof window !== 'undefined') {
+  window.addEventListener('keydown', () => (lastInput = 'keyboard'), true);
+  window.addEventListener('pointerdown', () => (lastInput = 'pointer'), true);
+}
+
+export function restoreFocus(el: HTMLElement | null | undefined): void {
+  // focusVisible is a newer FocusOptions member (Chromium, Firefox); where
+  // unsupported the browser's own :focus-visible heuristic applies.
+  el?.focus({ preventScroll: true, focusVisible: lastInput === 'keyboard' } as FocusOptions);
+}
+
 // ── Button ──
 type ButtonVariant = 'primary' | 'secondary' | 'ghost';
 
@@ -218,7 +235,7 @@ export function Popover({
 
   useEscape(() => {
     onClose();
-    anchorRef.current?.focus();
+    restoreFocus(anchorRef.current);
   }, open);
 
   if (!open) return null;
@@ -261,7 +278,7 @@ export function Dialog({ open, onClose, labelledBy, tone = 'dark', className, ch
       d.showModal();
     } else if (!open && d.open) {
       d.close();
-      opener.current?.focus?.();
+      restoreFocus(opener.current);
     }
   }, [open]);
 

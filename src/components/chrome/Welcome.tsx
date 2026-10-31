@@ -30,10 +30,13 @@ export function Welcome({ compact, short }: { compact: boolean; short?: boolean 
   const [el, setEl] = useState<HTMLElement | null>(null);
   useEffect(() => {
     if (!el) return;
-    const edge = compact ? 'bottom' : 'left';
+    // Landscape phones get the placard on the left too: a bottom inset there
+    // would leave the map a strip too thin to frame anything in.
+    const below = compact && !short;
+    const edge = below ? 'bottom' : 'left';
     // Layout boxes, not getBoundingClientRect: the entrance animation moves
     // the card, and the map should frame for where it lands.
-    const measure = () => setInset('welcome', edge, compact ? el.offsetHeight + 8 : el.offsetLeft + el.offsetWidth + 8);
+    const measure = () => setInset('welcome', edge, below ? el.offsetHeight + 8 : el.offsetLeft + el.offsetWidth + 8);
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
@@ -41,7 +44,7 @@ export function Welcome({ compact, short }: { compact: boolean; short?: boolean 
       ro.disconnect();
       setInset('welcome', edge, 0);
     };
-  }, [el, compact]);
+  }, [el, compact, short]);
 
   // The store hides the card on any action (a marker, a route, Play) but
   // only setWelcome(false) remembers it — so make every dismissal stick.

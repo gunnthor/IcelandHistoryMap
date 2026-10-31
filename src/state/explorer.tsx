@@ -71,6 +71,9 @@ interface State {
   mapStyle: MapStyle;
   /** Bumped to ask the map to frame all of Iceland (or the route). */
   fitRequest: number;
+  /** Events the latest fit request should frame (e.g. a finished route);
+   *  null means the usual: the route, the matches, or all of Iceland. */
+  fitIds: string[] | null;
   /** Bumped to ask the map to re-centre on the selection. */
   focusRequest: number;
   /** Shared hover between map markers, timeline ticks and lists. */
@@ -95,7 +98,7 @@ type Action =
   | { type: 'playing'; on: boolean }
   | { type: 'dialog'; id: DialogId }
   | { type: 'mapStyle'; style: MapStyle }
-  | { type: 'fit' }
+  | { type: 'fit'; ids: string[] | null }
   | { type: 'focus' }
   | { type: 'hover'; id: string | null }
   | { type: 'welcome'; open: boolean }
@@ -132,6 +135,7 @@ function init(): State {
     dialog: null,
     mapStyle: loadMapStyle(),
     fitRequest: 0,
+    fitIds: null,
     focusRequest: 0,
     hoveredId: null,
     // First visit only, and never on top of a shared link.
@@ -194,7 +198,7 @@ function reducer(s: State, a: Action): State {
     case 'mapStyle':
       return { ...s, mapStyle: a.style };
     case 'fit':
-      return { ...s, fitRequest: s.fitRequest + 1 };
+      return { ...s, fitRequest: s.fitRequest + 1, fitIds: a.ids };
     case 'focus':
       return { ...s, focusRequest: s.focusRequest + 1 };
     case 'hover':
@@ -297,7 +301,8 @@ export interface Explorer {
   openDialog: (id: DialogId) => void;
   closeDialog: () => void;
   setMapStyle: (style: MapStyle) => void;
-  requestFit: () => void;
+  /** Frame these events, or (no ids) the route / the matches / Iceland. */
+  requestFit: (ids?: string[]) => void;
   requestFocus: () => void;
   setHovered: (id: string | null) => void;
   setWelcome: (open: boolean) => void;
@@ -502,7 +507,7 @@ export function ExplorerProvider({ children, announcer }: { children: ReactNode;
         storage.set(KEYS.mapStyle, style);
         dispatch({ type: 'mapStyle', style });
       },
-      requestFit: () => dispatch({ type: 'fit' }),
+      requestFit: (ids?: string[]) => dispatch({ type: 'fit', ids: ids?.length ? ids : null }),
       requestFocus: () => dispatch({ type: 'focus' }),
       setHovered: (id: string | null) => dispatch({ type: 'hover', id }),
       setWelcome: (open: boolean) => {
@@ -581,7 +586,9 @@ export function ExplorerProvider({ children, announcer }: { children: ReactNode;
   const prevSelected = useRef(state.selectedId);
   useEffect(() => {
     const base = import.meta.env.BASE_URL;
-    const path = selected ? `${base}event/${selected.id}` : base;
+    // Trailing slash: the prerendered page's own form, so a copied address
+    // bar unfurls with the event's share card too.
+    const path = selected ? `${base}event/${selected.id}/` : base;
     const opening = !prevSelected.current && !!selected;
     const closing = !!prevSelected.current && !selected;
     prevSelected.current = selected?.id ?? null;

@@ -686,14 +686,12 @@
   font-size: var(--fs-title);
   line-height: var(--lh-title);
 }
+/* Taglines are the pitch for each route — shown whole on desktop (the
+   cards grow); phones clamp them further down. */
 .route-card__tagline {
   font-size: var(--fs-small);
   line-height: var(--lh-small);
   color: var(--bone-300);
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 .is-featured .route-card__tagline {
   font-size: var(--fs-ui);
@@ -822,7 +820,10 @@
   .is-featured .route-card__tagline {
     font-size: var(--fs-small);
     line-height: var(--lh-small);
-    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
@@ -1474,4 +1475,13 @@
   flex-direction: column;
   padding-top: var(--sp-2);
   border-top: 1px solid var(--line-dark);
+}
+
+/* Phones: the token row scrolls sideways, so "Clear all" goes up front,
+   right after the Filters chip, instead of under the fade at the far end. */
+.chrome-compact__tokens > .chrome-compact__filters {
+  order: -2;
+}
+.chrome-compact__tokens > .chrome-tokens__clear {
+  order: -1;
 }
