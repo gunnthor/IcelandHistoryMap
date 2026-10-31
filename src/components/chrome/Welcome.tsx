@@ -1,7 +1,8 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useI18n } from '../../i18n';
 import { useExplorer } from '../../state/explorer';
 import { useEscape } from '../../state/escape';
+import { setInset } from '../../state/layout';
 import { TOURS } from '../../data/tours';
 import { Button, IconButton } from '../ui';
 import { Icon } from '../icons/Icon';
@@ -22,6 +23,25 @@ export function Welcome({ compact, short }: { compact: boolean; short?: boolean 
   const visible = x.state.welcome && !x.selected;
   const dismiss = () => x.setWelcome(false);
   useEscape(dismiss, visible);
+
+  // The card sits over the map: report it, so the camera frames Iceland in
+  // what's left (and re-frames once it's dismissed). On phones it covers the
+  // bottom; elsewhere it's a placard down the left side, over the West Fjords.
+  const [el, setEl] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (!el) return;
+    const edge = compact ? 'bottom' : 'left';
+    // Layout boxes, not getBoundingClientRect: the entrance animation moves
+    // the card, and the map should frame for where it lands.
+    const measure = () => setInset('welcome', edge, compact ? el.offsetHeight + 8 : el.offsetLeft + el.offsetWidth + 8);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      setInset('welcome', edge, 0);
+    };
+  }, [el, compact]);
 
   // The store hides the card on any action (a marker, a route, Play) but
   // only setWelcome(false) remembers it — so make every dismissal stick.
@@ -58,6 +78,7 @@ export function Welcome({ compact, short }: { compact: boolean; short?: boolean 
 
   return (
     <section
+      ref={setEl}
       onFocus={() => (hasFocus.current = true)}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) hasFocus.current = false;

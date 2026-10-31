@@ -154,8 +154,10 @@
   box-shadow: inset 0 0 0 1px var(--line-dark);
   transition: box-shadow var(--dur-fast) var(--ease-out);
 }
-.chrome-search__field:hover {
-  box-shadow: inset 0 0 0 1px var(--line-dark-strong);
+@media (hover: hover) {
+  .chrome-search__field:hover {
+    box-shadow: inset 0 0 0 1px var(--line-dark-strong);
+  }
 }
 /* The ring sits on the field so the icon and clear button sit inside it. */
 .chrome-search__field:focus-within {
@@ -208,9 +210,11 @@
   border-radius: var(--r-sm);
   color: var(--bone-400);
 }
-.chrome-search__clear:hover {
-  color: var(--bone-100);
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .chrome-search__clear:hover {
+    color: var(--bone-100);
+    background: var(--basalt-800);
+  }
 }
 @media (pointer: coarse) {
   .chrome-search__input {
@@ -236,9 +240,11 @@
   white-space: nowrap;
   transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
-.chrome-filters-btn:hover {
-  color: var(--bone-100);
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .chrome-filters-btn:hover {
+    color: var(--bone-100);
+    background: var(--basalt-800);
+  }
 }
 .chrome-filters-btn[aria-expanded='true'] {
   color: var(--brass-300);
@@ -274,9 +280,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.chrome-token:hover .ui-chip__x {
-  color: var(--bone-100);
-  background: var(--basalt-700);
+@media (hover: hover) {
+  .chrome-token:hover .ui-chip__x {
+    color: var(--bone-100);
+    background: var(--basalt-700);
+  }
 }
 .chrome-tokens__clear {
   background: var(--glass);
@@ -431,8 +439,10 @@
   cursor: pointer;
   transition: background-color var(--dur-fast) var(--ease-out);
 }
-.flt-check:hover {
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .flt-check:hover {
+    background: var(--basalt-800);
+  }
 }
 .flt-check--all {
   margin-bottom: var(--sp-1);
@@ -507,6 +517,14 @@
 }
 .flt-confidence__label {
   text-wrap: balance;
+}
+/* The desktop popover has room for every label on one line if "Any" takes
+   less of it; the phone sheet keeps balanced wrapping. */
+.chrome-filters-pop .flt-confidence.ui-seg {
+  grid-template-columns: minmax(0, 0.7fr) repeat(3, minmax(0, 1.1fr));
+}
+.chrome-filters-pop .flt-confidence__label {
+  white-space: nowrap;
 }
 
 .flt-years {
@@ -635,9 +653,11 @@
   text-align: left;
   transition: background-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
 }
-.route-card:hover {
-  background: var(--basalt-800);
-  box-shadow: inset 0 0 0 1px var(--brass-500);
+@media (hover: hover) {
+  .route-card:hover {
+    background: var(--basalt-800);
+    box-shadow: inset 0 0 0 1px var(--brass-500);
+  }
 }
 .route-card__sketch {
   grid-row: 1 / -1;
@@ -697,10 +717,15 @@
   transform: translateX(-4px);
   transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.route-card:hover .route-card__go,
 .route-card:focus-visible .route-card__go {
   opacity: 1;
   transform: none;
+}
+@media (hover: hover) {
+  .route-card:hover .route-card__go {
+    opacity: 1;
+    transform: none;
+  }
 }
 .route-sketch {
   display: block;
@@ -734,8 +759,10 @@
   stroke: var(--basalt-950);
   stroke-width: 1.25;
 }
-.route-card:hover .route-sketch__line {
-  stroke: var(--brass-300);
+@media (hover: hover) {
+  .route-card:hover .route-sketch__line {
+    stroke: var(--brass-300);
+  }
 }
 .chrome-routes__foot {
   display: flex;
@@ -856,8 +883,10 @@
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
-.chrome-about__inline:hover {
-  text-decoration-thickness: 2px;
+@media (hover: hover) {
+  .chrome-about__inline:hover {
+    text-decoration-thickness: 2px;
+  }
 }
 .chrome-about__disclaimer {
   margin-top: var(--sp-4);
@@ -1078,7 +1107,10 @@
 .chrome-welcome.is-compact {
   left: var(--sp-2);
   right: var(--sp-2);
-  bottom: calc(var(--inset-bottom) + var(--sp-2));
+  /* Above the dock only: on phones the card reports its own height as a
+     bottom inset (so the map frames Iceland above it), and positioning it
+     from --inset-bottom would chase its own tail. */
+  bottom: calc(var(--dock-h, 0px) + var(--sp-2));
   width: auto;
   max-width: 480px;
   margin: 0 auto;
@@ -1119,8 +1151,13 @@
   }
 }
 @media (max-height: 600px) {
-  .chrome-welcome.is-compact .chrome-welcome__body {
+  /* Small phones: title and the three ways in — the ✕ still dismisses. */
+  .chrome-welcome.is-compact .chrome-welcome__body,
+  .chrome-welcome.is-compact .chrome-welcome__foot {
     display: none;
+  }
+  .chrome-welcome.is-compact {
+    padding-bottom: var(--sp-4);
   }
 }
 
@@ -1402,8 +1439,10 @@
   text-decoration: none;
   transition: background-color var(--dur-fast) var(--ease-out);
 }
-.chrome-menu__row:hover {
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .chrome-menu__row:hover {
+    background: var(--basalt-800);
+  }
 }
 .chrome-menu__row > svg:first-child {
   flex-shrink: 0;

@@ -1,5 +1,5 @@
 import { ConflictEvent } from '../../types';
-import { ICELAND_OUTLINE } from './icelandOutline';
+import { ICELAND_OUTLINE } from '../../data/icelandOutline';
 
 // A thumbnail of a story route: Iceland's outline with the stops placed by
 // their real coordinates and joined by the brass line the route will draw on
