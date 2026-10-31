@@ -23,9 +23,9 @@ const hitsAny = (r: { left: number; top: number; right: number; bottom: number }
 // ── Glaciers ──
 // Iceland's ice caps (real OSM outlines) as quiet "white realms". Faded on
 // satellite, where the real ice shows through; hidden on the 1590 plate,
-// which draws its own. Labels are Cormorant italic, appear from z7 (the
-// small caps from z8 so neighbours don't collide), and step aside for
-// event markers.
+// which draws its own. Labels are Cormorant italic — the big ice caps from
+// the whole-island view (a phone's overview included), the small caps from
+// z8 so neighbours don't collide — and step aside for event markers.
 const LABEL_MIN_ZOOM: Record<string, number> = {
   Eyjafjallajökull: 8,
   Snæfellsjökull: 8,
@@ -56,7 +56,7 @@ export function useGlaciers(map: L.Map | null, dodgeRef: MutableRefObject<Dodge 
       }).addTo(map);
       layers.push(m);
       const el = m.getElement();
-      if (el) labels.push({ el, minZoom: LABEL_MIN_ZOOM[g.name] ?? 6.5 });
+      if (el) labels.push({ el, minZoom: LABEL_MIN_ZOOM[g.name] ?? 5.25 });
     }
     dodgeRef.current = (occupied) => {
       const z = map.getZoom();

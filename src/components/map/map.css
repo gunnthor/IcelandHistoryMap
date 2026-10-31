@@ -1063,7 +1063,7 @@
 }
 
 /* On a route, the numbered stops carry the story; the "+n" pills for
-   stepped-back events beneath them are hidden (except on the open stop). */
-.map-canvas[data-route] .cl-marker[data-key^='s:']:not(.is-on-selected) {
+   stepped-back events beneath them are hidden. */
+.map-canvas[data-route] .cl-marker[data-key^='s:'] {
   display: none;
 }

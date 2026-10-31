@@ -135,7 +135,12 @@ export function Rail() {
   useLayoutEffect(() => {
     const host = bandsRef.current;
     if (!host) return;
-    const f = flagRef.current?.getBoundingClientRect();
+    // Where the flag is going, not where it is: the needle slides between
+    // events, so its live rect still shows the previous position.
+    const rail = railRef.current?.getBoundingClientRect();
+    const fw = flagRef.current?.offsetWidth ?? 0;
+    const cx = rail && n ? rail.left + ((axis.selected + 0.5) / n) * rail.width : 0;
+    const f = rail && fw && axis.selected >= 0 ? { left: cx - fw / 2, right: cx + fw / 2 } : null;
     host.querySelectorAll<HTMLElement>('.tl-band').forEach((band) => {
       let covered = false;
       const label = band.querySelector<HTMLElement>('.tl-band__label');
@@ -149,7 +154,7 @@ export function Rail() {
       }
       band.toggleAttribute('data-covered', covered);
     });
-  }, [axis.selected, width, axis.bands]);
+  }, [axis.selected, width, axis.bands, n]);
 
   if (!n) {
     return (

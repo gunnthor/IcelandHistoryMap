@@ -17,7 +17,7 @@ export interface Place {
 
 export const places: Place[] = [
   // Regions: peninsulas, bays, islands
-  { id: 'vestfirdir', kind: 'region', coordinates: [65.908, -22.904], name: { en: 'Westfjords', is: 'Vestfirðir' }, minZoom: 6 },
+  { id: 'vestfirdir', kind: 'region', coordinates: [65.908, -22.904], name: { en: 'Westfjords', is: 'Vestfirðir' }, minZoom: 5.25 },
   { id: 'snaefellsnes', kind: 'region', coordinates: [64.903, -22.926], name: { en: 'Snæfellsnes', is: 'Snæfellsnes' }, minZoom: 6.5 },
   { id: 'reykjanes', kind: 'region', coordinates: [63.941, -22.254], name: { en: 'Reykjanes', is: 'Reykjanesskagi' }, minZoom: 6.5 },
   { id: 'hunafloi', kind: 'region', coordinates: [65.757, -20.852], name: { en: 'Húnaflói', is: 'Húnaflói' }, minZoom: 6.5 },
@@ -29,7 +29,7 @@ export const places: Place[] = [
   { id: 'reykjavik', kind: 'town', coordinates: [64.146, -21.9422], name: { en: 'Reykjavík', is: 'Reykjavík' }, minZoom: 6 },
   { id: 'akureyri', kind: 'town', coordinates: [65.6826, -18.0913], name: { en: 'Akureyri', is: 'Akureyri' }, minZoom: 6.5 },
   { id: 'isafjordur', kind: 'town', coordinates: [66.0727, -23.1194], name: { en: 'Ísafjörður', is: 'Ísafjörður' }, minZoom: 7 },
-  { id: 'egilsstadir', kind: 'town', coordinates: [65.262, -14.4035], name: { en: 'Egilsstaðir', is: 'Egilsstaðir' }, minZoom: 6.5 },
-  { id: 'hofn', kind: 'town', coordinates: [64.2533, -15.208], name: { en: 'Höfn', is: 'Höfn' }, minZoom: 6.5 },
-  { id: 'husavik', kind: 'town', coordinates: [66.0433, -17.341], name: { en: 'Húsavík', is: 'Húsavík' }, minZoom: 6.5 },
+  { id: 'egilsstadir', kind: 'town', coordinates: [65.262, -14.4035], name: { en: 'Egilsstaðir', is: 'Egilsstaðir' }, minZoom: 5.5 },
+  { id: 'hofn', kind: 'town', coordinates: [64.2533, -15.208], name: { en: 'Höfn', is: 'Höfn' }, minZoom: 5.5 },
+  { id: 'husavik', kind: 'town', coordinates: [66.0433, -17.341], name: { en: 'Húsavík', is: 'Húsavík' }, minZoom: 5.5 },
 ];

@@ -236,7 +236,12 @@ export function useCamera(map: L.Map | null, x: Explorer): Camera {
       const i = intent.current;
       beforeStory.current = i.kind === 'free' ? { kind: 'view', center: map.getCenter(), zoom: map.getZoom() } : i;
     }
-    if (startedRoute && stops && stops.length > 1) {
+    // On a very small phone the map left above the route sheet is too small
+    // for a legible overview: open on stop 1 instead.
+    const ins = getInsets();
+    const size = map.getSize();
+    const roomy = size.y - ins.top - ins.bottom >= 220 && size.x - ins.left - ins.right >= 220;
+    if (startedRoute && roomy && stops && stops.length > 1) {
       const bounds = L.latLngBounds(stops.map((s) => s.coordinates));
       if (bounds.isValid()) {
         lastSelected.current = selId;

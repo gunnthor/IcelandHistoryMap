@@ -1112,6 +1112,9 @@
      bottom inset (so the map frames Iceland above it), and positioning it
      from --inset-bottom would chase its own tail. */
   bottom: calc(var(--dock-h, 0px) + var(--sp-2));
+  /* Same reason for the height cap: --inset-bottom includes this card, so
+     a cap derived from it would flip the card between two heights forever. */
+  max-height: calc(100dvh - var(--inset-top) - var(--dock-h, 0px) - var(--sp-6));
   width: auto;
   max-width: 480px;
   margin: 0 auto;
