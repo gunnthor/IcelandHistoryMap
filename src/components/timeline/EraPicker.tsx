@@ -1,14 +1,14 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 import { MAX_YEAR, MIN_YEAR, useExplorer } from '../../state/explorer';
 import { useI18n } from '../../i18n';
-import { ERAS } from '../../utils/eventConfig';
 
 // ── Era presets ──
 // "All eras" + one button per era. Toggle buttons (aria-pressed), not a
 // radio group: the year range can be something no button describes (a
 // dragged brush), and picking the active era again returns to all years.
-// Wide: a segmented strip with the years set small. Compact: chips that
-// scroll sideways and keep the active one in view.
+// Wide: a segmented strip (the rail right below labels each band with its
+// years, so the tabs don't repeat them). Compact: chips that scroll sideways
+// and keep the active one in view.
 export function EraPicker({ variant }: { variant: 'tabs' | 'chips' }) {
   const x = useExplorer();
   const { t } = useI18n();
@@ -22,19 +22,14 @@ export function EraPicker({ variant }: { variant: 'tabs' | 'chips' }) {
       id: null as string | null,
       label: t.timeline.allEras,
       title: t.timeline.allErasTitle(MIN_YEAR, MAX_YEAR),
-      years: null as string | null,
       pressed: all,
     },
-    ...x.eras.map((era) => {
-      const nominal = ERAS.find((e) => e.id === era.id)?.range ?? era.range;
-      return {
-        id: era.id as string | null,
-        label: t.eras[era.id]?.label ?? era.id,
-        title: t.eras[era.id]?.hint,
-        years: nominal[1] > MAX_YEAR ? t.timeline.rangeFrom(nominal[0]) : t.timeline.range(nominal[0], nominal[1]),
-        pressed: x.activeEraId === era.id,
-      };
-    }),
+    ...x.eras.map((era) => ({
+      id: era.id as string | null,
+      label: t.eras[era.id]?.label ?? era.id,
+      title: t.eras[era.id]?.hint,
+      pressed: x.activeEraId === era.id,
+    })),
   ];
 
   // Keep the active chip in view, and fade only the edges that hide more.
@@ -90,7 +85,6 @@ export function EraPicker({ variant }: { variant: 'tabs' | 'chips' }) {
           onClick={() => x.selectEra(item.id)}
         >
           {item.label}
-          {!chips && item.years && <span className="tl-era__years">{item.years}</span>}
         </button>
       ))}
     </div>

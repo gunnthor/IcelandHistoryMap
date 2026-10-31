@@ -95,18 +95,22 @@
   border: 1.5px solid var(--brass-500);
   color: var(--brass-300);
 }
-.tl-dock .tl-play:hover {
-  border-color: var(--brass-300);
-  background: var(--basalt-800);
-  color: var(--brass-300);
+@media (hover: hover) {
+  .tl-dock .tl-play:hover {
+    border-color: var(--brass-300);
+    background: var(--basalt-800);
+    color: var(--brass-300);
+  }
 }
 .tl-dock .tl-play[aria-pressed='true'] {
   background: var(--brass-400);
   border-color: var(--brass-400);
   color: var(--basalt-950);
 }
-.tl-dock .tl-play[aria-pressed='true']:hover {
-  background: var(--brass-300);
+@media (hover: hover) {
+  .tl-dock .tl-play[aria-pressed='true']:hover {
+    background: var(--brass-300);
+  }
 }
 .tl-dock .tl-play[aria-disabled='true'] {
   border-color: var(--line-dark-strong);
@@ -171,21 +175,6 @@
   flex-shrink: 0;
   white-space: nowrap;
 }
-.tl-era__years {
-  margin-left: 6px;
-  font-weight: 400;
-  color: var(--bone-400);
-  font-variant-numeric: tabular-nums lining-nums;
-}
-.tl-era[aria-pressed='true'] .tl-era__years {
-  color: inherit;
-  opacity: 0.72;
-}
-@container (max-width: 1080px) {
-  .tl-era__years {
-    display: none;
-  }
-}
 
 /* ── Status ── */
 .tl-status {
@@ -199,10 +188,6 @@
 .tl-status__range {
   color: var(--bone-100);
   font-weight: 500;
-}
-.tl-status--playing {
-  color: var(--brass-300);
-  font-weight: 600;
 }
 @container (max-width: 620px) {
   .tl-status {
@@ -423,6 +408,10 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums lining-nums;
   white-space: nowrap;
+  /* The flag sits in the band-label row; a halo of the dock's own surface
+     cuts the label cleanly instead of colliding with its letters. */
+  z-index: 1;
+  box-shadow: 0 0 0 4px var(--basalt-850);
 }
 
 /* ── Axis: baseline, century marks, end years; press anywhere on it to move
@@ -528,14 +517,23 @@
   background: var(--brass-400);
   opacity: 0.9;
 }
-.tl-handle:hover::after,
 .tl-handle.is-dragging::after {
   transform: scale(1.2);
   background: var(--bone-100);
 }
-.tl-rail[data-ranged] .tl-handle:hover::after,
+@media (hover: hover) {
+  .tl-handle:hover::after {
+    transform: scale(1.2);
+    background: var(--bone-100);
+  }
+}
 .tl-rail[data-ranged] .tl-handle.is-dragging::after {
   background: var(--brass-300);
+}
+@media (hover: hover) {
+  .tl-rail[data-ranged] .tl-handle:hover::after {
+    background: var(--brass-300);
+  }
 }
 .tl-handle__flag {
   position: absolute;
@@ -556,10 +554,14 @@
   pointer-events: none;
   transition: opacity var(--dur-fast) var(--ease-out);
 }
-.tl-handle:hover .tl-handle__flag,
 .tl-handle:focus-visible .tl-handle__flag,
 .tl-handle.is-dragging .tl-handle__flag {
   opacity: 1;
+}
+@media (hover: hover) {
+  .tl-handle:hover .tl-handle__flag {
+    opacity: 1;
+  }
 }
 
 /* ── Tooltip (hover / keyboard focus) ── */
@@ -913,8 +915,10 @@
   text-align: left;
   transition: background-color var(--dur-fast) var(--ease-out);
 }
-.tl-row:hover {
-  background: var(--basalt-800);
+@media (hover: hover) {
+  .tl-row:hover {
+    background: var(--basalt-800);
+  }
 }
 .tl-row:focus-visible {
   outline-offset: -2px;

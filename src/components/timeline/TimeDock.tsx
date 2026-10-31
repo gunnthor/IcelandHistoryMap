@@ -122,11 +122,8 @@ function Status() {
   const x = useExplorer();
   const { t } = useI18n();
   const range = useRangeLabel();
-  if (x.state.playing && x.selected) {
-    const i = x.playlist.findIndex((e) => e.id === x.selected!.id);
-    if (i >= 0)
-      return <span className="tl-status tl-status--playing t-num">{t.timeline.playing(i + 1, x.playlist.length)}</span>;
-  }
+  // While playing, "Playing 3 of 15" lives in the story's ribbon next to its
+  // Pause button; the dock keeps showing what's in play (and its dwell line).
   const count = x.filtersActive ? t.shownOf(x.filtered.length, x.events.length) : t.eventCount(x.events.length);
   return (
     <span className="tl-status t-num">
