@@ -29,6 +29,7 @@ const EVENT_TYPES = [
   'political',
   'eruption',
   'plague',
+  'disaster',
 ] as const;
 
 const UNCERTAINTY_FLAGS = [

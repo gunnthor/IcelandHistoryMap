@@ -114,9 +114,13 @@ Saga-era events often have uncertain exact locations. Use the closest known mode
 ## Deployment
 
 The app is a static Vite SPA, so any static host works. It's deployed on
-**Vercel** (zero-config: framework `Vite`, build `npm run build`, output `dist`).
-Pushing to `main` triggers a new production deploy when the GitHub integration
-is connected.
+**Vercel** (zero-config: framework `Vite`, build `npm run build`, output `dist`)
+and served at **https://map.gunnthor.is**. Pushing to `main` triggers a new
+production deploy when the GitHub integration is connected.
+
+If the site ever moves domains again, change `SITE_URL` in `vite.config.ts` —
+it's the only place the origin is baked in (canonical tags, OG URLs, and
+`sitemap.xml`).
 
 ## License
 

@@ -301,6 +301,7 @@ button, .chip, a {
 .marker-massacre   { background: #8a1f1f; }
 .marker-eruption   { background: #b5391f; }
 .marker-plague     { background: #5f7a2e; }
+.marker-disaster   { background: #148f77; }
 .marker-other      { background: #717d7e; }
 
 /* ── Clan power-centers layer ── */

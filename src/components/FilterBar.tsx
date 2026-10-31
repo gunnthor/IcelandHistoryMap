@@ -28,6 +28,7 @@ const EVENT_TYPES: EventType[] = [
   'occupation',
   'eruption',
   'plague',
+  'disaster',
 ];
 const CONFIDENCES: Confidence[] = ['high', 'medium', 'low'];
 

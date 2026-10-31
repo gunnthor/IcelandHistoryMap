@@ -1963,6 +1963,67 @@ export const events: ConflictEvent[] = [
     ],
   },
   {
+    id: 'axlar-bjorn-1596',
+    name: 'Axlar-Björn — Iceland\'s Only Serial Killer',
+    icelandicName: 'Axlar-Björn',
+    aliases: ['Axlar-Bjorn', 'Björn Pétursson', 'serial killer', 'Öxl', 'Ígultjörn'],
+    year: 1596,
+    dateText: 'Executed spring 1596 (murders through the preceding years)',
+    period: 'Danish Rule / Post-Reformation',
+    type: 'killing',
+    locationName: 'Öxl in Breiðuvík, south Snæfellsnes (west of Búðir)',
+    coordinates: [64.8292, -23.4289],
+    factions: [
+      'Björn Pétursson of Öxl, farmer and murderer',
+      'Travelers passing through Breiðuvík, robbed of horses and goods',
+    ],
+    keyPeople: [
+      'Björn Pétursson (Axlar-Björn)',
+      'Þórdís Ólafsdóttir (his wife)',
+      'Sveinn skotti (his son)',
+    ],
+    casualtyEstimate: '9 murders in the court records; folk tradition says 14–18',
+    summary:
+      'Iceland\'s only documented serial killer. Björn Pétursson farmed at Öxl on the south coast of Snæfellsnes and murdered travelers who passed his farm — robbing them of horses and belongings, and by folk account sinking the bodies in the pond Ígultjörn below the farm. Caught in 1596, he confessed to nine murders, was condemned at Laugarbrekkuþing and executed that spring: limbs broken with a sledgehammer, then beheaded, the remains displayed on stakes.',
+    eli12:
+      'A farmer on Snæfellsnes killed travelers who stopped at his farm and took their horses and belongings, hiding the bodies in a pond. He was caught, confessed to nine murders, and was executed in the most brutal way the law allowed. He\'s the only serial killer in Icelandic history.',
+    whyItHappened:
+      'Greed, mostly — the victims were travelers worth robbing, and Öxl sat conveniently on the route along the peninsula. Folklore added a darker explanation: a cursed craving that gripped him before he was born. The trial records settle for the horses and the goods.',
+    whyItMatters:
+      'One murderer became a whole genre of Icelandic folklore: the body divided between burial spots so he wouldn\'t walk again, the pregnancy that spared his widow, his son Sveinn skotti hanged in 1648 and his grandson Gísli hrókur after that — a "criminal bloodline" narrated across three generations. It\'s also the rare Icelandic crime story where court records and folk tale can be laid side by side.',
+    before: {
+      text: 'Post-Reformation Iceland had harsh courts but no police — a lonely farm on a travel route was as unwatched as anywhere in Europe.',
+      eventId: 'reformation-1550',
+    },
+    after: {
+      text: 'Nineteen years later the same century\'s hard justice turned on shipwrecked foreigners in the Westfjords.',
+      eventId: 'spanverjavigin-1615',
+    },
+    relatedIds: ['drekkingarhylur-storidomur', 'thristapar-1830'],
+    humanDrama:
+      'His wife Þórdís was investigated as an accomplice and escaped punishment — tradition says her pregnancy saved her. The child of that pregnancy, Sveinn skotti, was hanged for attempted rape in 1648, and Sveinn\'s son Gísli hrókur was executed too. Iceland told itself the evil ran in the blood — three generations on the gallows made the folklore irresistible.',
+    modernTranslation:
+      'A roadside host quietly disappears his guests for their cars and cash, until someone gets away. The case files record nine victims; the true-crime podcasts say eighteen. Four hundred years later, the killer\'s name is still the first thing people mention about the neighborhood.',
+    confidenceNote:
+      'Medium. Two Alþingi judgments from 1596–97 and the annal Skarðsárannáll confirm the case, the confession to nine murders, and the execution. The tortures, the pond, the cursed pregnancy and the divided burial come from folk tales written down centuries later — vivid, and unverifiable.',
+    uncertaintyFlags: ['event_likely', 'saga_dramatized'],
+    confidence: 'medium',
+    sources: [
+      {
+        title: 'Wikipedia: Axlar-Björn',
+        url: 'https://en.wikipedia.org/wiki/Axlar-Bj%C3%B6rn',
+      },
+      {
+        title: 'Icelandmag: Axlar-Björn, the only Icelandic serial killer',
+        url: 'https://icelandmag.is/article/axlar-bjorn-only-icelandic-serial-killer-terrorized-travellers-snaefellsnes-peninsula',
+      },
+      {
+        title: 'Wikipedia (is): Axlar-Björn',
+        url: 'https://is.wikipedia.org/wiki/Axlar-Bj%C3%B6rn',
+      },
+    ],
+  },
+  {
     id: 'spanverjavigin-1615',
     name: 'Slaying of the Basques',
     icelandicName: 'Spánverjavígin',
@@ -2641,6 +2702,61 @@ export const events: ConflictEvent[] = [
       {
         title: 'Wikipedia: Iceland in World War II',
         url: 'https://en.wikipedia.org/wiki/Iceland_in_World_War_II',
+      },
+    ],
+  },
+  {
+    id: 'spiramalid-1943',
+    name: 'The Þjóðhátíð Poisoning of 1943',
+    icelandicName: 'Spíramálið í Eyjum',
+    aliases: ['spíramálið', 'tréspíritus', 'methanol poisoning', 'wood alcohol', 'Þjóðhátíð 1943'],
+    year: 1943,
+    dateText: 'August 6–11, 1943 (the barrel found July 24)',
+    period: 'World War II',
+    type: 'disaster',
+    locationName: 'Herjólfsdalur, Vestmannaeyjar (the barrel found adrift off Þrídrangar)',
+    coordinates: [63.4425, -20.298],
+    factions: [
+      'Þjóðhátíð festival-goers in Herjólfsdalur against a drifting barrel of wartime methanol',
+    ],
+    keyPeople: [
+      'Ólafur Davíðsson (skipper of Stakksárfoss VE 245)',
+      'Þorlákur Sverrisson',
+      'Andrés Gestsson ("Blind Andrés")',
+    ],
+    winner: 'No one — nine dead, one blinded, a town silenced for decades',
+    casualtyEstimate: '9 dead August 9–11; one man permanently blinded; several more sickened and recovered',
+    summary:
+      'On July 24, 1943, the crew of the fishing boat Stakksárfoss VE 245 found a tarred iron barrel drifting in Þrídrangadýpi west of the islands — industrial wood spirit (methanol), probably off a German wartime supply ship. The contents were split three ways; a pharmacist\'s test was inconclusive, a merchant tasted it and pronounced it safe, and it was drunk at Þjóðhátíð in Herjólfsdalur on August 6–8. Between August 9 and 11, nine people died and one man was blinded for life.',
+    eli12:
+      'Fishermen found a barrel floating in the sea during the war and thought it was drinking alcohol. It was actually methanol — a poison that looks and tastes almost the same. People drank it at the islands\' biggest festival; nine died and one man went blind forever.',
+    whyItHappened:
+      'Wartime scarcity made a free barrel of "spirits" irresistible, and methanol can\'t be told from drinking alcohol without proper testing. The one test made was inconclusive — and the taste test that overruled it killed the taster.',
+    whyItMatters:
+      'The deadliest poisoning in Icelandic history, and Vestmannaeyjar\'s quietest trauma: the town spoke of it only in whispers for decades. It\'s also a dark little window on wartime Iceland, where even the sea\'s flotsam came armed.',
+    before: {
+      text: 'The war had filled Icelandic waters with convoys, wrecks and drifting cargo — some of it treasure, some of it lethal.',
+      eventId: 'operation-fork-1940',
+    },
+    after: {
+      text: 'A trial sent two men to prison for months. The community\'s real sentence was longer: decades of silence and grief around Iceland\'s biggest festival.',
+    },
+    relatedIds: ['tyrkjaranid-1627', 'operation-fork-1940'],
+    humanDrama:
+      'The merchant who declared the liquid safe died of it. The skipper who found the barrel watched the deaths mount for two days and then, on August 11, reportedly chose to end his own life with the same spirit — the ninth and last victim. Andrés Gestsson lived on for decades as "Blind Andrés," the town\'s walking reminder of the festival nobody would talk about.',
+    modernTranslation:
+      'A free barrel of mystery liquor turns up right before the biggest party of the year. The lab test is inconclusive, so someone credible takes a sip and gives the all-clear. Nine funerals later, the courts hand out months of prison time — and the town hands itself fifty years of silence.',
+    confidenceNote:
+      'High. Contemporary newspapers, court records and the Vestmannaeyjar archives document the barrel, the dates, the names of the dead and the verdicts. The skipper\'s final act rests on local accounts rather than the court record.',
+    confidence: 'high',
+    sources: [
+      {
+        title: 'Safnahús Vestmannaeyja: Spíramálið á Þjóðhátíð 1943',
+        url: 'https://safnahus.vestmannaeyjar.is/page/ragnar-a-latrum-fer-yfir-spiramalinu-thegar-9-dou-a-thjodhatid',
+      },
+      {
+        title: 'Heimaslóð: Þjóðhátíðin',
+        url: 'https://heimaslod.is/index.php/%C3%9Ej%C3%B3%C3%B0h%C3%A1t%C3%AD%C3%B0in',
       },
     ],
   },

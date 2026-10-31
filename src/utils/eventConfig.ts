@@ -93,6 +93,13 @@ export const EVENT_CONFIG: Record<EventType, TypeConfig> = {
     bgColor: '#e7edd6',
     borderColor: '#6b8e23',
   },
+  disaster: {
+    label: 'Disaster',
+    symbol: '☠',
+    color: '#0e6655',
+    bgColor: '#d1ece5',
+    borderColor: '#148f77',
+  },
 };
 
 export const CONFIDENCE_CONFIG: Record<Confidence, {

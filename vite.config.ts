@@ -8,7 +8,7 @@ import { events } from './src/data/events';
 // The deployed origin. Baked into canonical/OG URLs and the sitemap at build
 // time — this is the ONE constant to change when the site moves domains.
 // (The in-app share button uses window.location.origin, so it needs no change.)
-const SITE_URL = 'https://iceland-ruddy.vercel.app';
+const SITE_URL = 'https://map.gunnthor.is';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 

@@ -294,6 +294,7 @@ const is: UIStrings = {
     occupation: 'Hernám',
     eruption: 'Eldgos',
     plague: 'Farsótt',
+    disaster: 'Slys',
   },
   confidence: {
     high: {

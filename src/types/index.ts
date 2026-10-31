@@ -10,7 +10,8 @@ export type EventType =
   | 'execution' // state or church putting someone to death with legal cover
   | 'political' // conversions, oaths, riots, trade wars — conflict without (much) blood
   | 'eruption'
-  | 'plague';
+  | 'plague'
+  | 'disaster'; // man-made catastrophe (poisonings, wrecks) — nature gets eruption/plague
 
 export type Confidence = 'high' | 'medium' | 'low';
 
